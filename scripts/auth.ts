@@ -67,6 +67,11 @@ async function main() {
     }
     code = parsed.searchParams.get("code") ?? "";
     if (!code) { console.error("URLにcodeが見つかりません"); process.exit(1); }
+  } else if (input.startsWith("{")) {
+    // GoCooがJSON形式でcodeを表示した場合
+    const json = JSON.parse(input) as { code?: string };
+    code = json.code ?? "";
+    if (!code) { console.error("JSONにcodeが見つかりません"); process.exit(1); }
   } else {
     code = input;
   }
