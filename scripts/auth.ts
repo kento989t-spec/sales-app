@@ -44,9 +44,27 @@ async function main() {
   let code: string;
   try {
     const parsed = new URL(redirectUrl);
+
+    // GoCooが認可段階でエラーを返した場合
+    const err = parsed.searchParams.get("error");
+    if (err) {
+      const desc = parsed.searchParams.get("error_description") ?? "";
+      console.error(`\n❌ GoCoo認可エラー: ${err}`);
+      console.error(`   詳細: ${desc}`);
+      console.error("\n考えられる原因:");
+      console.error("  - GoCooのOAuthアプリ設定でリダイレクトURIが未登録");
+      console.error("  - client_idが無効または承認待ち");
+      console.error("  - このOAuthアプリがGoCooで有効化されていない");
+      process.exit(1);
+    }
+
     const c = parsed.searchParams.get("code");
-    if (!c) throw new Error("codeパラメータが見つかりません");
+    if (!c) {
+      console.error("URLにcodeパラメータがありません。貼り付けたURL:", redirectUrl);
+      process.exit(1);
+    }
     code = c;
+    console.log("  コード取得: OK");
   } catch (e) {
     console.error("URLの解析に失敗しました:", e);
     process.exit(1);
