@@ -75,9 +75,11 @@
 
   // ===== GoCoo フィールド定数 =====
   const GOCOO_REPO = "kento989t-spec/sales-app";
-  const F_YOMI = "field_ed6f5306-135c-4105-a915-17e554dc5be2";
-  const F_BILLING = "field_d8fd26b2-a857-450b-9f93-9cd44d0bb811";
-  const YOMI_OPTIONS = { A: 120, B: 121, C: 122, D: 123 };
+  const F_YOMI        = "field_ed6f5306-135c-4105-a915-17e554dc5be2";
+  const F_BILLING     = "field_d8fd26b2-a857-450b-9f93-9cd44d0bb811";
+  const F_AMOUNT      = "field_76f2b2f7-af26-44bc-a4db-7817c1a07dcc";
+  const F_NEXT_ACTION = "field_2b2fbca9-15f1-43b7-9ad6-516d48904c4a";
+  const YOMI_OPTIONS  = { A: 120, B: 121, C: 122, D: 123 };
 
   // ===== GitHub PAT =====
   const PAT_KEY = "sales_app_github_pat";
@@ -280,16 +282,17 @@
     const billingCell = showBillingMonth
       ? `<td><input type="month" class="billing-input" value="${billingVal}" data-deal-id="${d.id}" onchange="window._billingChange(this, ${d.id})"></td>`
       : "";
+    const amountRaw = d.amount ?? 0;
     return `<tr>
       <td>${esc(d.company || d.name)}</td>
       <td><small>${esc(cats)}</small></td>
       <td>${yomiSelect(d)}</td>
-      <td class="num">${yen(d.amount)}</td>
+      <td class="num"><input type="number" class="amount-input" value="${amountRaw}" data-deal-id="${d.id}" onchange="window._amountChange(this, ${d.id})"></td>
       <td class="num">${yen(d.weighted_amount)}</td>
       <td>${wonBadge}${esc(d.phase)}</td>
       ${billingCell}
       <td>${esc(d.owner)}</td>
-      <td class="na-text">${esc(d.next_action)}</td>
+      <td class="na-text"><input type="text" class="na-input" value="${esc(d.next_action)}" data-deal-id="${d.id}" onchange="window._naChange(this, ${d.id})"></td>
     </tr>`;
   }
 
@@ -452,6 +455,29 @@
         select.value = deal.yomi;
         select.className = `yomi-select badge badge-${deal.yomi}`;
       }
+    }
+  };
+
+  window._amountChange = async function(input, dealId) {
+    const val = parseInt(input.value, 10);
+    if (isNaN(val) || val < 0) return;
+    input.disabled = true;
+    const ok = await triggerUpdate(dealId, F_AMOUNT, val);
+    input.disabled = false;
+    if (!ok) {
+      const deal = (DATA.all_deals ?? DATA.deals ?? []).find(d => d.id === dealId);
+      if (deal) input.value = deal.amount ?? 0;
+    }
+  };
+
+  window._naChange = async function(input, dealId) {
+    const val = input.value;
+    input.disabled = true;
+    const ok = await triggerUpdate(dealId, F_NEXT_ACTION, val);
+    input.disabled = false;
+    if (!ok) {
+      const deal = (DATA.all_deals ?? DATA.deals ?? []).find(d => d.id === dealId);
+      if (deal) input.value = deal.next_action ?? "";
     }
   };
 
