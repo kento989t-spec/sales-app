@@ -941,13 +941,11 @@
     if (!authed) {
       document.getElementById("pw-btn").addEventListener("click", async () => {
         const pw = document.getElementById("pw-input").value;
-        const pat = document.getElementById("pat-input").value.trim();
         const errEl = document.getElementById("pw-error");
         errEl.classList.add("hidden");
         try {
           await loadData(pw);
           sessionStorage.setItem(SESSION_KEY, pw);
-          savePat(pat);
           document.getElementById("auth-gate").classList.add("hidden");
           document.getElementById("app").classList.remove("hidden");
           initApp();
