@@ -42,16 +42,18 @@ const server = http.createServer(async (req, res) => {
 
   console.log("認証コード取得成功。アクセストークンを取得中...");
 
+  // GoCoo は application/x-www-form-urlencoded + Basic auth の場合がある
   const tokenRes = await fetch(TOKEN_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Basic " + Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64"),
+    },
+    body: new URLSearchParams({
       code,
       grant_type: "authorization_code",
-      client_id: CLIENT_ID,
-      client_secret: CLIENT_SECRET,
       redirect_uri: REDIRECT_URI,
-    }),
+    }).toString(),
   });
 
   if (!tokenRes.ok) {

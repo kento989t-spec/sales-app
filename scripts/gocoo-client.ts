@@ -28,15 +28,16 @@ function saveTokens(tokens: Tokens) {
 }
 
 async function refreshAccessToken(refresh_token: string): Promise<Tokens> {
-  const res = await fetch(`${BASE_URL}/oauth/token?grant_type=refresh_token`, {
+  const res = await fetch(`${BASE_URL}/oauth/token`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Basic " + Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64"),
+    },
+    body: new URLSearchParams({
       grant_type: "refresh_token",
       refresh_token,
-      client_id: CLIENT_ID,
-      client_secret: CLIENT_SECRET,
-    }),
+    }).toString(),
   });
   if (!res.ok) {
     const body = await res.text();
