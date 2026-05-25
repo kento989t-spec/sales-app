@@ -11,7 +11,7 @@
     "D": 0.3
   },
   "won_phases": ["CS-01", "CS-02", "CS-03", "CS-04", "CS-05"],
-  "standing_tasks": ["次回打ち合わせの準備", "本日のお礼メールの送付"],
+  "standing_tasks": ["次回打ち合わせの準備", "本日のお礼メールの送付", "次回打ち合わせ日程の調整"],
   "slack_minutes_channel": "C0A8E0R4THR",
   "slack_na_patterns": ["NA:", "ネクストアクション:", "→ "],
   "password": ""

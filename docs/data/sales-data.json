@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-25T07:53:03.571Z",
+  "generated_at": "2026-05-25T07:53:48.033Z",
   "month": "2026-05",
   "targets": {
     "CoPASS": 500000,
@@ -9298,6 +9298,12 @@
         "id": "standing-1",
         "type": "standing",
         "title": "本日のお礼メールの送付",
+        "owner": null
+      },
+      {
+        "id": "standing-2",
+        "type": "standing",
+        "title": "次回打ち合わせ日程の調整",
         "owner": null
       }
     ],
