@@ -39,6 +39,87 @@
     return sessionStorage.getItem(SESSION_KEY) ?? "";
   }
 
+  // ===== 楽観的更新 + ペンディング管理（localStorage）=====
+  const PENDING_KEY = "sales_app_pending";
+  const PENDING_TTL = 90 * 60 * 1000; // 90分: Actions完了 + hourly fetch を余裕で待てる
+
+  function loadPending() {
+    try { return JSON.parse(localStorage.getItem(PENDING_KEY) ?? "{}"); }
+    catch { return {}; }
+  }
+
+  function setPending(dealId, field, value) {
+    const obj = loadPending();
+    obj[`${dealId}:${field}`] = { dealId, field, value, ts: Date.now() };
+    localStorage.setItem(PENDING_KEY, JSON.stringify(obj));
+  }
+
+  function clearPending(dealId, field) {
+    const obj = loadPending();
+    delete obj[`${dealId}:${field}`];
+    localStorage.setItem(PENDING_KEY, JSON.stringify(obj));
+  }
+
+  // DATA ロード直後に呼ぶ: ペンディング中の変更をデータに上書き適用
+  function applyPending() {
+    if (!DATA) return;
+    const now = Date.now();
+    const obj = loadPending();
+    const valid = Object.values(obj).filter(p => now - p.ts < PENDING_TTL);
+    // 期限切れを削除
+    const cleaned = {};
+    valid.forEach(p => { cleaned[`${p.dealId}:${p.field}`] = p; });
+    localStorage.setItem(PENDING_KEY, JSON.stringify(cleaned));
+
+    for (const { dealId, field, value } of valid) {
+      for (const arr of [DATA.deals, DATA.all_deals]) {
+        const deal = (arr ?? []).find(d => d.id === dealId);
+        if (!deal) continue;
+        deal[field] = value;
+        // ヨミor金額が変わったら加重額を再計算
+        if (field === "yomi" || field === "amount") {
+          const coeff = (DATA.yomi_coefficients ?? {})[deal.yomi] ?? 0;
+          deal.weighted_amount = Math.round(deal.amount * coeff);
+        }
+      }
+    }
+  }
+
+  // 楽観的更新: DATA を即時更新してサマリー/進捗/案件リストを再描画
+  function optimisticUpdate(dealId, field, value) {
+    for (const arr of [DATA.deals, DATA.all_deals]) {
+      const deal = (arr ?? []).find(d => d.id === dealId);
+      if (!deal) continue;
+      deal[field] = value;
+      if (field === "yomi" || field === "amount") {
+        const coeff = (DATA.yomi_coefficients ?? {})[deal.yomi] ?? 0;
+        deal.weighted_amount = Math.round(deal.amount * coeff);
+      }
+    }
+    setPending(dealId, field, value);
+    renderSummary();
+    renderProgress();
+    renderDashboardDeals();
+    renderDealsList();
+  }
+
+  function revertUpdate(dealId, field, origValue) {
+    for (const arr of [DATA.deals, DATA.all_deals]) {
+      const deal = (arr ?? []).find(d => d.id === dealId);
+      if (!deal) continue;
+      deal[field] = origValue;
+      if (field === "yomi" || field === "amount") {
+        const coeff = (DATA.yomi_coefficients ?? {})[deal.yomi] ?? 0;
+        deal.weighted_amount = Math.round(deal.amount * coeff);
+      }
+    }
+    clearPending(dealId, field);
+    renderSummary();
+    renderProgress();
+    renderDashboardDeals();
+    renderDealsList();
+  }
+
   // ===== タスクステータス（localStorage）=====
   function loadTaskStatus() {
     try {
@@ -164,6 +245,7 @@
     } else {
       DATA = raw;
     }
+    applyPending(); // ペンディング中の変更をデータに上書き
   }
 
   // ===== ヘッダー =====
@@ -572,29 +654,37 @@
   window._yomiChange = async function(select, dealId) {
     const newYomi = select.value;
     if (!newYomi) return;
+    const origYomi = (DATA.all_deals ?? DATA.deals ?? []).find(d => d.id === dealId)?.yomi ?? "";
     const choiceId = YOMI_OPTIONS[newYomi];
+
+    // 楽観的更新: DATA + サマリー即時反映
+    optimisticUpdate(dealId, "yomi", newYomi);
     select.className = `yomi-select badge badge-${newYomi}`;
     select.disabled = true;
+
     const ok = await triggerUpdate(dealId, F_YOMI, choiceId);
     select.disabled = false;
     if (!ok) {
-      const deal = (DATA.all_deals ?? DATA.deals ?? []).find(d => d.id === dealId);
-      if (deal) {
-        select.value = deal.yomi ?? "";
-        select.className = `yomi-select badge badge-${deal.yomi || "none"}`;
-      }
+      revertUpdate(dealId, "yomi", origYomi);
+      select.value = origYomi || "";
+      select.className = `yomi-select badge badge-${origYomi || "none"}`;
     }
+    // 成功時はペンディングをそのまま保持（hourly fetchがGoCooの更新を拾うまで保護）
   };
 
   window._amountChange = async function(input, dealId) {
     const val = parseInt(input.value, 10);
     if (isNaN(val) || val < 0) return;
+    const origAmount = (DATA.all_deals ?? DATA.deals ?? []).find(d => d.id === dealId)?.amount ?? 0;
+
+    optimisticUpdate(dealId, "amount", val);
     input.disabled = true;
+
     const ok = await triggerUpdate(dealId, F_AMOUNT, val);
     input.disabled = false;
     if (!ok) {
-      const deal = (DATA.all_deals ?? DATA.deals ?? []).find(d => d.id === dealId);
-      if (deal) input.value = deal.amount ?? 0;
+      revertUpdate(dealId, "amount", origAmount);
+      input.value = origAmount;
     }
   };
 
