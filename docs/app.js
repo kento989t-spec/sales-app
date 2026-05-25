@@ -537,7 +537,7 @@
     done:      { label: "完了",   cls: "status-done",      active: false },
     cancelled: { label: "中止",   cls: "status-cancelled", active: false },
   };
-  const STANDING_TITLES = ["次回打ち合わせの準備", "本日のお礼メールの送付"];
+  const STANDING_TITLES = ["次回打ち合わせの準備", "本日のお礼メールの送付", "次回打ち合わせ日程の調整"];
 
   function taskCard(id, labelClass, labelText, title, meta = "", deletable = false) {
     const status = getTaskStatus(id);
