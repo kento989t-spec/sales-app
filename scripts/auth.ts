@@ -7,14 +7,14 @@ import path from "path";
 import readline from "readline";
 import { exec } from "child_process";
 import { fileURLToPath } from "url";
-import { CLIENT_ID, CLIENT_SECRET, TENANT_BASE } from "./gocoo-client.ts";
+import { CLIENT_ID, CLIENT_SECRET, TENANT_BASE, OAUTH_BASE } from "./gocoo-client.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TOKENS_FILE = path.join(__dirname, ".tokens.json");
 
 const REDIRECT_URI = "http://localhost:3456/callback";
-const AUTH_URL = `${TENANT_BASE}/oauth/authorize`;
-const TOKEN_URL = `${TENANT_BASE}/oauth/token`;
+const AUTH_URL = `${OAUTH_BASE}/oauth/authorize`;
+const TOKEN_URL = `${OAUTH_BASE}/oauth/token`;
 
 async function main() {
   const authorizeUrl = new URL(AUTH_URL);
@@ -73,8 +73,8 @@ async function main() {
   console.log("\n3. 認証コード取得成功。アクセストークンを取得中...");
 
   // 試すURL × フォーマットの組み合わせ
-  const GLOBAL_TOKEN_URL = "https://sfa.salesgo.jp/oauth/token";
-  const TENANT_TOKEN_URL = TOKEN_URL;
+  const GLOBAL_TOKEN_URL = TOKEN_URL;
+  const TENANT_TOKEN_URL = `${TENANT_BASE}/oauth/token`;
 
   type Attempt = { url: string; label: string; req: RequestInit };
   const attempts: Attempt[] = [

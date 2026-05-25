@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TOKENS_FILE = path.join(__dirname, ".tokens.json");
 export const TENANT_BASE = "https://deex.sfa.salesgo.jp/organizations/deex";
+export const OAUTH_BASE = "https://sfa.salesgo.jp";  // OAuthはグローバルURL
 const API_BASE = `${TENANT_BASE}/v1`;
 
 export const CLIENT_ID = "a1d2317b-3927-4143-8b17-0dd8565229fd";
@@ -28,7 +29,7 @@ function saveTokens(tokens: Tokens) {
 }
 
 async function refreshAccessToken(refresh_token: string): Promise<Tokens> {
-  const res = await fetch(`${TENANT_BASE}/oauth/token`, {
+  const res = await fetch(`${OAUTH_BASE}/oauth/token`, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
