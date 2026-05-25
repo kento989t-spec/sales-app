@@ -565,6 +565,19 @@ th.sortable:hover { background: #f3f4f6; }
 /* ===== 最終更新セル ===== */
 .updated-cell { color: var(--text-sub); font-size: 12px; white-space: nowrap; }
 
+/* ===== 更新ボタン ===== */
+#refresh-btn {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--surface);
+  cursor: pointer;
+  transition: opacity .15s;
+}
+#refresh-btn:hover { opacity: .7; }
+#refresh-btn:disabled { opacity: .4; cursor: default; }
+
 /* ===== PAT設定ボタン ===== */
 #pat-setting-btn {
   padding: 4px 10px;

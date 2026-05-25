@@ -793,6 +793,25 @@
     }
   }
 
+  function initRefreshButton() {
+    const btn = document.getElementById("refresh-btn");
+    if (!btn) return;
+    btn.addEventListener("click", async () => {
+      btn.disabled = true;
+      btn.textContent = "⏳";
+      try {
+        await loadData(getSavedPassword());
+        renderAll();
+        toast("データを更新しました", "success");
+      } catch {
+        toast("更新に失敗しました", "error");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "🔄";
+      }
+    });
+  }
+
   function initApp() {
     renderHeader();
     initTabs();
@@ -800,6 +819,7 @@
     initDealsFilter();
     initSortHeaders();
     initPatButton();
+    initRefreshButton();
     document.addEventListener("click", e => {
       if (!e.target.closest(".cat-dropdown-wrap")) {
         document.querySelectorAll(".cat-dropdown:not(.hidden)").forEach(d => d.classList.add("hidden"));
