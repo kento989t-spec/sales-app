@@ -1,10 +1,10 @@
 /**
- * GoCoo OAuth 認証セットアップ（PKCE / ネイティブアプリ）
- * npm run auth
+ * GoCoo OAuth 認証セットアップ（PKCE / 2ステップ）
+ * ステップ1: npm run auth          → ブラウザを開く・verifier保存
+ * ステップ2: npm run auth -- CODE  → トークン取得
  */
 import fs from "fs";
 import path from "path";
-import readline from "readline";
 import { exec } from "child_process";
 import { fileURLToPath } from "url";
 import { webcrypto } from "crypto";
@@ -13,11 +13,10 @@ import { OAUTH_BASE, NATIVE_CLIENT_ID } from "./gocoo-client.ts";
 const crypto = webcrypto as unknown as Crypto;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TOKENS_FILE = path.join(__dirname, ".tokens.json");
+const STATE_FILE = path.join(__dirname, ".auth-state.json");
 
-// PKCE ユーティリティ
 function base64url(buf: ArrayBuffer): string {
-  return Buffer.from(buf)
-    .toString("base64")
+  return Buffer.from(buf).toString("base64")
     .replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
 }
 
@@ -32,85 +31,71 @@ async function generateCodeChallenge(verifier: string): Promise<string> {
   return base64url(buf);
 }
 
+function extractCode(input: string): string {
+  if (input.startsWith("{")) return (JSON.parse(input) as { code: string }).code;
+  if (input.startsWith("http")) return new URL(input).searchParams.get("code") ?? input;
+  return input;
+}
+
 async function main() {
-  const codeVerifier = generateCodeVerifier();
-  const codeChallenge = await generateCodeChallenge(codeVerifier);
+  const arg = process.argv[2];
 
-  const authorizeUrl = new URL(`${OAUTH_BASE}/oauth/authorize`);
-  authorizeUrl.searchParams.set("response_type", "code");
-  authorizeUrl.searchParams.set("client_id", NATIVE_CLIENT_ID);
-  authorizeUrl.searchParams.set("code_challenge", codeChallenge);
-  authorizeUrl.searchParams.set("code_challenge_method", "S256");
+  if (!arg) {
+    // ===== ステップ1: ブラウザを開く =====
+    const verifier = generateCodeVerifier();
+    const challenge = await generateCodeChallenge(verifier);
+    fs.writeFileSync(STATE_FILE, JSON.stringify({ verifier }));
 
-  console.log("\n========================================");
-  console.log("GoCoo 認証セットアップ（PKCE）");
-  console.log("========================================");
-  console.log("\n1. ブラウザでGoCooにログインしてください:");
-  console.log("\n" + authorizeUrl.toString() + "\n");
-  exec(`open "${authorizeUrl.toString()}"`);
+    const url = new URL(`${OAUTH_BASE}/oauth/authorize`);
+    url.searchParams.set("response_type", "code");
+    url.searchParams.set("client_id", NATIVE_CLIENT_ID);
+    url.searchParams.set("code_challenge", challenge);
+    url.searchParams.set("code_challenge_method", "S256");
 
-  console.log("2. 承認後、ブラウザに表示された認証コード（code）を貼り付けてください");
-  console.log("   アドレスバーのURL全体でも可（?code=XXX の部分を抽出します）\n");
+    console.log("\nブラウザを開いてGoCooにログイン・承認してください。");
+    console.log("承認後、表示されたJSONまたはURLをコピーして以下を実行:\n");
+    console.log(`  npm run auth -- 'ここにJSONまたはURLを貼り付け'\n`);
+    exec(`open "${url.toString()}"`);
 
-  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-  const input = await new Promise<string>(resolve => {
-    rl.question("コード: ", answer => { rl.close(); resolve(answer.trim()); });
-  });
-
-  let code: string;
-  if (input.startsWith("http")) {
-    const parsed = new URL(input);
-    const err = parsed.searchParams.get("error");
-    if (err) {
-      console.error(`\n❌ 認可エラー: ${err} - ${parsed.searchParams.get("error_description")}`);
+  } else {
+    // ===== ステップ2: トークン取得 =====
+    if (!fs.existsSync(STATE_FILE)) {
+      console.error("先に npm run auth を実行してください（verifierがありません）");
       process.exit(1);
     }
-    code = parsed.searchParams.get("code") ?? "";
-    if (!code) { console.error("URLにcodeが見つかりません"); process.exit(1); }
-  } else if (input.startsWith("{")) {
-    // GoCooがJSON形式でcodeを表示した場合
-    const json = JSON.parse(input) as { code?: string };
-    code = json.code ?? "";
-    if (!code) { console.error("JSONにcodeが見つかりません"); process.exit(1); }
-  } else {
-    code = input;
+    const { verifier } = JSON.parse(fs.readFileSync(STATE_FILE, "utf-8")) as { verifier: string };
+    const code = extractCode(arg);
+
+    console.log("アクセストークンを取得中...");
+    const res = await fetch(`${OAUTH_BASE}/oauth/token`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        grant_type: "authorization_code",
+        code,
+        client_id: NATIVE_CLIENT_ID,
+        code_verifier: verifier,
+      }).toString(),
+    });
+
+    const text = await res.text();
+    if (!res.ok) {
+      console.error(`❌ 失敗: ${res.status}\n${text}`);
+      process.exit(1);
+    }
+
+    const data = JSON.parse(text) as { access_token: string; refresh_token: string; expires_in: number };
+    fs.writeFileSync(TOKENS_FILE, JSON.stringify({
+      access_token: data.access_token,
+      refresh_token: data.refresh_token,
+      expires_at: Date.now() + (data.expires_in - 60) * 1000,
+      client_id: NATIVE_CLIENT_ID,
+    }, null, 2));
+    fs.unlinkSync(STATE_FILE);
+
+    console.log("✅ トークン保存完了");
+    console.log("次: npm run discover → npm run fetch");
   }
-  console.log("コード取得: OK\nアクセストークンを取得中...");
-
-  const tokenUrl = `${OAUTH_BASE}/oauth/token`;
-  const body = new URLSearchParams({
-    grant_type: "authorization_code",
-    code,
-    client_id: NATIVE_CLIENT_ID,
-    code_verifier: codeVerifier,
-  });
-
-  const res = await fetch(tokenUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: body.toString(),
-  });
-
-  const text = await res.text();
-  if (!res.ok) {
-    console.error(`\n❌ トークン取得失敗: ${res.status}`);
-    console.error(text);
-    process.exit(1);
-  }
-
-  const data = JSON.parse(text) as {
-    access_token: string; refresh_token: string; expires_in: number;
-  };
-  const tokens = {
-    access_token: data.access_token,
-    refresh_token: data.refresh_token,
-    expires_at: Date.now() + (data.expires_in - 60) * 1000,
-    client_id: NATIVE_CLIENT_ID,
-  };
-
-  fs.writeFileSync(TOKENS_FILE, JSON.stringify(tokens, null, 2));
-  console.log("\n✅ トークンを保存しました:", TOKENS_FILE);
-  console.log("\n次: npm run discover → npm run fetch");
 }
 
 main().catch(e => { console.error(e); process.exit(1); });
