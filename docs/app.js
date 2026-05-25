@@ -80,6 +80,14 @@
   const F_AMOUNT      = "field_76f2b2f7-af26-44bc-a4db-7817c1a07dcc";
   const F_NEXT_ACTION = "field_2b2fbca9-15f1-43b7-9ad6-516d48904c4a";
   const YOMI_OPTIONS  = { A: 120, B: 121, C: 122, D: 123 };
+  const F_CATEGORIES  = "field_00c5a3dc-ea3e-4a19-84b2-d50dd44dcad0";
+  const CAT_OPTIONS   = [
+    { id: 258, name: "CoPASS" },
+    { id: 259, name: "CoPASS BPO" },
+    { id: 257, name: "Partner Boost" },
+    { id: 332, name: "Partner startup" },
+    { id: 333, name: "BPO(開拓以外）" },
+  ];
 
   // ===== GitHub PAT =====
   const PAT_KEY = "sales_app_github_pat";
@@ -320,8 +328,24 @@
     return `<select class="yomi-select badge badge-${d.yomi}" data-deal-id="${d.id}" onchange="window._yomiChange(this, ${d.id})">${opts}</select>`;
   }
 
+  function catDropdown(d) {
+    const current = d.categories || [];
+    const tags = current.length > 0
+      ? current.map(c => `<span class="cat-tag">${esc(c)}</span>`).join("")
+      : `<span class="cat-placeholder">—</span>`;
+    const checkboxes = CAT_OPTIONS.map(opt =>
+      `<label class="cat-check"><input type="checkbox" value="${opt.id}" data-name="${esc(opt.name)}" ${current.includes(opt.name) ? "checked" : ""}> ${esc(opt.name)}</label>`
+    ).join("");
+    return `<div class="cat-dropdown-wrap" data-deal-id="${d.id}">
+      <div class="cat-tags" onclick="window._catToggleDropdown(this)">${tags}</div>
+      <div class="cat-dropdown hidden">
+        ${checkboxes}
+        <button class="cat-save-btn" onclick="window._catSave(this, ${d.id})">更新</button>
+      </div>
+    </div>`;
+  }
+
   function dealRow(d, showBillingMonth = false) {
-    const cats = (d.categories || []).join(", ");
     const wonBadge = d.is_won ? `<span class="badge badge-won">受注</span> ` : "";
     const billingVal = d.billing_month ? d.billing_month.slice(0, 7) : "";
     const billingCell = showBillingMonth
@@ -333,7 +357,7 @@
     const amountRaw = d.amount ?? 0;
     return `<tr>
       <td>${esc(d.company || d.name)}</td>
-      <td><small>${esc(cats)}</small></td>
+      <td>${catDropdown(d)}</td>
       <td>${yomiSelect(d)}</td>
       <td class="num"><input type="number" class="amount-input" value="${amountRaw}" data-deal-id="${d.id}" onchange="window._amountChange(this, ${d.id})"></td>
       <td class="num">${yen(d.weighted_amount)}</td>
@@ -383,20 +407,22 @@
   }
 
   // ===== タスク管理タブ（会社別ビュー）=====
-  const STATUS_LABELS = { todo: "未対応", doing: "対応中", done: "完了" };
-  const STATUS_NEXT  = { todo: "doing", doing: "done", done: "todo" };
-  const STATUS_CLASS = { todo: "status-todo", doing: "status-doing", done: "status-done" };
+  const STATUSES = {
+    todo:      { label: "未対応",               cls: "status-todo",      active: true  },
+    doing:     { label: "対応中",               cls: "status-doing",     active: true  },
+    done:      { label: "完了",                 cls: "status-done",      active: false },
+    skipped:   { label: "やらなかった",         cls: "status-skipped",   active: false },
+    cancelled: { label: "やらなくてよくなった", cls: "status-cancelled", active: false },
+  };
   const STANDING_TITLES = ["次回打ち合わせの準備", "本日のお礼メールの送付"];
-
-  function taskStatusToggle(id) {
-    const current = getTaskStatus(id);
-    setTaskStatus(id, STATUS_NEXT[current]);
-    renderTasks();
-  }
 
   function taskCard(id, labelClass, labelText, title, meta = "") {
     const status = getTaskStatus(id);
-    return `<div class="task-card ${status === "done" ? "task-done" : ""}">
+    const st = STATUSES[status] ?? STATUSES.todo;
+    const opts = Object.entries(STATUSES).map(([v, s]) =>
+      `<option value="${v}" ${status === v ? "selected" : ""}>${s.label}</option>`
+    ).join("");
+    return `<div class="task-card ${st.active ? "" : "task-inactive"}">
       <div class="task-card-main">
         <span class="task-label ${labelClass}">${labelText}</span>
         <div class="task-card-body">
@@ -404,9 +430,9 @@
           ${meta ? `<div class="task-meta">${meta}</div>` : ""}
         </div>
       </div>
-      <button class="status-toggle ${STATUS_CLASS[status]}" onclick="window._taskToggle('${esc(id)}')">
-        ${STATUS_LABELS[status]}
-      </button>
+      <select class="status-select ${st.cls}" data-task-id="${esc(id)}" onchange="window._taskStatusChange(this)">
+        ${opts}
+      </select>
     </div>`;
   }
 
@@ -414,10 +440,9 @@
     const el = document.getElementById("task-companies");
     if (!el) return;
 
-    const slackAll  = DATA.tasks?.slack        ?? [];
-    const naAll     = DATA.tasks?.next_action  ?? [];
+    const slackAll = DATA.tasks?.slack       ?? [];
+    const naAll    = DATA.tasks?.next_action ?? [];
 
-    // 担当フィルタ
     const slack = activeOwner ? slackAll.filter(t => !t.owner || t.owner === activeOwner) : slackAll;
     const na    = activeOwner ? naAll.filter(t => t.owner === activeOwner) : naAll;
 
@@ -426,11 +451,9 @@
       return;
     }
 
-    // 会社別にグループ化
     const companies = new Map();
+    const meetingsByCompany = new Map();
 
-    // Slack NAs → unique meeting ts per company で定常タスクも生成
-    const meetingsByCompany = new Map(); // company → Set<source_ts>
     for (const t of slack) {
       const key = t.company ?? "（会社不明）";
       if (!companies.has(key)) companies.set(key, { slack: [], na: [], owner: t.owner });
@@ -438,45 +461,73 @@
       if (!meetingsByCompany.has(key)) meetingsByCompany.set(key, new Set());
       meetingsByCompany.get(key).add(t.source_ts);
     }
-
-    // GoCoo NA
     for (const t of na) {
       const key = t.company ?? "（会社不明）";
       if (!companies.has(key)) companies.set(key, { slack: [], na: [], owner: t.owner });
       companies.get(key).na.push(t);
     }
 
+    const allDeals = DATA.all_deals ?? DATA.deals ?? [];
+
     let html = "";
     for (const [company, { slack: sTasks, na: naTasks, owner }] of companies) {
       const meetingTsList = meetingsByCompany.get(company) ?? new Set();
       const ownerChip = owner ? `<span class="owner-chip">${esc(owner)}</span>` : "";
 
-      let cards = "";
+      // 案件情報バー
+      const deal = allDeals.find(d => (d.company || d.name) === company);
+      let dealInfoBar = "";
+      if (deal) {
+        const catTags = (deal.categories || [])
+          .filter(c => c !== "未分類")
+          .map(c => `<span class="cat-tag">${esc(c)}</span>`).join(" ");
+        dealInfoBar = `<div class="deal-info-bar">
+          <span class="badge badge-${deal.yomi}">${esc(deal.yomi || "—")}</span>
+          ${catTags}
+          <span class="deal-amount">${yen(deal.amount)}</span>
+        </div>`;
+      }
 
-      // Slack NA
+      // タスクカードを active / inactive に振り分け
+      const activeTasks = [];
+      const inactiveTasks = [];
+
+      function classify(card, id) {
+        const s = STATUSES[getTaskStatus(id)] ?? STATUSES.todo;
+        (s.active ? activeTasks : inactiveTasks).push(card);
+      }
+
       for (const t of sTasks) {
-        cards += taskCard(t.id, "slack-label", "NA", t.title);
+        classify(taskCard(t.id, "slack-label", "NA", t.title), t.id);
       }
-
-      // GoCoo NA
       for (const t of naTasks) {
-        cards += taskCard(t.id, "na-label", "GoCoo", t.next_action, `<span class="badge badge-${t.yomi}">${esc(t.yomi || "—")}</span><span class="phase-text">${esc(t.phase)}</span>`);
+        classify(
+          taskCard(t.id, "na-label", "GoCoo", t.next_action,
+            `<span class="badge badge-${t.yomi}">${esc(t.yomi || "—")}</span><span class="phase-text">${esc(t.phase)}</span>`),
+          t.id
+        );
       }
-
-      // 定常タスク：打ち合わせごとに生成
       for (const ts of meetingTsList) {
         for (let i = 0; i < STANDING_TITLES.length; i++) {
           const id = `standing-${company}-${ts}-${i}`;
-          cards += taskCard(id, "standing-label", "定常", STANDING_TITLES[i]);
+          classify(taskCard(id, "standing-label", "定常", STANDING_TITLES[i]), id);
         }
       }
+
+      const completedSection = inactiveTasks.length > 0
+        ? `<details class="completed-section">
+            <summary>対応済み (${inactiveTasks.length}件)</summary>
+            <div class="completed-cards">${inactiveTasks.join("")}</div>
+          </details>` : "";
 
       html += `<section class="company-task-group">
         <div class="company-task-header">
           <span class="company-task-name">${esc(company)}</span>
           ${ownerChip}
         </div>
-        <div class="task-cards">${cards}</div>
+        ${dealInfoBar}
+        <div class="task-cards">${activeTasks.join("") || '<p class="task-empty" style="padding:8px 12px">アクティブなタスクなし</p>'}</div>
+        ${completedSection}
       </section>`;
     }
 
@@ -484,7 +535,36 @@
   }
 
   // グローバルハンドラ
-  window._taskToggle = taskStatusToggle;
+  window._taskStatusChange = function(select) {
+    setTaskStatus(select.dataset.taskId, select.value);
+    renderTasks();
+  };
+
+  window._catToggleDropdown = function(el) {
+    document.querySelectorAll(".cat-dropdown:not(.hidden)").forEach(d => {
+      if (!el.parentElement.contains(d)) d.classList.add("hidden");
+    });
+    el.nextElementSibling.classList.toggle("hidden");
+  };
+
+  window._catSave = async function(btn, dealId) {
+    const wrap = btn.closest(".cat-dropdown-wrap");
+    const checked = [...wrap.querySelectorAll("input[type=checkbox]:checked")];
+    const ids = checked.map(cb => parseInt(cb.value, 10));
+    btn.disabled = true;
+    const ok = await triggerUpdate(dealId, F_CATEGORIES, ids);
+    btn.disabled = false;
+    if (ok) {
+      const names = checked.map(cb => cb.dataset.name);
+      wrap.querySelector(".cat-tags").innerHTML = names.length > 0
+        ? names.map(n => `<span class="cat-tag">${esc(n)}</span>`).join("")
+        : `<span class="cat-placeholder">—</span>`;
+      wrap.querySelector(".cat-dropdown").classList.add("hidden");
+      const update = d => { if (d.id === dealId) d.categories = names; };
+      (DATA.all_deals ?? []).forEach(update);
+      (DATA.deals ?? []).forEach(update);
+    }
+  };
 
   window._yomiChange = async function(select, dealId) {
     const newYomi = select.value;
@@ -627,6 +707,11 @@
     initDealsFilter();
     initSortHeaders();
     initPatButton();
+    document.addEventListener("click", e => {
+      if (!e.target.closest(".cat-dropdown-wrap")) {
+        document.querySelectorAll(".cat-dropdown:not(.hidden)").forEach(d => d.classList.add("hidden"));
+      }
+    });
     renderAll();
   }
 

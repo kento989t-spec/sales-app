@@ -337,6 +337,9 @@ header {
   box-shadow: var(--shadow);
   transition: opacity .2s;
 }
+.task-card.task-inactive {
+  opacity: .55;
+}
 .task-card.task-done {
   opacity: .5;
 }
@@ -372,7 +375,8 @@ header {
   line-height: 1.5;
   word-break: break-all;
 }
-.task-card.task-done .task-title { text-decoration: line-through; }
+.task-card.task-done .task-title,
+.task-card.task-inactive .task-title { text-decoration: line-through; }
 
 .task-meta {
   display: flex;
@@ -395,9 +399,9 @@ header {
   color: var(--text-sub);
 }
 
-/* ステータストグルボタン */
-.status-toggle {
-  padding: 4px 12px;
+/* ステータスセレクト */
+.status-select {
+  padding: 4px 8px;
   border-radius: 6px;
   font-size: 12px;
   font-weight: 600;
@@ -405,12 +409,124 @@ header {
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: background .15s;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23666'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  padding-right: 20px;
 }
-.status-todo  { background: #f3f4f6; color: var(--text-sub); }
-.status-doing { background: #fef3c7; color: #b45309; border-color: #fcd34d; }
-.status-done  { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
-.status-toggle:hover { filter: brightness(.95); }
+.status-todo      { background: #f3f4f6; color: var(--text-sub); }
+.status-doing     { background: #fef3c7; color: #b45309; border-color: #fcd34d; }
+.status-done      { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
+.status-skipped   { background: #f3f4f6; color: #6b7280; border-color: #d1d5db; }
+.status-cancelled { background: #f3f4f6; color: #9ca3af; border-color: #e5e7eb; }
+
+/* ===== カテゴリドロップダウン ===== */
+.cat-dropdown-wrap {
+  position: relative;
+  display: inline-block;
+}
+.cat-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  cursor: pointer;
+  min-width: 60px;
+  min-height: 20px;
+}
+.cat-tags:hover { opacity: .8; }
+.cat-tag {
+  display: inline-block;
+  background: #e0e7ff;
+  color: #3730a3;
+  border-radius: 4px;
+  font-size: 11px;
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+.cat-placeholder { color: var(--text-sub); font-size: 12px; }
+.cat-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 200;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cat-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.cat-save-btn {
+  margin-top: 4px;
+  padding: 4px 10px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.cat-save-btn:hover { background: var(--primary-dark); }
+.cat-save-btn:disabled { opacity: .5; cursor: default; }
+
+/* ===== 案件情報バー（タスク管理）===== */
+.deal-info-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: #f9fafb;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.deal-amount {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-sub);
+  margin-left: auto;
+}
+
+/* ===== 対応済みセクション ===== */
+.completed-section {
+  border-top: 1px solid var(--border);
+}
+.completed-section summary {
+  padding: 8px 16px;
+  font-size: 12px;
+  color: var(--text-sub);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.completed-section summary::before {
+  content: "▶";
+  font-size: 10px;
+  transition: transform .15s;
+}
+.completed-section[open] summary::before { transform: rotate(90deg); }
+.completed-cards {
+  padding: 6px 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
 /* ===== 会社別タスクグループ ===== */
 .company-task-group {
