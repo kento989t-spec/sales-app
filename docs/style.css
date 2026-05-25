@@ -725,6 +725,11 @@ header {
   font-size: 14px;
   color: var(--text);
 }
+.company-updated-at {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-sub);
+}
 .company-task-group .task-cards {
   padding: 8px 12px;
   display: flex;

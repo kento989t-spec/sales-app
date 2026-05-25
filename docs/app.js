@@ -676,10 +676,12 @@
     const companies = new Map();
     const meetingsByCompany = new Map();
 
-    // 管理対象全会社を起点にセクションを生成
+    // 管理対象全会社を起点にセクションを生成（updated_atも保持）
+    const companyUpdatedAt = new Map();
     for (const dc of dcs) {
       const key = dc.company ?? "（会社不明）";
       if (!companies.has(key)) companies.set(key, { slack: [], na: [], custom: [], owner: dc.owner });
+      if (dc.updated_at) companyUpdatedAt.set(key, dc.updated_at);
     }
     for (const t of slack) {
       const key = t.company ?? "（会社不明）";
@@ -717,10 +719,20 @@
       return true;
     }
 
+    // updated_at 降順でソート
+    const sortedCompanies = [...companies.entries()].sort(([a], [b]) => {
+      const ua = companyUpdatedAt.get(a) ?? "";
+      const ub = companyUpdatedAt.get(b) ?? "";
+      return ub.localeCompare(ua);
+    });
+
     let html = "";
-    for (const [company, { slack: sTasks, na: naTasks, custom: cTasks, owner }] of companies) {
+    for (const [company, { slack: sTasks, na: naTasks, custom: cTasks, owner }] of sortedCompanies) {
       if (!companyMatchesFilter(company)) continue;
       const meetingTsList = meetingsByCompany.get(company) ?? new Set();
+      const updatedAt = companyUpdatedAt.get(company) ?? "";
+      const updatedLabel = updatedAt
+        ? `<span class="company-updated-at">GoCoo更新: ${updatedAt.slice(0, 10)}</span>` : "";
       const ownerChip = owner ? `<span class="owner-chip">${esc(owner)}</span>` : "";
 
       // 案件情報バー
@@ -784,6 +796,7 @@
         <div class="company-task-header">
           <span class="company-task-name">${esc(company)}</span>
           ${ownerChip}
+          ${updatedLabel}
         </div>
         ${dealInfoBar}
         <div class="task-cards">${activeTasks.join("") || '<p class="task-empty" style="padding:8px 12px">アクティブなタスクなし</p>'}</div>

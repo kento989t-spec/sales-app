@@ -181,6 +181,7 @@ async function main() {
       owner: d.owner,
       yomi: d.yomi,
       billing_month: d.billing_month,
+      updated_at: d.updated_at ?? "",
     }));
 
   // Slack議事録
