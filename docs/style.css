@@ -412,6 +412,20 @@ header {
 .status-done  { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
 .status-toggle:hover { filter: brightness(.95); }
 
+/* ===== PAT設定ボタン ===== */
+#pat-setting-btn {
+  padding: 4px 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  background: var(--warning);
+  transition: opacity .15s;
+}
+#pat-setting-btn:hover { opacity: .85; }
+
 /* ===== インライン編集 ===== */
 .yomi-select {
   border: none;

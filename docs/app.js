@@ -554,7 +554,29 @@
     initTabs();
     initYomiFilter();
     initDealsFilter();
+    initPatButton();
     renderAll();
+  }
+
+  function initPatButton() {
+    const btn = document.getElementById("pat-setting-btn");
+    if (!btn) return;
+    updatePatBtn();
+    btn.addEventListener("click", () => {
+      const current = getPat();
+      const val = prompt("GitHub PAT を入力してください（編集機能に使用）:", current);
+      if (val !== null) {
+        savePat(val.trim());
+        updatePatBtn();
+        toast(val.trim() ? "PAT を保存しました" : "PAT をクリアしました", "success");
+      }
+    });
+  }
+
+  function updatePatBtn() {
+    const btn = document.getElementById("pat-setting-btn");
+    if (!btn) return;
+    btn.style.background = getPat() ? "var(--success)" : "var(--warning)";
   }
 
   main();
