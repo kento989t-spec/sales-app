@@ -12,7 +12,7 @@ import { CLIENT_ID, CLIENT_SECRET, TENANT_BASE, OAUTH_BASE } from "./gocoo-clien
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TOKENS_FILE = path.join(__dirname, ".tokens.json");
 
-const REDIRECT_URI = "http://localhost:3456/callback";
+const REDIRECT_URI = "https://httpbin.org/get";
 const AUTH_URL = `${OAUTH_BASE}/oauth/authorize`;
 const TOKEN_URL = `${OAUTH_BASE}/oauth/token`;
 
@@ -29,46 +29,40 @@ async function main() {
   console.log("\n" + authorizeUrl.toString() + "\n");
   exec(`open "${authorizeUrl.toString()}"`);
 
-  console.log("2. ログイン後、ブラウザのアドレスバーに表示されるURL全体を");
-  console.log("   コピーしてここに貼り付けてください:");
-  console.log("   (例: http://localhost:3456/callback?code=XXXXXXXX)\n");
+  console.log('2. ログイン・承認後、ブラウザに表示されるJSONの中の "code" の値をコピー');
+  console.log('   (例: {"args":{"code":"XXXXXXXX",...}} の中の code の値)\n');
+  console.log("   ※ ブラウザのアドレスバーのURL全体でも可\n");
 
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-  const redirectUrl = await new Promise<string>(resolve => {
-    rl.question("リダイレクトURL: ", answer => {
+  const input = await new Promise<string>(resolve => {
+    rl.question("codeの値（またはURL全体）: ", answer => {
       rl.close();
       resolve(answer.trim());
     });
   });
 
   let code: string;
-  try {
-    const parsed = new URL(redirectUrl);
-
-    // GoCooが認可段階でエラーを返した場合
-    const err = parsed.searchParams.get("error");
-    if (err) {
-      const desc = parsed.searchParams.get("error_description") ?? "";
-      console.error(`\n❌ GoCoo認可エラー: ${err}`);
-      console.error(`   詳細: ${desc}`);
-      console.error("\n考えられる原因:");
-      console.error("  - GoCooのOAuthアプリ設定でリダイレクトURIが未登録");
-      console.error("  - client_idが無効または承認待ち");
-      console.error("  - このOAuthアプリがGoCooで有効化されていない");
+  // URL全体が貼られた場合はcodeパラメータを抽出、そうでなければそのままcode
+  if (input.startsWith("http")) {
+    try {
+      const parsed = new URL(input);
+      const err = parsed.searchParams.get("error");
+      if (err) {
+        console.error(`\n❌ GoCoo認可エラー: ${err} - ${parsed.searchParams.get("error_description")}`);
+        process.exit(1);
+      }
+      const c = parsed.searchParams.get("code");
+      if (!c) { console.error("URLにcodeが見つかりません:", input); process.exit(1); }
+      code = c;
+    } catch (e) {
+      console.error("URL解析失敗:", e);
       process.exit(1);
     }
-
-    const c = parsed.searchParams.get("code");
-    if (!c) {
-      console.error("URLにcodeパラメータがありません。貼り付けたURL:", redirectUrl);
-      process.exit(1);
-    }
-    code = c;
-    console.log("  コード取得: OK");
-  } catch (e) {
-    console.error("URLの解析に失敗しました:", e);
-    process.exit(1);
+  } else {
+    // code値そのものを貼った場合
+    code = input;
   }
+  console.log("  コード取得: OK");
 
   console.log("\n3. 認証コード取得成功。アクセストークンを取得中...");
 
