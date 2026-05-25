@@ -8,8 +8,9 @@ export const TENANT_BASE = "https://deex.sfa.salesgo.jp/organizations/deex";
 export const OAUTH_BASE = "https://sfa.salesgo.jp";  // OAuthはグローバルURL
 const API_BASE = `${TENANT_BASE}/v1`;
 
-export const CLIENT_ID = "a1d2317b-3927-4143-8b17-0dd8565229fd";
-export const CLIENT_SECRET = "fNs1ulqqP27vJBkGeZiPCocGCtT6n3z1YKYxZJgl";
+export const CLIENT_ID = "a1d2317b-3927-4143-8b17-0dd8565229fd";       // Webアプリ（未使用）
+export const CLIENT_SECRET = "fNs1ulqqP27vJBkGeZiPCocGCtT6n3z1YKYxZJgl"; // Webアプリ（未使用）
+export const NATIVE_CLIENT_ID = "a1dc4943-903c-4f50-9cec-c46f24e62eaf";  // ネイティブアプリ（PKCE）
 
 interface Tokens {
   access_token: string;
@@ -29,15 +30,15 @@ function saveTokens(tokens: Tokens) {
 }
 
 async function refreshAccessToken(refresh_token: string): Promise<Tokens> {
+  const tokens = loadTokens();
+  const clientId = (tokens as { client_id?: string }).client_id ?? NATIVE_CLIENT_ID;
   const res = await fetch(`${OAUTH_BASE}/oauth/token`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: "Basic " + Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64"),
-    },
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
       grant_type: "refresh_token",
       refresh_token,
+      client_id: clientId,
     }).toString(),
   });
   if (!res.ok) {
