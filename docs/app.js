@@ -181,7 +181,7 @@
       return `<div class="progress-card">
         <h3>${esc(cat)}</h3>
         <div class="progress-nums">
-          <span>読み: ${yen(v.yomi_weighted)} <small style="color:var(--text-sub)">(${yomiPct}%)</small></span>
+          <span>ヨミ: ${yen(v.yomi_weighted)} <small style="color:var(--text-sub)">(${yomiPct}%)</small></span>
           <span style="color:var(--text-sub)">目標: ${yen(v.target)}</span>
         </div>
         <div class="progress-bar-wrap" style="margin-bottom:6px">
