@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>deex 営業ダッシュボード</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 認証ゲート -->
+<div id="auth-gate">
+  <div class="auth-box">
+    <h1>deex 営業ダッシュボード</h1>
+    <p>パスワードを入力してください</p>
+    <input type="password" id="pw-input" placeholder="パスワード" autocomplete="current-password">
+    <button id="pw-btn">ログイン</button>
+    <p id="pw-error" class="error hidden">パスワードが違います</p>
+  </div>
+</div>
+
+<!-- メイン -->
+<div id="app" class="hidden">
+  <header>
+    <div class="header-inner">
+      <h1>deex 営業ダッシュボード</h1>
+      <div class="header-meta">
+        <span id="month-label"></span>
+        <span id="updated-at"></span>
+        <select id="owner-filter"><option value="">担当: 全員</option></select>
+      </div>
+    </div>
+    <nav class="tabs">
+      <button class="tab active" data-tab="dashboard">ダッシュボード</button>
+      <button class="tab" data-tab="deals">案件一覧</button>
+    </nav>
+  </header>
+
+  <!-- ダッシュボードタブ -->
+  <div id="tab-dashboard" class="tab-content">
+    <section class="summary-section">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>カテゴリ</th>
+            <th>今月目標</th>
+            <th>読み（加重）</th>
+            <th>実績</th>
+            <th>過不足</th>
+          </tr>
+        </thead>
+        <tbody id="summary-body"></tbody>
+        <tfoot id="summary-foot"></tfoot>
+      </table>
+    </section>
+
+    <section class="progress-section" id="progress-bars"></section>
+
+    <section class="yomi-section">
+      <h2>ヨミ別内訳</h2>
+      <div class="yomi-filter">
+        <button class="yomi-btn active" data-yomi="">すべて</button>
+        <button class="yomi-btn" data-yomi="A">A（80%↑）</button>
+        <button class="yomi-btn" data-yomi="B">B（60〜80%）</button>
+        <button class="yomi-btn" data-yomi="C">C（40〜60%）</button>
+        <button class="yomi-btn" data-yomi="D">D（40%↓）</button>
+      </div>
+      <table class="deals-table">
+        <thead>
+          <tr>
+            <th>企業名</th>
+            <th>カテゴリ</th>
+            <th>ヨミ</th>
+            <th>見込み金額</th>
+            <th>加重後</th>
+            <th>フェーズ</th>
+            <th>担当</th>
+            <th>ネクストアクション</th>
+          </tr>
+        </thead>
+        <tbody id="deals-body-dashboard"></tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- 案件一覧タブ -->
+  <div id="tab-deals" class="tab-content hidden">
+    <section class="deals-section">
+      <div class="deals-header">
+        <h2>案件一覧</h2>
+        <div class="deals-filter">
+          <select id="cat-filter">
+            <option value="">カテゴリ: すべて</option>
+            <option>CoPASS</option>
+            <option>CoPASS BPO</option>
+            <option>Partner Boost</option>
+          </select>
+          <select id="phase-filter">
+            <option value="">フェーズ: すべて</option>
+            <option value="IS">IS</option>
+            <option value="FS">FS</option>
+            <option value="CS">CS（受注）</option>
+          </select>
+        </div>
+      </div>
+      <table class="deals-table">
+        <thead>
+          <tr>
+            <th>企業名</th>
+            <th>カテゴリ</th>
+            <th>ヨミ</th>
+            <th>見込み金額</th>
+            <th>加重後</th>
+            <th>フェーズ</th>
+            <th>計上月</th>
+            <th>担当</th>
+            <th>ネクストアクション</th>
+          </tr>
+        </thead>
+        <tbody id="deals-body-list"></tbody>
+      </table>
+    </section>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "generated_at": "2026-05-25T00:00:00.000Z",
+  "month": "2026-05",
+  "password_hash": "",
+  "targets": {
+    "CoPASS": 0,
+    "CoPASS BPO": 0,
+    "Partner Boost": 0
+  },
+  "yomi_coefficients": { "A": 0.8, "B": 0.7, "C": 0.5, "D": 0.3 },
+  "categories": ["CoPASS", "CoPASS BPO", "Partner Boost"],
+  "summary": {
+    "CoPASS":        { "target": 0, "yomi_weighted": 0, "actual": 0, "gap": 0 },
+    "CoPASS BPO":    { "target": 0, "yomi_weighted": 0, "actual": 0, "gap": 0 },
+    "Partner Boost": { "target": 0, "yomi_weighted": 0, "actual": 0, "gap": 0 }
+  },
+  "total": { "target": 0, "yomi_weighted": 0, "actual": 0, "gap": 0 },
+  "deals": []
+}
