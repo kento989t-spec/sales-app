@@ -30,8 +30,8 @@ function saveTokens(tokens: Tokens) {
 }
 
 async function refreshAccessToken(refresh_token: string): Promise<Tokens> {
-  const tokens = loadTokens();
-  const clientId = (tokens as { client_id?: string }).client_id ?? NATIVE_CLIENT_ID;
+  const saved = loadTokens();
+  const clientId = (saved as { client_id?: string }).client_id ?? NATIVE_CLIENT_ID;
   const res = await fetch(`${OAUTH_BASE}/oauth/token`, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -46,13 +46,13 @@ async function refreshAccessToken(refresh_token: string): Promise<Tokens> {
     throw new Error(`トークン更新失敗: ${res.status} ${body}`);
   }
   const data = await res.json() as { access_token: string; refresh_token: string; expires_in: number };
-  const tokens: Tokens = {
+  const refreshed: Tokens = {
     access_token: data.access_token,
     refresh_token: data.refresh_token,
     expires_at: Date.now() + (data.expires_in - 60) * 1000,
   };
-  saveTokens(tokens);
-  return tokens;
+  saveTokens(refreshed);
+  return refreshed;
 }
 
 async function getAccessToken(): Promise<string> {
