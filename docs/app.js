@@ -4,6 +4,7 @@
   const TASK_STATUS_KEY   = "sales_app_task_status";
   const CUSTOM_TASKS_KEY  = "sales_app_custom_tasks";
   const COMMENTS_KEY      = "sales_app_task_comments";
+  const TASK_DATES_KEY    = "sales_app_task_dates";
 
   function fromHex(hex) {
     const arr = new Uint8Array(hex.length / 2);
@@ -171,6 +172,18 @@
     if (!all[taskId]) all[taskId] = [];
     all[taskId].push({ text, ts: Date.now() });
     localStorage.setItem(COMMENTS_KEY, JSON.stringify(all));
+  }
+
+  // ===== タスク日付（localStorage）=====
+  function loadTaskDates() {
+    try { return JSON.parse(localStorage.getItem(TASK_DATES_KEY) ?? "{}"); }
+    catch { return {}; }
+  }
+  function getTaskDue(id) { return loadTaskDates()[id] ?? ""; }
+  function setTaskDue(id, date) {
+    const map = loadTaskDates();
+    map[id] = date;
+    localStorage.setItem(TASK_DATES_KEY, JSON.stringify(map));
   }
 
   // コメントパネルが開いているタスクID（再描画後に復元）
@@ -539,13 +552,15 @@
   };
   const STANDING_TITLES = ["次回打ち合わせの準備", "本日のお礼メールの送付", "次回打ち合わせ日程の調整"];
 
-  function taskCard(id, labelClass, labelText, title, meta = "", deletable = false) {
+  function taskCard(id, labelClass, labelText, title, meta = "", deletable = false, defaultDue = "") {
     const status = getTaskStatus(id);
     const st = STATUSES[status] ?? STATUSES.todo;
     const opts = Object.entries(STATUSES).map(([v, s]) =>
       `<option value="${v}" ${status === v ? "selected" : ""}>${s.label}</option>`
     ).join("");
 
+    const due = getTaskDue(id) || defaultDue;
+    const dueClass = due && due < new Date().toISOString().slice(0, 10) ? "due-overdue" : "";
     const comments = getComments(id);
     const isOpen = openComments.has(id);
     const commentListHtml = comments.length > 0
@@ -565,6 +580,10 @@
           <span class="task-label ${labelClass}">${labelText}</span>
           <div class="task-card-body">
             <div class="task-title">${esc(title)}</div>
+            <div class="task-due-row">
+              <input type="date" class="task-due-input ${dueClass}" value="${esc(due)}" data-task-id="${esc(id)}"
+                onchange="window._setTaskDue('${esc(id)}',this.value)">
+            </div>
             ${meta ? `<div class="task-meta">${meta}</div>` : ""}
           </div>
         </div>
@@ -697,9 +716,10 @@
         );
       }
       for (const ts of meetingTsList) {
+        const meetingDate = new Date(parseFloat(ts) * 1000).toISOString().slice(0, 10);
         for (let i = 0; i < STANDING_TITLES.length; i++) {
           const id = `standing-${company}-${ts}-${i}`;
-          classify(taskCard(id, "standing-label", "定常", STANDING_TITLES[i]), id);
+          classify(taskCard(id, "standing-label", "定常", STANDING_TITLES[i], "", false, meetingDate), id);
         }
       }
       for (const t of (cTasks ?? [])) {
@@ -762,6 +782,16 @@
     document.getElementById("new-task-company").value = "";
     document.getElementById("new-task-title").value = "";
     renderTasks();
+  };
+
+  window._setTaskDue = function(taskId, date) {
+    setTaskDue(taskId, date);
+    // 期限切れクラスのみ即時更新（再描画なし）
+    const input = document.querySelector(`.task-due-input[data-task-id="${taskId}"]`);
+    if (input) {
+      const today = new Date().toISOString().slice(0, 10);
+      input.classList.toggle("due-overdue", !!date && date < today);
+    }
   };
 
   window._deleteTask = function(taskId) {

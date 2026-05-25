@@ -530,6 +530,20 @@ header {
 }
 .task-delete-btn:hover { background: #fee2e2; color: var(--danger); border-color: #fca5a5; }
 
+/* タスク期限 */
+.task-due-row { margin-top: 4px; }
+.task-due-input {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 11px;
+  color: var(--text-sub);
+  background: var(--surface);
+  cursor: pointer;
+}
+.task-due-input:hover, .task-due-input:focus { border-color: var(--primary); outline: none; }
+.task-due-input.due-overdue { color: var(--danger); border-color: #fca5a5; background: #fff1f2; }
+
 /* 追加ラベル */
 .custom-label { background: #ecfdf5; color: #065f46; }
 
