@@ -270,6 +270,34 @@ header {
 
 .na-text { color: var(--text-sub); font-size: 12px; max-width: 200px; }
 
+/* ===== 新規タスク（会社指定）===== */
+.new-company-task-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.new-company-task-row input {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+  flex: 1;
+  min-width: 120px;
+}
+.new-company-task-row button {
+  padding: 6px 14px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.new-company-task-row button:hover { background: var(--primary-dark); }
+
 /* ===== タスクフィルタバー ===== */
 .task-filter-bar {
   display: flex;
@@ -346,13 +374,24 @@ header {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow);
+  transition: opacity .2s;
+  overflow: hidden;
+}
+.task-card-top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
-  box-shadow: var(--shadow);
-  transition: opacity .2s;
+  padding: 12px 16px;
+}
+.task-card-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
 }
 .task-card.task-inactive {
   opacity: .55;
@@ -415,6 +454,113 @@ header {
   font-size: 11px;
   color: var(--text-sub);
 }
+
+/* ===== コメントパネル ===== */
+.task-comment-panel {
+  border-top: 1px solid var(--border);
+  background: #f9fafb;
+  padding: 10px 16px;
+}
+.comment-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
+.comment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+}
+.comment-text { flex: 1; color: var(--text); line-height: 1.5; }
+.comment-ts { color: var(--text-sub); white-space: nowrap; font-size: 11px; flex-shrink: 0; }
+.no-comments { font-size: 12px; color: var(--text-sub); margin-bottom: 8px; }
+.comment-input-row { display: flex; gap: 6px; }
+.comment-input {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 12px;
+  background: var(--surface);
+}
+.comment-submit {
+  padding: 5px 12px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.comment-submit:hover { background: var(--primary-dark); }
+
+/* コメントボタン */
+.comment-btn {
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 12px;
+  background: var(--surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+.comment-btn:hover { background: #f3f4f6; }
+.comment-btn-open { background: #dbeafe; border-color: #93c5fd; }
+.comment-count {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 0 5px;
+}
+
+/* 削除ボタン */
+.task-delete-btn {
+  padding: 3px 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 11px;
+  background: var(--surface);
+  color: var(--text-sub);
+  cursor: pointer;
+}
+.task-delete-btn:hover { background: #fee2e2; color: var(--danger); border-color: #fca5a5; }
+
+/* 追加ラベル */
+.custom-label { background: #ecfdf5; color: #065f46; }
+
+/* ===== タスク追加フォーム（会社内）===== */
+.add-task-row {
+  display: flex;
+  gap: 6px;
+  padding: 8px 12px;
+  border-top: 1px dashed var(--border);
+}
+.add-task-input {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  background: var(--surface);
+  color: var(--text-sub);
+}
+.add-task-input:focus { outline: none; border-color: var(--primary); color: var(--text); }
+.add-task-btn {
+  padding: 5px 12px;
+  background: #f3f4f6;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.add-task-btn:hover { background: #e5e7eb; }
 
 /* ステータスセレクト */
 .status-select {

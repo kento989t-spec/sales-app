@@ -1,7 +1,9 @@
 (() => {
   // ===== 暗号化ユーティリティ =====
-  const SESSION_KEY = "sales_app_pw";
-  const TASK_STATUS_KEY = "sales_app_task_status";
+  const SESSION_KEY       = "sales_app_pw";
+  const TASK_STATUS_KEY   = "sales_app_task_status";
+  const CUSTOM_TASKS_KEY  = "sales_app_custom_tasks";
+  const COMMENTS_KEY      = "sales_app_task_comments";
 
   function fromHex(hex) {
     const arr = new Uint8Array(hex.length / 2);
@@ -135,8 +137,44 @@
 
   function getTaskStatus(id) {
     const s = loadTaskStatus()[id] ?? "todo";
-    return s === "skipped" ? "cancelled" : s; // 旧ステータス互換
+    return s === "skipped" ? "cancelled" : s;
   }
+
+  // ===== カスタムタスク（localStorage）=====
+  function loadCustomTasks() {
+    try { return JSON.parse(localStorage.getItem(CUSTOM_TASKS_KEY) ?? "{}"); }
+    catch { return {}; }
+  }
+  function saveCustomTask(company, title) {
+    const tasks = loadCustomTasks();
+    const id = `custom-${Date.now()}-${Math.floor(Math.random() * 9999)}`;
+    tasks[id] = { id, company, title, created_at: new Date().toISOString() };
+    localStorage.setItem(CUSTOM_TASKS_KEY, JSON.stringify(tasks));
+  }
+  function deleteCustomTask(id) {
+    const tasks = loadCustomTasks();
+    delete tasks[id];
+    localStorage.setItem(CUSTOM_TASKS_KEY, JSON.stringify(tasks));
+    const all = loadAllComments();
+    delete all[id];
+    localStorage.setItem(COMMENTS_KEY, JSON.stringify(all));
+  }
+
+  // ===== コメント（localStorage）=====
+  function loadAllComments() {
+    try { return JSON.parse(localStorage.getItem(COMMENTS_KEY) ?? "{}"); }
+    catch { return {}; }
+  }
+  function getComments(taskId) { return loadAllComments()[taskId] ?? []; }
+  function addComment(taskId, text) {
+    const all = loadAllComments();
+    if (!all[taskId]) all[taskId] = [];
+    all[taskId].push({ text, ts: Date.now() });
+    localStorage.setItem(COMMENTS_KEY, JSON.stringify(all));
+  }
+
+  // コメントパネルが開いているタスクID（再描画後に復元）
+  const openComments = new Set();
 
   // ===== ユーティリティ =====
   function yen(n) {
@@ -501,23 +539,49 @@
   };
   const STANDING_TITLES = ["次回打ち合わせの準備", "本日のお礼メールの送付"];
 
-  function taskCard(id, labelClass, labelText, title, meta = "") {
+  function taskCard(id, labelClass, labelText, title, meta = "", deletable = false) {
     const status = getTaskStatus(id);
     const st = STATUSES[status] ?? STATUSES.todo;
     const opts = Object.entries(STATUSES).map(([v, s]) =>
       `<option value="${v}" ${status === v ? "selected" : ""}>${s.label}</option>`
     ).join("");
+
+    const comments = getComments(id);
+    const isOpen = openComments.has(id);
+    const commentListHtml = comments.length > 0
+      ? comments.map(c => {
+          const d = new Date(c.ts);
+          const t = d.toLocaleString("ja-JP", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" });
+          return `<div class="comment-item"><span class="comment-text">${esc(c.text)}</span><span class="comment-ts">${t}</span></div>`;
+        }).join("")
+      : `<p class="no-comments">コメントなし</p>`;
+    const commentCount = comments.length > 0 ? `<span class="comment-count">${comments.length}</span>` : "";
+    const deleteBtn = deletable
+      ? `<button class="task-delete-btn" onclick="window._deleteTask('${esc(id)}')" title="削除">✕</button>` : "";
+
     return `<div class="task-card ${st.active ? "" : "task-inactive"}">
-      <div class="task-card-main">
-        <span class="task-label ${labelClass}">${labelText}</span>
-        <div class="task-card-body">
-          <div class="task-title">${esc(title)}</div>
-          ${meta ? `<div class="task-meta">${meta}</div>` : ""}
+      <div class="task-card-top">
+        <div class="task-card-main">
+          <span class="task-label ${labelClass}">${labelText}</span>
+          <div class="task-card-body">
+            <div class="task-title">${esc(title)}</div>
+            ${meta ? `<div class="task-meta">${meta}</div>` : ""}
+          </div>
+        </div>
+        <div class="task-card-right">
+          <button class="comment-btn ${isOpen ? "comment-btn-open" : ""}" onclick="window._toggleComments('${esc(id)}')" title="コメント">💬${commentCount}</button>
+          ${deleteBtn}
+          <select class="status-select ${st.cls}" data-task-id="${esc(id)}" onchange="window._taskStatusChange(this)">${opts}</select>
         </div>
       </div>
-      <select class="status-select ${st.cls}" data-task-id="${esc(id)}" onchange="window._taskStatusChange(this)">
-        ${opts}
-      </select>
+      <div class="task-comment-panel ${isOpen ? "" : "hidden"}">
+        <div class="comment-list">${commentListHtml}</div>
+        <div class="comment-input-row">
+          <input type="text" class="comment-input" placeholder="コメントを追加..." data-task-id="${esc(id)}"
+            onkeydown="if(event.key==='Enter')window._submitComment('${esc(id)}',this)">
+          <button class="comment-submit" onclick="window._submitComment('${esc(id)}',this.previousElementSibling)">送信</button>
+        </div>
+      </div>
     </div>`;
   }
 
@@ -564,15 +628,21 @@
 
     for (const t of slack) {
       const key = t.company ?? "（会社不明）";
-      if (!companies.has(key)) companies.set(key, { slack: [], na: [], owner: t.owner });
+      if (!companies.has(key)) companies.set(key, { slack: [], na: [], custom: [], owner: t.owner });
       companies.get(key).slack.push(t);
       if (!meetingsByCompany.has(key)) meetingsByCompany.set(key, new Set());
       meetingsByCompany.get(key).add(t.source_ts);
     }
     for (const t of na) {
       const key = t.company ?? "（会社不明）";
-      if (!companies.has(key)) companies.set(key, { slack: [], na: [], owner: t.owner });
+      if (!companies.has(key)) companies.set(key, { slack: [], na: [], custom: [], owner: t.owner });
       companies.get(key).na.push(t);
+    }
+    // カスタムタスク（新規会社セクションも生成）
+    for (const t of Object.values(loadCustomTasks())) {
+      const key = t.company ?? "（会社不明）";
+      if (!companies.has(key)) companies.set(key, { slack: [], na: [], custom: [], owner: null });
+      companies.get(key).custom.push(t);
     }
 
     const allDeals = DATA.all_deals ?? DATA.deals ?? [];
@@ -588,7 +658,7 @@
     }
 
     let html = "";
-    for (const [company, { slack: sTasks, na: naTasks, owner }] of companies) {
+    for (const [company, { slack: sTasks, na: naTasks, custom: cTasks, owner }] of companies) {
       if (!companyMatchesFilter(company)) continue;
       const meetingTsList = meetingsByCompany.get(company) ?? new Set();
       const ownerChip = owner ? `<span class="owner-chip">${esc(owner)}</span>` : "";
@@ -632,6 +702,9 @@
           classify(taskCard(id, "standing-label", "定常", STANDING_TITLES[i]), id);
         }
       }
+      for (const t of (cTasks ?? [])) {
+        classify(taskCard(t.id, "custom-label", "追加", t.title, "", true), t.id);
+      }
 
       const completedSection = inactiveTasks.length > 0
         ? `<details class="completed-section">
@@ -647,6 +720,11 @@
         ${dealInfoBar}
         <div class="task-cards">${activeTasks.join("") || '<p class="task-empty" style="padding:8px 12px">アクティブなタスクなし</p>'}</div>
         ${completedSection}
+        <div class="add-task-row">
+          <input type="text" class="add-task-input" placeholder="+ タスクを追加..."
+            onkeydown="if(event.key==='Enter'&&this.value.trim())window._addCustomTask('${esc(company)}',this)">
+          <button class="add-task-btn" onclick="window._addCustomTask('${esc(company)}',this.previousElementSibling)">追加</button>
+        </div>
       </section>`;
     }
 
@@ -654,6 +732,44 @@
   }
 
   // グローバルハンドラ
+  window._toggleComments = function(taskId) {
+    if (openComments.has(taskId)) openComments.delete(taskId);
+    else openComments.add(taskId);
+    renderTasks();
+  };
+
+  window._submitComment = function(taskId, input) {
+    const text = input.value.trim();
+    if (!text) return;
+    addComment(taskId, text);
+    openComments.add(taskId);
+    renderTasks();
+  };
+
+  window._addCustomTask = function(company, input) {
+    const title = input.value.trim();
+    if (!title) return;
+    saveCustomTask(company, title);
+    input.value = "";
+    renderTasks();
+  };
+
+  window._addNewCompanyTask = function() {
+    const company = document.getElementById("new-task-company").value.trim();
+    const title   = document.getElementById("new-task-title").value.trim();
+    if (!company || !title) { toast("会社名とタスク内容を入力してください", "error"); return; }
+    saveCustomTask(company, title);
+    document.getElementById("new-task-company").value = "";
+    document.getElementById("new-task-title").value = "";
+    renderTasks();
+  };
+
+  window._deleteTask = function(taskId) {
+    deleteCustomTask(taskId);
+    openComments.delete(taskId);
+    renderTasks();
+  };
+
   window._taskStatusChange = function(select) {
     setTaskStatus(select.dataset.taskId, select.value);
     renderTasks();
