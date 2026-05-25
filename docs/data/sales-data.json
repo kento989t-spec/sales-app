@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-25T04:49:27.061Z",
+  "generated_at": "2026-05-25T05:34:44.978Z",
   "month": "2026-05",
   "targets": {
     "CoPASS": 500000,
@@ -43,7 +43,25 @@
     "actual": 0,
     "gap": -1940000
   },
-  "deals": [],
+  "deals": [
+    {
+      "id": 956,
+      "name": "案件0000724",
+      "company": "Volta Networks株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "",
+      "amount": 300000,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-30",
+      "owner": "佐竹 洋政",
+      "next_action": "",
+      "updated_at": "2026-05-25 14:21:54"
+    }
+  ],
   "all_deals": [
     {
       "id": 283,
@@ -1222,10 +1240,10 @@
       "weighted_amount": 0,
       "phase": "【FS-02】初回商談実施済",
       "is_won": false,
-      "billing_month": "2026-02-27",
+      "billing_month": "2026-05-30",
       "owner": "佐竹 洋政",
       "next_action": "",
-      "updated_at": "2026-05-25 13:31:11"
+      "updated_at": "2026-05-25 14:21:54"
     },
     {
       "id": 928,
