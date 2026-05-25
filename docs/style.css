@@ -412,6 +412,42 @@ header {
 .status-done  { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
 .status-toggle:hover { filter: brightness(.95); }
 
+/* ===== 会社別タスクグループ ===== */
+.company-task-group {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.company-task-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #f3f4f6;
+  border-bottom: 1px solid var(--border);
+}
+.company-task-name {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text);
+}
+.company-task-group .task-cards {
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ===== ソートヘッダー ===== */
+th.sortable { user-select: none; white-space: nowrap; }
+th.sortable:hover { background: #f3f4f6; }
+.sort-icon { color: var(--primary); font-size: 11px; }
+
+/* ===== 最終更新セル ===== */
+.updated-cell { color: var(--text-sub); font-size: 12px; white-space: nowrap; }
+
 /* ===== PAT設定ボタン ===== */
 #pat-setting-btn {
   padding: 4px 10px;

@@ -267,6 +267,51 @@
     }).join("");
   }
 
+  // ===== ソート =====
+  let sortField = "updated_at";
+  let sortDir = "desc";
+
+  function sortDeals(arr) {
+    return [...arr].sort((a, b) => {
+      let va = a[sortField] ?? "", vb = b[sortField] ?? "";
+      if (sortField === "amount") { va = a.amount ?? 0; vb = b.amount ?? 0; }
+      const cmp = typeof va === "number"
+        ? va - vb
+        : String(va).localeCompare(String(vb), "ja");
+      return sortDir === "asc" ? cmp : -cmp;
+    });
+  }
+
+  function initSortHeaders() {
+    document.querySelectorAll("th.sortable").forEach(th => {
+      th.style.cursor = "pointer";
+      th.addEventListener("click", () => {
+        const field = th.dataset.sort;
+        if (sortField === field) {
+          sortDir = sortDir === "asc" ? "desc" : "asc";
+        } else {
+          sortField = field;
+          sortDir = field === "updated_at" ? "desc" : "asc";
+        }
+        updateSortIcons();
+        renderDealsList();
+      });
+    });
+    updateSortIcons();
+  }
+
+  function updateSortIcons() {
+    document.querySelectorAll("th.sortable").forEach(th => {
+      const icon = th.querySelector(".sort-icon");
+      if (!icon) return;
+      if (th.dataset.sort === sortField) {
+        icon.textContent = sortDir === "asc" ? " ▲" : " ▼";
+      } else {
+        icon.textContent = "";
+      }
+    });
+  }
+
   // ===== 案件行 =====
   function yomiSelect(d) {
     const opts = ["A", "B", "C", "D"].map(v =>
@@ -282,6 +327,9 @@
     const billingCell = showBillingMonth
       ? `<td><input type="month" class="billing-input" value="${billingVal}" data-deal-id="${d.id}" onchange="window._billingChange(this, ${d.id})"></td>`
       : "";
+    const updatedCell = showBillingMonth
+      ? `<td class="updated-cell">${d.updated_at ? d.updated_at.slice(0, 10) : ""}</td>`
+      : "";
     const amountRaw = d.amount ?? 0;
     return `<tr>
       <td>${esc(d.company || d.name)}</td>
@@ -292,7 +340,7 @@
       <td>${wonBadge}${esc(d.phase)}</td>
       ${billingCell}
       <td>${esc(d.owner)}</td>
-      <td class="na-text"><input type="text" class="na-input" value="${esc(d.next_action)}" data-deal-id="${d.id}" onchange="window._naChange(this, ${d.id})"></td>
+      ${updatedCell}
     </tr>`;
   }
 
@@ -301,7 +349,7 @@
     const deals = filteredDeals(activeYomi);
     const tbody = document.getElementById("deals-body-dashboard");
     if (deals.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:var(--text-sub);padding:24px">該当案件なし</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--text-sub);padding:24px">該当案件なし</td></tr>`;
     } else {
       tbody.innerHTML = deals.map(d => dealRow(d, false)).join("");
     }
@@ -325,18 +373,20 @@
       return true;
     });
 
+    const sorted = sortDeals(deals);
     const tbody = document.getElementById("deals-body-list");
-    if (deals.length === 0) {
+    if (sorted.length === 0) {
       tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--text-sub);padding:24px">該当案件なし</td></tr>`;
     } else {
-      tbody.innerHTML = deals.map(d => dealRow(d, true)).join("");
+      tbody.innerHTML = sorted.map(d => dealRow(d, true)).join("");
     }
   }
 
-  // ===== タスク管理タブ =====
+  // ===== タスク管理タブ（会社別ビュー）=====
   const STATUS_LABELS = { todo: "未対応", doing: "対応中", done: "完了" };
-  const STATUS_NEXT = { todo: "doing", doing: "done", done: "todo" };
+  const STATUS_NEXT  = { todo: "doing", doing: "done", done: "todo" };
   const STATUS_CLASS = { todo: "status-todo", doing: "status-doing", done: "status-done" };
+  const STANDING_TITLES = ["次回打ち合わせの準備", "本日のお礼メールの送付"];
 
   function taskStatusToggle(id) {
     const current = getTaskStatus(id);
@@ -344,101 +394,93 @@
     renderTasks();
   }
 
-  function renderStandingTasks() {
-    const el = document.getElementById("task-cards-standing");
-    const tasks = DATA.tasks?.standing ?? [];
-    if (tasks.length === 0) {
-      el.innerHTML = `<p class="task-empty">定常タスクなし</p>`;
-      return;
-    }
-    el.innerHTML = tasks.map(t => {
-      const status = getTaskStatus(t.id);
-      return `<div class="task-card ${status === "done" ? "task-done" : ""}">
-        <div class="task-card-main">
-          <span class="task-label standing-label">定常</span>
-          <span class="task-title">${esc(t.title)}</span>
+  function taskCard(id, labelClass, labelText, title, meta = "") {
+    const status = getTaskStatus(id);
+    return `<div class="task-card ${status === "done" ? "task-done" : ""}">
+      <div class="task-card-main">
+        <span class="task-label ${labelClass}">${labelText}</span>
+        <div class="task-card-body">
+          <div class="task-title">${esc(title)}</div>
+          ${meta ? `<div class="task-meta">${meta}</div>` : ""}
         </div>
-        <button class="status-toggle ${STATUS_CLASS[status]}" onclick="window._taskToggle('${esc(t.id)}')">
-          ${STATUS_LABELS[status]}
-        </button>
-      </div>`;
-    }).join("");
-  }
-
-  function renderNaTasks() {
-    const el = document.getElementById("task-cards-na");
-    const countEl = document.getElementById("na-count");
-    const all = DATA.tasks?.next_action ?? [];
-    const tasks = activeOwner
-      ? all.filter(t => t.owner === activeOwner)
-      : all;
-
-    countEl.textContent = tasks.length > 0 ? `(${tasks.length}件)` : "";
-
-    if (tasks.length === 0) {
-      el.innerHTML = `<p class="task-empty">ネクストアクションなし</p>`;
-      return;
-    }
-    el.innerHTML = tasks.map(t => {
-      const status = getTaskStatus(t.id);
-      return `<div class="task-card ${status === "done" ? "task-done" : ""}">
-        <div class="task-card-main">
-          <span class="task-label na-label">NA</span>
-          <div class="task-card-body">
-            <div class="task-title">${esc(t.next_action)}</div>
-            <div class="task-meta">
-              <span>${esc(t.company)}</span>
-              <span class="badge badge-${t.yomi}">${esc(t.yomi || "—")}</span>
-              <span class="phase-text">${esc(t.phase)}</span>
-              ${t.owner ? `<span class="owner-chip">${esc(t.owner)}</span>` : ""}
-            </div>
-          </div>
-        </div>
-        <button class="status-toggle ${STATUS_CLASS[status]}" onclick="window._taskToggle('${esc(t.id)}')">
-          ${STATUS_LABELS[status]}
-        </button>
-      </div>`;
-    }).join("");
-  }
-
-  function renderSlackTasks() {
-    const el = document.getElementById("task-cards-slack");
-    const countEl = document.getElementById("slack-count");
-    const all = DATA.tasks?.slack ?? [];
-    const tasks = activeOwner
-      ? all.filter(t => !t.owner || t.owner === activeOwner)
-      : all;
-
-    countEl.textContent = tasks.length > 0 ? `(${tasks.length}件)` : "";
-
-    if (tasks.length === 0) {
-      el.innerHTML = `<p class="task-empty">Slack議事録タスクなし${!all.length ? "（チャンネル未設定）" : ""}</p>`;
-      return;
-    }
-    el.innerHTML = tasks.map(t => {
-      const status = getTaskStatus(t.id);
-      return `<div class="task-card ${status === "done" ? "task-done" : ""}">
-        <div class="task-card-main">
-          <span class="task-label slack-label">Slack</span>
-          <div class="task-card-body">
-            <div class="task-title">${esc(t.title)}</div>
-            <div class="task-meta">
-              ${t.company ? `<span>${esc(t.company)}</span>` : ""}
-              ${t.owner ? `<span class="owner-chip">${esc(t.owner)}</span>` : ""}
-            </div>
-          </div>
-        </div>
-        <button class="status-toggle ${STATUS_CLASS[status]}" onclick="window._taskToggle('${esc(t.id)}')">
-          ${STATUS_LABELS[status]}
-        </button>
-      </div>`;
-    }).join("");
+      </div>
+      <button class="status-toggle ${STATUS_CLASS[status]}" onclick="window._taskToggle('${esc(id)}')">
+        ${STATUS_LABELS[status]}
+      </button>
+    </div>`;
   }
 
   function renderTasks() {
-    renderStandingTasks();
-    renderNaTasks();
-    renderSlackTasks();
+    const el = document.getElementById("task-companies");
+    if (!el) return;
+
+    const slackAll  = DATA.tasks?.slack        ?? [];
+    const naAll     = DATA.tasks?.next_action  ?? [];
+
+    // 担当フィルタ
+    const slack = activeOwner ? slackAll.filter(t => !t.owner || t.owner === activeOwner) : slackAll;
+    const na    = activeOwner ? naAll.filter(t => t.owner === activeOwner) : naAll;
+
+    if (slack.length === 0 && na.length === 0) {
+      el.innerHTML = `<p class="task-empty" style="padding:24px">タスクなし</p>`;
+      return;
+    }
+
+    // 会社別にグループ化
+    const companies = new Map();
+
+    // Slack NAs → unique meeting ts per company で定常タスクも生成
+    const meetingsByCompany = new Map(); // company → Set<source_ts>
+    for (const t of slack) {
+      const key = t.company ?? "（会社不明）";
+      if (!companies.has(key)) companies.set(key, { slack: [], na: [], owner: t.owner });
+      companies.get(key).slack.push(t);
+      if (!meetingsByCompany.has(key)) meetingsByCompany.set(key, new Set());
+      meetingsByCompany.get(key).add(t.source_ts);
+    }
+
+    // GoCoo NA
+    for (const t of na) {
+      const key = t.company ?? "（会社不明）";
+      if (!companies.has(key)) companies.set(key, { slack: [], na: [], owner: t.owner });
+      companies.get(key).na.push(t);
+    }
+
+    let html = "";
+    for (const [company, { slack: sTasks, na: naTasks, owner }] of companies) {
+      const meetingTsList = meetingsByCompany.get(company) ?? new Set();
+      const ownerChip = owner ? `<span class="owner-chip">${esc(owner)}</span>` : "";
+
+      let cards = "";
+
+      // Slack NA
+      for (const t of sTasks) {
+        cards += taskCard(t.id, "slack-label", "NA", t.title);
+      }
+
+      // GoCoo NA
+      for (const t of naTasks) {
+        cards += taskCard(t.id, "na-label", "GoCoo", t.next_action, `<span class="badge badge-${t.yomi}">${esc(t.yomi || "—")}</span><span class="phase-text">${esc(t.phase)}</span>`);
+      }
+
+      // 定常タスク：打ち合わせごとに生成
+      for (const ts of meetingTsList) {
+        for (let i = 0; i < STANDING_TITLES.length; i++) {
+          const id = `standing-${company}-${ts}-${i}`;
+          cards += taskCard(id, "standing-label", "定常", STANDING_TITLES[i]);
+        }
+      }
+
+      html += `<section class="company-task-group">
+        <div class="company-task-header">
+          <span class="company-task-name">${esc(company)}</span>
+          ${ownerChip}
+        </div>
+        <div class="task-cards">${cards}</div>
+      </section>`;
+    }
+
+    el.innerHTML = html;
   }
 
   // グローバルハンドラ
@@ -583,6 +625,7 @@
     initTabs();
     initYomiFilter();
     initDealsFilter();
+    initSortHeaders();
     initPatButton();
     renderAll();
   }

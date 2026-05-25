@@ -98,6 +98,7 @@ function mapDeal(d: RawDeal) {
     billing_month: billingVal,
     owner: getField(d, F.OWNER)?.formatted_value ?? "",
     next_action: (getField(d, F.NEXT_ACTION)?.value as string) ?? "",
+    updated_at: (d.updated_at as FieldValue)?.value as string ?? "",
   };
 }
 
