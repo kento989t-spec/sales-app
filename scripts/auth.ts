@@ -54,44 +54,64 @@ async function main() {
 
   console.log("\n3. 認証コード取得成功。アクセストークンを取得中...");
 
-  async function tryExchange(format: "form_body" | "form_basic"): Promise<Response> {
-    if (format === "form_body") {
-      return fetch(TOKEN_URL, {
+  // 試すURL × フォーマットの組み合わせ
+  const GLOBAL_TOKEN_URL = "https://sfa.salesgo.jp/oauth/token";
+  const TENANT_TOKEN_URL = TOKEN_URL;
+
+  type Attempt = { url: string; label: string; req: RequestInit };
+  const attempts: Attempt[] = [
+    {
+      label: "テナントURL + form + body credentials",
+      url: TENANT_TOKEN_URL,
+      req: {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-          grant_type: "authorization_code",
-          code,
-          client_id: CLIENT_ID,
-          client_secret: CLIENT_SECRET,
-          redirect_uri: REDIRECT_URI,
-        }).toString(),
-      });
-    } else {
-      return fetch(TOKEN_URL, {
+        body: new URLSearchParams({ grant_type: "authorization_code", code, client_id: CLIENT_ID, client_secret: CLIENT_SECRET, redirect_uri: REDIRECT_URI }).toString(),
+      },
+    },
+    {
+      label: "グローバルURL + form + body credentials",
+      url: GLOBAL_TOKEN_URL,
+      req: {
         method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Authorization: "Basic " + Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64"),
-        },
-        body: new URLSearchParams({
-          grant_type: "authorization_code",
-          code,
-          redirect_uri: REDIRECT_URI,
-        }).toString(),
-      });
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ grant_type: "authorization_code", code, client_id: CLIENT_ID, client_secret: CLIENT_SECRET, redirect_uri: REDIRECT_URI }).toString(),
+      },
+    },
+    {
+      label: "テナントURL + JSON",
+      url: TENANT_TOKEN_URL,
+      req: {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ grant_type: "authorization_code", code, client_id: CLIENT_ID, client_secret: CLIENT_SECRET, redirect_uri: REDIRECT_URI }),
+      },
+    },
+    {
+      label: "テナントURL + form + Basic auth",
+      url: TENANT_TOKEN_URL,
+      req: {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded", Authorization: "Basic " + Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64") },
+        body: new URLSearchParams({ grant_type: "authorization_code", code, redirect_uri: REDIRECT_URI }).toString(),
+      },
+    },
+  ];
+
+  let tokenRes: Response | null = null;
+  for (const attempt of attempts) {
+    console.log(`  試行中: ${attempt.label}`);
+    const res = await fetch(attempt.url, attempt.req);
+    const text = await res.text();
+    console.log(`  → ${res.status}: ${text.slice(0, 120)}`);
+    if (res.ok) {
+      tokenRes = new Response(text, { status: res.status, headers: res.headers });
+      break;
     }
   }
 
-  let tokenRes = await tryExchange("form_body");
-  if (!tokenRes.ok) {
-    console.log("form_body 形式失敗、Basic auth 形式で再試行...");
-    tokenRes = await tryExchange("form_basic");
-  }
-
-  if (!tokenRes.ok) {
-    const body = await tokenRes.text();
-    console.error("トークン取得失敗:", tokenRes.status, body);
+  if (!tokenRes || !tokenRes.ok) {
+    console.error("\n全パターン失敗。上記ログをオーナーに共有してください。");
     process.exit(1);
   }
 
