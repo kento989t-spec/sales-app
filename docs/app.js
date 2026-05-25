@@ -84,6 +84,9 @@
           const coeff = (DATA.yomi_coefficients ?? {})[deal.yomi] ?? 0;
           deal.weighted_amount = Math.round(deal.amount * coeff);
         }
+        if (field === "phase") {
+          deal.is_won = String(value).includes("CS-");
+        }
       }
     }
   }
@@ -97,6 +100,9 @@
       if (field === "yomi" || field === "amount") {
         const coeff = (DATA.yomi_coefficients ?? {})[deal.yomi] ?? 0;
         deal.weighted_amount = Math.round(deal.amount * coeff);
+      }
+      if (field === "phase") {
+        deal.is_won = String(value).includes("CS-");
       }
     }
     setPending(dealId, field, value);
@@ -114,6 +120,9 @@
       if (field === "yomi" || field === "amount") {
         const coeff = (DATA.yomi_coefficients ?? {})[deal.yomi] ?? 0;
         deal.weighted_amount = Math.round(deal.amount * coeff);
+      }
+      if (field === "phase") {
+        deal.is_won = String(origValue).includes("CS-");
       }
     }
     clearPending(dealId, field);
@@ -212,8 +221,17 @@
   const F_BILLING     = "field_d8fd26b2-a857-450b-9f93-9cd44d0bb811";
   const F_AMOUNT      = "field_76f2b2f7-af26-44bc-a4db-7817c1a07dcc";
   const F_NEXT_ACTION = "field_2b2fbca9-15f1-43b7-9ad6-516d48904c4a";
-  const YOMI_OPTIONS  = { A: 120, B: 121, C: 122, D: 123 };
   const F_CATEGORIES  = "field_00c5a3dc-ea3e-4a19-84b2-d50dd44dcad0";
+  const F_PATH        = "path_id";
+  const YOMI_OPTIONS  = { A: 120, B: 121, C: 122, D: 123 };
+  // GoCoo path step IDs (from /custom-objects/5/paths)
+  const PATH_ID = { 商談中: 5, 保留: 19, 失注: 20, 受注: 12 };
+  const PATH_PHASE_FROM_ID = {
+    5:  "【FS-02】初回商談実施済",
+    12: "【CS-01】本番初期設定・キックオフ",
+    19: "ペンディング",
+    20: "失注",
+  };
   const CAT_OPTIONS   = [
     { id: 258, name: "CoPASS" },
     { id: 259, name: "CoPASS BPO" },
@@ -465,6 +483,22 @@
     return `<select class="${cls}" data-deal-id="${d.id}" onchange="window._yomiChange(this, ${d.id})">${placeholder}${opts}</select>`;
   }
 
+  function deriveStatus(phase) {
+    if (!phase) return "商談中";
+    if (String(phase).includes("CS-")) return "受注";
+    if (phase === "ペンディング") return "保留";
+    if (phase === "失注") return "失注";
+    return "商談中";
+  }
+
+  function statusSelect(d) {
+    const current = deriveStatus(d.phase);
+    const opts = Object.keys(PATH_ID).map(v =>
+      `<option value="${v}" ${current === v ? "selected" : ""}>${v}</option>`
+    ).join("");
+    return `<select class="status-deal-select status-deal-${current}" data-deal-id="${d.id}" onchange="window._statusChange(this, ${d.id})">${opts}</select>`;
+  }
+
   function catDropdown(d) {
     const current = d.categories || [];
     const tags = current.length > 0
@@ -498,7 +532,7 @@
       <td>${yomiSelect(d)}</td>
       <td class="num"><input type="number" class="amount-input" value="${amountRaw}" data-deal-id="${d.id}" onchange="window._amountChange(this, ${d.id})"></td>
       <td class="num">${yen(d.weighted_amount)}</td>
-      <td>${wonBadge}${esc(d.phase)}</td>
+      <td>${wonBadge}${statusSelect(d)}</td>
       ${billingCell}
       <td>${esc(d.owner)}</td>
       ${updatedCell}
@@ -798,6 +832,27 @@
     deleteCustomTask(taskId);
     openComments.delete(taskId);
     renderTasks();
+  };
+
+  window._statusChange = async function(select, dealId) {
+    const newStatus = select.value;
+    const newPathId = PATH_ID[newStatus] ?? PATH_ID["商談中"];
+    const newPhase  = PATH_PHASE_FROM_ID[newPathId] ?? "";
+
+    const deal = [...(DATA.all_deals ?? []), ...(DATA.deals ?? [])].find(d => d.id === dealId);
+    const origPhase = deal?.phase ?? "";
+
+    select.disabled = true;
+    optimisticUpdate(dealId, "phase", newPhase);
+    select.className = `status-deal-select status-deal-${newStatus}`;
+
+    const ok = await triggerUpdate(dealId, F_PATH, newPathId);
+    select.disabled = false;
+    if (!ok) {
+      revertUpdate(dealId, "phase", origPhase);
+      select.value = deriveStatus(origPhase);
+      select.className = `status-deal-select status-deal-${deriveStatus(origPhase)}`;
+    }
   };
 
   window._taskStatusChange = function(select) {

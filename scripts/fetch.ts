@@ -94,6 +94,7 @@ function mapDeal(d: RawDeal) {
     amount,
     weighted_amount: Math.round(amount * coeff),
     phase,
+    path_id_raw: (d.path_id?.value as number) ?? null,
     is_won: isWon,
     billing_month: billingVal,
     owner: getField(d, F.OWNER)?.formatted_value ?? "",

@@ -784,6 +784,24 @@ th.sortable:hover { background: #f3f4f6; }
 }
 .yomi-select:disabled { opacity: .5; cursor: default; }
 
+/* ===== 案件ステータスセレクト ===== */
+.status-deal-select {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  text-align: center;
+}
+.status-deal-select:disabled { opacity: .5; cursor: default; }
+.status-deal-商談中 { background: #e0f2fe; color: #0369a1; border-color: #7dd3fc; }
+.status-deal-受注   { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
+.status-deal-保留   { background: #fef3c7; color: #b45309; border-color: #fcd34d; }
+.status-deal-失注   { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+
 .billing-input {
   border: 1px solid var(--border);
   border-radius: 4px;
