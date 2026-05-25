@@ -420,8 +420,7 @@ header {
 .status-todo      { background: #f3f4f6; color: var(--text-sub); }
 .status-doing     { background: #fef3c7; color: #b45309; border-color: #fcd34d; }
 .status-done      { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
-.status-skipped   { background: #f3f4f6; color: #6b7280; border-color: #d1d5db; }
-.status-cancelled { background: #f3f4f6; color: #9ca3af; border-color: #e5e7eb; }
+.status-cancelled { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
 
 /* ===== カテゴリドロップダウン ===== */
 .cat-dropdown-wrap {

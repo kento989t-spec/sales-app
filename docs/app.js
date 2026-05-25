@@ -134,7 +134,8 @@
   }
 
   function getTaskStatus(id) {
-    return loadTaskStatus()[id] ?? "todo";
+    const s = loadTaskStatus()[id] ?? "todo";
+    return s === "skipped" ? "cancelled" : s; // 旧ステータス互換
   }
 
   // ===== ユーティリティ =====
@@ -493,11 +494,10 @@
 
   // ===== タスク管理タブ（会社別ビュー）=====
   const STATUSES = {
-    todo:      { label: "未対応",               cls: "status-todo",      active: true  },
-    doing:     { label: "対応中",               cls: "status-doing",     active: true  },
-    done:      { label: "完了",                 cls: "status-done",      active: false },
-    skipped:   { label: "やらなかった",         cls: "status-skipped",   active: false },
-    cancelled: { label: "やらなくてよくなった", cls: "status-cancelled", active: false },
+    todo:      { label: "未対応", cls: "status-todo",      active: true  },
+    doing:     { label: "対応中", cls: "status-doing",     active: true  },
+    done:      { label: "完了",   cls: "status-done",      active: false },
+    cancelled: { label: "中止",   cls: "status-cancelled", active: false },
   };
   const STANDING_TITLES = ["次回打ち合わせの準備", "本日のお礼メールの送付"];
 
