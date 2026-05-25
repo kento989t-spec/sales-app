@@ -412,6 +412,66 @@ header {
 .status-done  { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
 .status-toggle:hover { filter: brightness(.95); }
 
+/* ===== インライン編集 ===== */
+.yomi-select {
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 4px;
+  border-radius: 4px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23666'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  padding-right: 18px;
+}
+.yomi-select:disabled { opacity: .5; cursor: default; }
+
+.billing-input {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  color: var(--text);
+  background: var(--surface);
+  cursor: pointer;
+}
+.billing-input:disabled { opacity: .5; }
+
+/* ===== トースト ===== */
+#toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .3s;
+  z-index: 9999;
+  white-space: nowrap;
+}
+.toast-info    { background: #374151; }
+.toast-success { background: var(--success); }
+.toast-error   { background: var(--danger); }
+
+/* ===== PAT 入力フィールド ===== */
+.auth-box input[type="text"] {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 12px;
+  margin-bottom: 12px;
+  color: var(--text-sub);
+}
+
 @media (max-width: 768px) {
   .header-inner { flex-direction: column; align-items: flex-start; gap: 8px; }
   .progress-section { grid-template-columns: 1fr; }

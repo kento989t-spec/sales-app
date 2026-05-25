@@ -73,6 +73,74 @@
     return (n >= 0 ? "+" : "▲") + yen(n);
   }
 
+  // ===== GoCoo フィールド定数 =====
+  const GOCOO_REPO = "kento989t-spec/sales-app";
+  const F_YOMI = "field_ed6f5306-135c-4105-a915-17e554dc5be2";
+  const F_BILLING = "field_d8fd26b2-a857-450b-9f93-9cd44d0bb811";
+  const YOMI_OPTIONS = { A: 120, B: 121, C: 122, D: 123 };
+
+  // ===== GitHub PAT =====
+  const PAT_KEY = "sales_app_github_pat";
+  function savePat(pat) { if (pat) sessionStorage.setItem(PAT_KEY, pat); }
+  function getPat() { return sessionStorage.getItem(PAT_KEY) ?? ""; }
+
+  // ===== トースト =====
+  function toast(msg, type = "info") {
+    let el = document.getElementById("toast");
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "toast";
+      document.body.appendChild(el);
+    }
+    el.textContent = msg;
+    el.className = "toast toast-" + type;
+    el.style.opacity = "1";
+    clearTimeout(el._timer);
+    el._timer = setTimeout(() => { el.style.opacity = "0"; }, 3000);
+  }
+
+  // ===== GoCoo 更新（GitHub Actions 経由）=====
+  async function triggerUpdate(dealId, fieldKey, fieldValue) {
+    const pat = getPat();
+    if (!pat) {
+      toast("GitHub PATが未設定です。再ログインしてPATを入力してください", "error");
+      return false;
+    }
+    toast("更新中...", "info");
+    try {
+      const res = await fetch(
+        `https://api.github.com/repos/${GOCOO_REPO}/actions/workflows/update-deal.yml/dispatches`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${pat}`,
+            Accept: "application/vnd.github+json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ref: "main",
+            inputs: {
+              deal_id: String(dealId),
+              field_key: fieldKey,
+              field_value: JSON.stringify(fieldValue),
+            },
+          }),
+        }
+      );
+      if (res.status === 204) {
+        toast("更新しました（GoCooへの反映は~60秒後）", "success");
+        return true;
+      } else {
+        const body = await res.text();
+        toast("更新失敗: " + res.status + " " + body, "error");
+        return false;
+      }
+    } catch (e) {
+      toast("通信エラー: " + e.message, "error");
+      return false;
+    }
+  }
+
   // ===== メインデータ =====
   let DATA = null;
   let activeYomi = "";
@@ -198,16 +266,24 @@
   }
 
   // ===== 案件行 =====
+  function yomiSelect(d) {
+    const opts = ["A", "B", "C", "D"].map(v =>
+      `<option value="${v}" ${d.yomi === v ? "selected" : ""}>${v}</option>`
+    ).join("");
+    return `<select class="yomi-select badge badge-${d.yomi}" data-deal-id="${d.id}" onchange="window._yomiChange(this, ${d.id})">${opts}</select>`;
+  }
+
   function dealRow(d, showBillingMonth = false) {
     const cats = (d.categories || []).join(", ");
     const wonBadge = d.is_won ? `<span class="badge badge-won">受注</span> ` : "";
+    const billingVal = d.billing_month ? d.billing_month.slice(0, 7) : "";
     const billingCell = showBillingMonth
-      ? `<td>${d.billing_month ? d.billing_month.slice(0, 7) : ""}</td>`
+      ? `<td><input type="month" class="billing-input" value="${billingVal}" data-deal-id="${d.id}" onchange="window._billingChange(this, ${d.id})"></td>`
       : "";
     return `<tr>
       <td>${esc(d.company || d.name)}</td>
       <td><small>${esc(cats)}</small></td>
-      <td><span class="badge badge-${d.yomi}">${esc(d.yomi)}</span></td>
+      <td>${yomiSelect(d)}</td>
       <td class="num">${yen(d.amount)}</td>
       <td class="num">${yen(d.weighted_amount)}</td>
       <td>${wonBadge}${esc(d.phase)}</td>
@@ -359,8 +435,40 @@
     renderSlackTasks();
   }
 
-  // グローバルハンドラ（onclick="window._taskToggle()"用）
+  // グローバルハンドラ
   window._taskToggle = taskStatusToggle;
+
+  window._yomiChange = async function(select, dealId) {
+    const newYomi = select.value;
+    const choiceId = YOMI_OPTIONS[newYomi];
+    select.className = `yomi-select badge badge-${newYomi}`;
+    select.disabled = true;
+    const ok = await triggerUpdate(dealId, F_YOMI, choiceId);
+    select.disabled = false;
+    if (!ok) {
+      // 失敗時は元の値に戻す（ローカルキャッシュを参照）
+      const deal = (DATA.all_deals ?? DATA.deals ?? []).find(d => d.id === dealId);
+      if (deal) {
+        select.value = deal.yomi;
+        select.className = `yomi-select badge badge-${deal.yomi}`;
+      }
+    }
+  };
+
+  window._billingChange = async function(input, dealId) {
+    const newMonth = input.value; // "YYYY-MM"
+    if (!newMonth) return;
+    // GoCoo の計上月は月末日 (YYYY-MM-DD)
+    const [y, m] = newMonth.split("-").map(Number);
+    const lastDay = new Date(y, m, 0).toISOString().slice(0, 10);
+    input.disabled = true;
+    const ok = await triggerUpdate(dealId, F_BILLING, lastDay);
+    input.disabled = false;
+    if (!ok) {
+      const deal = (DATA.all_deals ?? DATA.deals ?? []).find(d => d.id === dealId);
+      if (deal) input.value = deal.billing_month ? deal.billing_month.slice(0, 7) : "";
+    }
+  };
 
   // ===== 全レンダリング =====
   function renderAll() {
@@ -409,11 +517,13 @@
     if (!authed) {
       document.getElementById("pw-btn").addEventListener("click", async () => {
         const pw = document.getElementById("pw-input").value;
+        const pat = document.getElementById("pat-input").value.trim();
         const errEl = document.getElementById("pw-error");
         errEl.classList.add("hidden");
         try {
           await loadData(pw);
           sessionStorage.setItem(SESSION_KEY, pw);
+          savePat(pat);
           document.getElementById("auth-gate").classList.add("hidden");
           document.getElementById("app").classList.remove("hidden");
           initApp();

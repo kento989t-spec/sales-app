@@ -1,0 +1,36 @@
+name: GoCoo Deal Update
+
+on:
+  workflow_dispatch:
+    inputs:
+      deal_id:
+        description: 'Deal record ID'
+        required: true
+        type: string
+      field_key:
+        description: 'Field UUID to update'
+        required: true
+        type: string
+      field_value:
+        description: 'New value (JSON-encoded)'
+        required: true
+        type: string
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
+      - name: Update GoCoo deal
+        run: npx tsx scripts/update-deal.ts
+        env:
+          DEAL_ID: ${{ inputs.deal_id }}
+          FIELD_KEY: ${{ inputs.field_key }}
+          FIELD_VALUE: ${{ inputs.field_value }}
+          GOCOO_REFRESH_TOKEN: ${{ secrets.GOCOO_REFRESH_TOKEN }}
+          GOCOO_CLIENT_ID: ${{ secrets.GOCOO_CLIENT_ID }}
