@@ -521,6 +521,29 @@
     </div>`;
   }
 
+  let activeTaskYomi  = "";
+  let activeTaskMonth = "";
+
+  function initTaskFilters() {
+    const yomiFil  = document.getElementById("task-yomi-filter");
+    const monthFil = document.getElementById("task-month-filter");
+    if (!yomiFil || !monthFil) return;
+
+    // 計上月の選択肢を all_deals から生成
+    const months = [...new Set(
+      (DATA.all_deals ?? []).map(d => d.billing_month ? d.billing_month.slice(0, 7) : "").filter(Boolean)
+    )].sort().reverse();
+    months.forEach(m => {
+      const opt = document.createElement("option");
+      opt.value = m;
+      opt.textContent = "計上月: " + m.replace("-", "年") + "月";
+      monthFil.appendChild(opt);
+    });
+
+    yomiFil.addEventListener("change",  () => { activeTaskYomi  = yomiFil.value;  renderTasks(); });
+    monthFil.addEventListener("change", () => { activeTaskMonth = monthFil.value; renderTasks(); });
+  }
+
   function renderTasks() {
     const el = document.getElementById("task-companies");
     if (!el) return;
@@ -554,8 +577,19 @@
 
     const allDeals = DATA.all_deals ?? DATA.deals ?? [];
 
+    // 計上月・ヨミフィルタ: 会社に紐づく案件でマッチング
+    function companyMatchesFilter(company) {
+      if (!activeTaskYomi && !activeTaskMonth) return true;
+      const deal = allDeals.find(d => (d.company || d.name) === company);
+      if (!deal) return !activeTaskYomi && !activeTaskMonth; // 案件なし会社はフィルタ時除外
+      if (activeTaskYomi  && deal.yomi !== activeTaskYomi)                          return false;
+      if (activeTaskMonth && !deal.billing_month?.startsWith(activeTaskMonth))      return false;
+      return true;
+    }
+
     let html = "";
     for (const [company, { slack: sTasks, na: naTasks, owner }] of companies) {
+      if (!companyMatchesFilter(company)) continue;
       const meetingTsList = meetingsByCompany.get(company) ?? new Set();
       const ownerChip = owner ? `<span class="owner-chip">${esc(owner)}</span>` : "";
 
@@ -820,6 +854,7 @@
     initSortHeaders();
     initPatButton();
     initRefreshButton();
+    initTaskFilters();
     document.addEventListener("click", e => {
       if (!e.target.closest(".cat-dropdown-wrap")) {
         document.querySelectorAll(".cat-dropdown:not(.hidden)").forEach(d => d.classList.add("hidden"));

@@ -270,6 +270,22 @@ header {
 
 .na-text { color: var(--text-sub); font-size: 12px; max-width: 200px; }
 
+/* ===== タスクフィルタバー ===== */
+.task-filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.task-filter-bar select {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  background: var(--surface);
+}
+
 /* ===== 案件一覧フィルタ ===== */
 .deals-header {
   display: flex;

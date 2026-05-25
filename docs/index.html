@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>deex 営業ダッシュボード</title>
-  <link rel="stylesheet" href="style.css?v=11">
+  <link rel="stylesheet" href="style.css?v=12">
 </head>
 <body>
 
@@ -130,10 +130,14 @@
 
   <!-- タスク管理タブ -->
   <div id="tab-tasks" class="tab-content hidden">
+    <div class="task-filter-bar">
+      <select id="task-yomi-filter"><option value="">ヨミ: すべて</option><option value="A">A（80%↑）</option><option value="B">B（60〜80%）</option><option value="C">C（40〜60%）</option><option value="D">D（40%↓）</option></select>
+      <select id="task-month-filter"><option value="">計上月: すべて</option></select>
+    </div>
     <div id="task-companies"></div>
   </div>
 </div>
 
-<script src="app.js?v=11"></script>
+<script src="app.js?v=12"></script>
 </body>
 </html>
