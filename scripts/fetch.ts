@@ -5,7 +5,10 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { webcrypto } from "crypto";
 import { getAllPages } from "./gocoo-client.ts";
+
+const crypto = webcrypto as unknown as Crypto;
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
@@ -134,5 +137,37 @@ const output = {
 };
 
 const outPath = path.join(ROOT, "docs", "data", "sales-data.json");
-fs.writeFileSync(outPath, JSON.stringify(output, null, 2));
-console.log(`✅ ${outPath} を生成しました`);
+const password = CONFIG.password as string | undefined;
+
+if (password) {
+  // AES-GCM 暗号化（パスワード設定時）
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const keyMaterial = await crypto.subtle.importKey(
+    "raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]
+  );
+  const key = await crypto.subtle.deriveKey(
+    { name: "PBKDF2", salt, iterations: 100000, hash: "SHA-256" },
+    keyMaterial,
+    { name: "AES-GCM", length: 256 },
+    false,
+    ["encrypt"]
+  );
+  const plaintext = new TextEncoder().encode(JSON.stringify(output));
+  const ciphertext = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, plaintext);
+
+  const toHex = (buf: ArrayBuffer) =>
+    [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+
+  const encrypted = {
+    encrypted: true,
+    salt: toHex(salt.buffer),
+    iv: toHex(iv.buffer),
+    ciphertext: toHex(ciphertext),
+  };
+  fs.writeFileSync(outPath, JSON.stringify(encrypted));
+  console.log(`✅ ${outPath} を暗号化して生成しました`);
+} else {
+  fs.writeFileSync(outPath, JSON.stringify(output, null, 2));
+  console.log(`✅ ${outPath} を生成しました（非暗号化モード）`);
+}

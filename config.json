@@ -11,5 +11,5 @@
     "D": 0.3
   },
   "won_phases": ["CS-01", "CS-02", "CS-03", "CS-04", "CS-05"],
-  "password_hash": ""
+  "password": ""
 }

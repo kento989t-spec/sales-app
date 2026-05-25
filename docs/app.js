@@ -1,25 +1,41 @@
 (() => {
-  // ===== 認証 =====
-  // SHA-256 ハッシュで比較（パスワード本文はソースに残らない）
-  const PW_HASH_KEY = "sales_app_authed";
+  // ===== 暗号化ユーティリティ =====
+  const SESSION_KEY = "sales_app_pw";
 
-  async function sha256hex(str) {
-    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
-    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+  function fromHex(hex) {
+    const arr = new Uint8Array(hex.length / 2);
+    for (let i = 0; i < arr.length; i++) arr[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
+    return arr;
+  }
+
+  async function deriveKey(password, salt) {
+    const keyMaterial = await crypto.subtle.importKey(
+      "raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]
+    );
+    return crypto.subtle.deriveKey(
+      { name: "PBKDF2", salt, iterations: 100000, hash: "SHA-256" },
+      keyMaterial,
+      { name: "AES-GCM", length: 256 },
+      false,
+      ["decrypt"]
+    );
+  }
+
+  async function decryptData(encrypted, password) {
+    const salt = fromHex(encrypted.salt);
+    const iv = fromHex(encrypted.iv);
+    const ciphertext = fromHex(encrypted.ciphertext);
+    const key = await deriveKey(password, salt);
+    const plaintext = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, ciphertext);
+    return JSON.parse(new TextDecoder().decode(plaintext));
   }
 
   async function checkAuth() {
-    if (sessionStorage.getItem(PW_HASH_KEY) === "1") return true;
-    return false;
+    return !!sessionStorage.getItem(SESSION_KEY);
   }
 
-  async function tryLogin(password, configuredHash) {
-    const hash = await sha256hex(password);
-    if (!configuredHash || hash === configuredHash) {
-      sessionStorage.setItem(PW_HASH_KEY, "1");
-      return true;
-    }
-    return false;
+  function getSavedPassword() {
+    return sessionStorage.getItem(SESSION_KEY) ?? "";
   }
 
   // ===== ユーティリティ =====
@@ -48,9 +64,14 @@
   let activeYomi = "";
   let activeOwner = "";
 
-  async function loadData() {
+  async function loadData(password = "") {
     const res = await fetch("data/sales-data.json?_=" + Date.now());
-    DATA = await res.json();
+    const raw = await res.json();
+    if (raw.encrypted) {
+      DATA = await decryptData(raw, password);
+    } else {
+      DATA = raw;
+    }
   }
 
   // ===== ヘッダー =====
@@ -248,41 +269,43 @@
 
   // ===== 起動 =====
   async function main() {
-    // パスワードチェック
     const authed = await checkAuth();
 
     if (!authed) {
-      // config の hash 取得のため先にデータをロード（hashだけ公開は許容）
-      let configHash = "";
-      try {
-        const res = await fetch("data/sales-data.json?_=" + Date.now());
-        const d = await res.json();
-        configHash = d.password_hash ?? "";
-      } catch (_) {}
-
       document.getElementById("pw-btn").addEventListener("click", async () => {
         const pw = document.getElementById("pw-input").value;
-        const ok = await tryLogin(pw, configHash);
-        if (ok) {
+        const errEl = document.getElementById("pw-error");
+        errEl.classList.add("hidden");
+        try {
+          await loadData(pw);
+          sessionStorage.setItem(SESSION_KEY, pw);
           document.getElementById("auth-gate").classList.add("hidden");
           document.getElementById("app").classList.remove("hidden");
-          await init();
-        } else {
-          document.getElementById("pw-error").classList.remove("hidden");
+          initApp();
+        } catch (_) {
+          errEl.textContent = "パスワードが違います";
+          errEl.classList.remove("hidden");
         }
       });
       document.getElementById("pw-input").addEventListener("keydown", e => {
         if (e.key === "Enter") document.getElementById("pw-btn").click();
       });
     } else {
-      document.getElementById("auth-gate").classList.add("hidden");
-      document.getElementById("app").classList.remove("hidden");
-      await init();
+      try {
+        await loadData(getSavedPassword());
+        document.getElementById("auth-gate").classList.add("hidden");
+        document.getElementById("app").classList.remove("hidden");
+        initApp();
+      } catch (_) {
+        // トークン切れ → 再認証
+        sessionStorage.removeItem(SESSION_KEY);
+        document.getElementById("pw-error").textContent = "セッションが切れました。再度ログインしてください";
+        document.getElementById("pw-error").classList.remove("hidden");
+      }
     }
   }
 
-  async function init() {
-    await loadData();
+  function initApp() {
     renderHeader();
     initTabs();
     initYomiFilter();
