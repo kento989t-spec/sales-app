@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-05-25T02:31:45.742Z",
+  "generated_at": "2026-05-25T02:54:05.011Z",
   "month": "2026-05",
   "targets": {
-    "CoPASS": 0,
-    "CoPASS BPO": 0,
-    "Partner Boost": 0
+    "CoPASS": 500000,
+    "CoPASS BPO": 1000000,
+    "Partner Boost": 440000
   },
   "yomi_coefficients": {
     "A": 0.8,
@@ -19,29 +19,29 @@
   ],
   "summary": {
     "CoPASS": {
-      "target": 0,
+      "target": 500000,
       "yomi_weighted": 0,
       "actual": 0,
-      "gap": 0
+      "gap": -500000
     },
     "CoPASS BPO": {
-      "target": 0,
+      "target": 1000000,
       "yomi_weighted": 0,
       "actual": 0,
-      "gap": 0
+      "gap": -1000000
     },
     "Partner Boost": {
-      "target": 0,
+      "target": 440000,
       "yomi_weighted": 0,
       "actual": 0,
-      "gap": 0
+      "gap": -440000
     }
   },
   "total": {
-    "target": 0,
+    "target": 1940000,
     "yomi_weighted": 0,
     "actual": 0,
-    "gap": 0
+    "gap": -1940000
   },
   "deals": [
     {
@@ -60,5 +60,8719 @@
       "owner": "佐竹 洋政",
       "next_action": ""
     }
-  ]
+  ],
+  "all_deals": [
+    {
+      "id": 283,
+      "name": "案件0000088",
+      "company": "GMOイプシロン株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 347,
+      "name": "案件0000152",
+      "company": "シトラスジャパン株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 399,
+      "name": "案件0000204",
+      "company": "株式会社moovy",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 772,
+      "name": "案件0000540",
+      "company": "株式会社ラクーンホールディングス",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 775,
+      "name": "案件0000543",
+      "company": "Esteras合同会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 778,
+      "name": "案件0000546",
+      "company": "ゾーホージャパン株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-30",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 826,
+      "name": "案件0000594",
+      "company": "GMOグローバルサイン・ホールディングス株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 890,
+      "name": "案件0000658",
+      "company": "株式会社スタメン",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 972,
+      "name": "案件0000740",
+      "company": "株式会社トレンドタウン",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 403,
+      "name": "案件0000208",
+      "company": "株式会社SHIFT AI",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 404,
+      "name": "案件0000209",
+      "company": "株式会社ARVEL",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 764,
+      "name": "案件0000532",
+      "company": "H.I.S.Mobile株式会社",
+      "categories": [
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 894,
+      "name": "案件0000662",
+      "company": "株式会社アト",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 973,
+      "name": "案件0000741",
+      "company": "株式会社オーライン",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 907,
+      "name": "案件0000675",
+      "company": "サイバーステーション株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 920,
+      "name": "案件0000688",
+      "company": "株式会社人事パートナーズ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 905,
+      "name": "案件0000673",
+      "company": "株式会社ホロンシステム",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 273,
+      "name": "案件0000078",
+      "company": "Y．W．C．株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 297,
+      "name": "案件0000102",
+      "company": "新日本コンピュータマネジメント株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 758,
+      "name": "案件0000526",
+      "company": "愛心Warm Heart株式会社(アドティッシュ)",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 771,
+      "name": "案件0000539",
+      "company": "株式会社Collection Bank",
+      "categories": [
+        "Partner Boost",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 777,
+      "name": "案件0000545",
+      "company": "株式会社キャピタルナレッジ",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 781,
+      "name": "案件0000549",
+      "company": "ファン株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-17",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 922,
+      "name": "案件0000690",
+      "company": "balance株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 974,
+      "name": "案件0000742",
+      "company": "税理士法人UNNAMED SERVICE",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 923,
+      "name": "案件0000691",
+      "company": "レバレジーズ株式会社",
+      "categories": [
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 417,
+      "name": "案件0000222",
+      "company": "大自然生活館株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 419,
+      "name": "案件0000224",
+      "company": "株式会社Media Theater",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 924,
+      "name": "案件0000692",
+      "company": "株式会社ダイドー不動産",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 420,
+      "name": "案件0000225",
+      "company": "福井電力株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 422,
+      "name": "案件0000227",
+      "company": "株式会社シャトク",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 423,
+      "name": "案件0000228",
+      "company": "Peaceful Morning株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-06】口頭受注",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 424,
+      "name": "案件0000229",
+      "company": "ユースフル株式会社",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 953,
+      "name": "案件0000721",
+      "company": "株式会社Anfini",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 280,
+      "name": "案件0000085",
+      "company": "株式会社テクノ西村",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 282,
+      "name": "案件0000087",
+      "company": "株式会社トモテツセブン",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 428,
+      "name": "案件0000233",
+      "company": "株式会社wib",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 925,
+      "name": "案件0000693",
+      "company": "株式会社ヒカリエ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 430,
+      "name": "案件0000235",
+      "company": "スタディポケット株式会社",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 784,
+      "name": "案件0000552",
+      "company": "GRAND株式会社",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "C",
+      "amount": 500000,
+      "weighted_amount": 250000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 785,
+      "name": "案件0000553",
+      "company": "株式会社Kanaglee",
+      "categories": [
+        "Partner Boost",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-08-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 869,
+      "name": "案件0000637",
+      "company": "エルメック株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "A",
+      "amount": 150000,
+      "weighted_amount": 120000,
+      "phase": "【CS-01】本番初期設定・キックオフ",
+      "is_won": true,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 954,
+      "name": "案件0000722",
+      "company": "ストライプジャパン株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 432,
+      "name": "案件0000237",
+      "company": "テックタッチ株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 434,
+      "name": "案件0000239",
+      "company": "株式会社hacomono",
+      "categories": [
+        "Partner Boost",
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 900000,
+      "weighted_amount": 270000,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2025-12-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 436,
+      "name": "案件0000241",
+      "company": "株式会社Desse Jenny",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 437,
+      "name": "案件0000242",
+      "company": "株式会社LDcube",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 438,
+      "name": "案件0000243",
+      "company": "NOTATSUファシリティーズ株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 439,
+      "name": "案件0000244",
+      "company": "エウゼーンカンパニー株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 440,
+      "name": "案件0000245",
+      "company": "株式会社SOLAR SHIP",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 926,
+      "name": "案件0000694",
+      "company": "株式会社AXIS",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 442,
+      "name": "案件0000247",
+      "company": "NEXTINNOVATION株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 443,
+      "name": "案件0000248",
+      "company": "株式会社モビーレ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 965,
+      "name": "案件0000733",
+      "company": "ゴマブックス株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 287,
+      "name": "案件0000092",
+      "company": "株式会社テクノツリー",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 288,
+      "name": "案件0000093",
+      "company": "サイバーリンク株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 446,
+      "name": "案件0000251",
+      "company": "BLUECHIP株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 448,
+      "name": "案件0000253",
+      "company": "アンドドット株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 449,
+      "name": "案件0000254",
+      "company": "RECERO株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 787,
+      "name": "案件0000555",
+      "company": "サイバネットシステム株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 955,
+      "name": "案件0000723",
+      "company": "ビズブースト株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 790,
+      "name": "案件0000558",
+      "company": "株式会社Ｊストリーム",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 791,
+      "name": "案件0000559",
+      "company": "FRAIM株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 825,
+      "name": "案件0000593",
+      "company": "株式会社BE.PRESTRO",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 927,
+      "name": "案件0000695",
+      "company": "日本災害救助艇研究所株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 966,
+      "name": "案件0000734",
+      "company": "山九株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 290,
+      "name": "案件0000095",
+      "company": "ミナト流通サービス株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 451,
+      "name": "案件0000256",
+      "company": "サブスクソリューションズ株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 956,
+      "name": "案件0000724",
+      "company": "Volta Networks株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "",
+      "amount": 300000,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-18",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 928,
+      "name": "案件0000696",
+      "company": "株式会社Sunways",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 453,
+      "name": "案件0000258",
+      "company": "Sales Retriever株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 50000,
+      "weighted_amount": 15000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 788,
+      "name": "案件0000556",
+      "company": "イクシアス株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 792,
+      "name": "案件0000560",
+      "company": "株式会社Goals",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 796,
+      "name": "案件0000564",
+      "company": "株式会社オフィスウエダ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 967,
+      "name": "案件0000735",
+      "company": "南陽吉久株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-04】デモ環境発行",
+      "is_won": false,
+      "billing_month": "2026-09-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 294,
+      "name": "案件0000099",
+      "company": "ソフィアデジタル株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 295,
+      "name": "案件0000100",
+      "company": "株式会社ブロードエンタープライズ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 296,
+      "name": "案件0000101",
+      "company": "株式会社日本文芸社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 298,
+      "name": "案件0000103",
+      "company": "大日通信株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 929,
+      "name": "案件0000697",
+      "company": "株式会社ディグロス",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 957,
+      "name": "案件0000725",
+      "company": "NHN テコラス株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 457,
+      "name": "案件0000262",
+      "company": "株式会社ミラビス",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 460,
+      "name": "案件0000265",
+      "company": "株式会社ADVATEC",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "C",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-06】口頭受注",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 461,
+      "name": "案件0000266",
+      "company": "株式会社インフォボックス",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 968,
+      "name": "案件0000736",
+      "company": "Phasera",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 299,
+      "name": "案件0000104",
+      "company": "株式会社穴吹カレッジサービス",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 301,
+      "name": "案件0000106",
+      "company": "株式会社BitStar",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 462,
+      "name": "案件0000267",
+      "company": "株式会社SYSLEA",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "A",
+      "amount": 100000,
+      "weighted_amount": 80000,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2025-12-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 467,
+      "name": "案件0000272",
+      "company": "株式会社Joynary",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-03】正式運用",
+      "is_won": true,
+      "billing_month": "2025-03-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 468,
+      "name": "案件0000273",
+      "company": "株式会社インサイドパス",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 469,
+      "name": "案件0000274",
+      "company": "株式会社KOCHI",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "A",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 768,
+      "name": "案件0000536",
+      "company": "ビズキューブ･コンサルティング株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 150000,
+      "weighted_amount": 45000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 798,
+      "name": "案件0000566",
+      "company": "株式会社PR TIMES",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "C",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 969,
+      "name": "案件0000737",
+      "company": "武蔵技術産業株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 930,
+      "name": "案件0000698",
+      "company": "株式会社Y's Assist",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 958,
+      "name": "案件0000726",
+      "company": "株式会社i-plug",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 303,
+      "name": "案件0000108",
+      "company": "Foonz株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 368,
+      "name": "案件0000173",
+      "company": "株式会社コミクス",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 470,
+      "name": "案件0000275",
+      "company": "株式会社T2X",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 474,
+      "name": "案件0000279",
+      "company": "キャリバン株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 795,
+      "name": "案件0000563",
+      "company": "株式会社レコモット",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 799,
+      "name": "案件0000567",
+      "company": "株式会社SkillCanvas",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 871,
+      "name": "案件0000639",
+      "company": "株式会社ブレス",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 931,
+      "name": "案件0000699",
+      "company": "株式会社ネクストビジョン",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 897,
+      "name": "案件0000665",
+      "company": "株式会社BLAM",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 959,
+      "name": "案件0000727",
+      "company": "株式会社アプリップリ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 970,
+      "name": "案件0000738",
+      "company": "株式会社カトレア",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 351,
+      "name": "案件0000156",
+      "company": "株式会社パレスリンク",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 477,
+      "name": "案件0000282",
+      "company": "有限会社アバンダンス",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 480,
+      "name": "案件0000285",
+      "company": "株式会社Zeeema",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 150000,
+      "weighted_amount": 45000,
+      "phase": "【FS-05】デモ環境利用",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 774,
+      "name": "案件0000542",
+      "company": "Cataris株式会社",
+      "categories": [
+        "Partner Boost",
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 800,
+      "name": "案件0000568",
+      "company": "株式会社PKSHA Infinity",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 872,
+      "name": "案件0000640",
+      "company": "株式会社er",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 932,
+      "name": "案件0000700",
+      "company": "株式会社RYU",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 898,
+      "name": "案件0000666",
+      "company": "株式会社華コーポレーション",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 960,
+      "name": "案件0000728",
+      "company": "株式会社アズミエンジニヤ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 305,
+      "name": "案件0000110",
+      "company": "株式会社ピーエイ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 385,
+      "name": "案件0000190",
+      "company": "ポケットサイン株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 801,
+      "name": "案件0000569",
+      "company": "Birdy Ventures合同会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 829,
+      "name": "案件0000597",
+      "company": "nocall株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 873,
+      "name": "案件0000641",
+      "company": "株式会社マクロズ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 150000,
+      "weighted_amount": 75000,
+      "phase": "【FS-04】デモ環境発行",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 961,
+      "name": "案件0000729",
+      "company": "株式会社ココロツナグ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 150000,
+      "weighted_amount": 75000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 933,
+      "name": "案件0000701",
+      "company": "株式会社オートテクニックジャパン",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 971,
+      "name": "案件0000739",
+      "company": "AIデータ株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 962,
+      "name": "案件0000730",
+      "company": "ベルズシステム株式会社",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "",
+      "amount": 500000,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-09-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 394,
+      "name": "案件0000199",
+      "company": "株式会社プロフィットメイカーズ",
+      "categories": [
+        "Partner Boost",
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 830,
+      "name": "案件0000598",
+      "company": "株式会社ANDSALT",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 874,
+      "name": "案件0000642",
+      "company": "スプラッシュトップ株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 921,
+      "name": "案件0000689",
+      "company": "株式会社PROLEXT",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 900,
+      "name": "案件0000668",
+      "company": "株式会社セールス・フォージ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 882,
+      "name": "案件0000650",
+      "company": "FAST BPO株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【CS-01】本番初期設定・キックオフ",
+      "is_won": true,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 964,
+      "name": "案件0000732",
+      "company": "株式会社ナビタイムジャパン",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "",
+      "amount": 500000,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 491,
+      "name": "案件0000296",
+      "company": "株式会社リエネ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-06】口頭受注",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 963,
+      "name": "案件0000731",
+      "company": "株式会社テクノ西村",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 492,
+      "name": "案件0000297",
+      "company": "GROWIT株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 493,
+      "name": "案件0000298",
+      "company": "株式会社プロテクトアーツ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 803,
+      "name": "案件0000571",
+      "company": "株式会社TAMACHAN",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 831,
+      "name": "案件0000599",
+      "company": "株式会社グロウバレー",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 875,
+      "name": "案件0000643",
+      "company": "株式会社ディアースジャパン",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 901,
+      "name": "案件0000669",
+      "company": "株式会社ロックトゥーン",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 934,
+      "name": "案件0000702",
+      "company": "株式会社タイムワールド",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "A",
+      "amount": 600000,
+      "weighted_amount": 480000,
+      "phase": "【FS-06】口頭受注",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 312,
+      "name": "案件0000117",
+      "company": "カゴヤ・ジャパン株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 50000,
+      "weighted_amount": 15000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 425,
+      "name": "案件0000230",
+      "company": "アイマガジン株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 494,
+      "name": "案件0000299",
+      "company": "株式会社ジンフリー",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 876,
+      "name": "案件0000644",
+      "company": "ディヴォートソリューション株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 935,
+      "name": "案件0000703",
+      "company": "株式会社ラクスライトクラウド",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 316,
+      "name": "案件0000121",
+      "company": "株式会社オープンエイト",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 427,
+      "name": "案件0000232",
+      "company": "株式会社KiZUKAI",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 496,
+      "name": "案件0000301",
+      "company": "株式会社ZOOOG",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 501,
+      "name": "案件0000306",
+      "company": "株式会社インフラトップ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 936,
+      "name": "案件0000704",
+      "company": "株式会社USTORY",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 505,
+      "name": "案件0000310",
+      "company": "TRUSTART株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 833,
+      "name": "案件0000601",
+      "company": "株式会社京進",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 937,
+      "name": "案件0000705",
+      "company": "株式会社Y's Assist",
+      "categories": [
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-10-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 315,
+      "name": "案件0000120",
+      "company": "株式会社フューチャーリンクネットワーク",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 319,
+      "name": "案件0000124",
+      "company": "株式会社ビービット",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 322,
+      "name": "案件0000127",
+      "company": "NTTコムオンライン・マーケティング・ソリューション株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 509,
+      "name": "案件0000314",
+      "company": "アローサル・テクノロジー株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2025-07-29",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 834,
+      "name": "案件0000602",
+      "company": "理想科学工業株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 938,
+      "name": "案件0000706",
+      "company": "株式会社LOOV",
+      "categories": [
+        "Partner Boost",
+        "CoPASS BPO"
+      ],
+      "yomi": "",
+      "amount": 500000,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 879,
+      "name": "案件0000647",
+      "company": "WSST JAPAN 株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 806,
+      "name": "案件0000574",
+      "company": "株式会社エネスマ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【FS-04】デモ環境発行",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 240,
+      "name": "案件0000045",
+      "company": "日本瓦斯株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 266,
+      "name": "案件0000071",
+      "company": "株式会社マネーフォワード",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 513,
+      "name": "案件0000318",
+      "company": "アマゾンジャパン合同会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 835,
+      "name": "案件0000603",
+      "company": "株式会社Influencer Tech",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-17",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 880,
+      "name": "案件0000648",
+      "company": "株式会社Helpfeel",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 939,
+      "name": "案件0000707",
+      "company": "株式会社Hubble",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 279,
+      "name": "案件0000084",
+      "company": "株式会社オロ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 471,
+      "name": "案件0000276",
+      "company": "株式会社QuickCEP",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2025-11-30",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 516,
+      "name": "案件0000321",
+      "company": "株式会社グロースデータ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 517,
+      "name": "案件0000322",
+      "company": "株式会社IVRy",
+      "categories": [
+        "CoPASS",
+        "Partner startup"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 518,
+      "name": "案件0000323",
+      "company": "株式会社LabBase",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 836,
+      "name": "案件0000604",
+      "company": "株式会社STAR UP",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 881,
+      "name": "案件0000649",
+      "company": "株式会社InterLink Guild",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 940,
+      "name": "案件0000708",
+      "company": "GMOデジタルラボ株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 289,
+      "name": "案件0000094",
+      "company": "株式会社アドバンティア",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 538,
+      "name": "案件0000020",
+      "company": "株式会社IFREA",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 150000,
+      "weighted_amount": 45000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 545,
+      "name": "案件0000027",
+      "company": "NUWORKS株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 547,
+      "name": "案件0000029",
+      "company": "株式会社Attack on",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 548,
+      "name": "案件0000030",
+      "company": "株式会社AIdeaLab",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 837,
+      "name": "案件0000605",
+      "company": "ラーニングス株式会社",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 941,
+      "name": "案件0000709",
+      "company": "株式会社トモノカイ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 549,
+      "name": "案件0000031",
+      "company": "株式会社Dooox",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 50000,
+      "weighted_amount": 15000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 550,
+      "name": "案件0000032",
+      "company": "有限会社ビンゴネット",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 551,
+      "name": "案件0000033",
+      "company": "株式会社SIRE",
+      "categories": [
+        "Partner startup"
+      ],
+      "yomi": "A",
+      "amount": 500000,
+      "weighted_amount": 400000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 552,
+      "name": "案件0000034",
+      "company": "株式会社USEN MEDIA PROMOTION",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 487,
+      "name": "案件0000292",
+      "company": "パナソニックEWスマートエナジー株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 488,
+      "name": "案件0000293",
+      "company": "BE．PRESTO株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 556,
+      "name": "案件0000324",
+      "company": "株式会社G-gen",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 557,
+      "name": "案件0000325",
+      "company": "株式会社ブレイン・ゲートプラス",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 150000,
+      "weighted_amount": 45000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 562,
+      "name": "案件0000330",
+      "company": "株式会社ユーラスグリーンエナジー",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "A",
+      "amount": 300000,
+      "weighted_amount": 240000,
+      "phase": "【FS-06】口頭受注",
+      "is_won": false,
+      "billing_month": "2025-12-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 564,
+      "name": "案件0000332",
+      "company": "株式会社キャムテック",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 569,
+      "name": "案件0000337",
+      "company": "案件0000337",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 571,
+      "name": "案件0000339",
+      "company": "株式会社スカイディスク",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 807,
+      "name": "案件0000575",
+      "company": "milk.株式会社",
+      "categories": [
+        "Partner Boost",
+        "CoPASS BPO"
+      ],
+      "yomi": "B",
+      "amount": 500000,
+      "weighted_amount": 350000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 838,
+      "name": "案件0000606",
+      "company": "タイムクラウド株式会社",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "C",
+      "amount": 500000,
+      "weighted_amount": 250000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-18",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 883,
+      "name": "案件0000651",
+      "company": "株式会社バズマッチ",
+      "categories": [
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 572,
+      "name": "案件0000340",
+      "company": "DXER株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 942,
+      "name": "案件0000710",
+      "company": "株式会社エルテス",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 325,
+      "name": "案件0000130",
+      "company": "株式会社スタメン",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 884,
+      "name": "案件0000652",
+      "company": "合同会社Your Mind Diamond",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 499,
+      "name": "案件0000304",
+      "company": "株式会社ネクストスケール",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 573,
+      "name": "案件0000341",
+      "company": "案件0000341",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 574,
+      "name": "案件0000342",
+      "company": "案件0000342",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 575,
+      "name": "案件0000343",
+      "company": "mappin株式会社",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "A",
+      "amount": 500000,
+      "weighted_amount": 400000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 576,
+      "name": "案件0000344",
+      "company": "案件0000344",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 577,
+      "name": "案件0000345",
+      "company": "株式会社グリーン・シップ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 943,
+      "name": "案件0000711",
+      "company": "株式会社DATAKIT",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 580,
+      "name": "案件0000348",
+      "company": "株式会社Laspy",
+      "categories": [
+        "Partner startup"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 583,
+      "name": "案件0000351",
+      "company": "株式会社find",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 50000,
+      "weighted_amount": 25000,
+      "phase": "【FS-04】デモ環境発行",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 327,
+      "name": "案件0000132",
+      "company": "株式会社識学",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 150000,
+      "weighted_amount": 45000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 808,
+      "name": "案件0000576",
+      "company": "株式会社Schoo",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 944,
+      "name": "案件0000712",
+      "company": "株式会社Amiability",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 445,
+      "name": "案件0000250",
+      "company": "株式会社JasOne",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "A",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-06】口頭受注",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 584,
+      "name": "案件0000352",
+      "company": "株式会社ゼクウ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": "・2025/12/9：初回商談"
+    },
+    {
+      "id": 585,
+      "name": "案件0000353",
+      "company": "株式会社DIGIYELL",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 586,
+      "name": "案件0000354",
+      "company": "FAST BPO株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 80000,
+      "weighted_amount": 40000,
+      "phase": "【FS-05】デモ環境利用",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 587,
+      "name": "案件0000355",
+      "company": "GrowthPartners税理士法人",
+      "categories": [
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 589,
+      "name": "案件0000357",
+      "company": "株式会社ソーシャルインテリア",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 591,
+      "name": "案件0000359",
+      "company": "Fulfill株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 50000,
+      "weighted_amount": 15000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 329,
+      "name": "案件0000134",
+      "company": "株式会社ベネッセi-キャリア",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 945,
+      "name": "案件0000713",
+      "company": "Cotel AI 株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 332,
+      "name": "案件0000137",
+      "company": "東北電力フロンティア株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 593,
+      "name": "案件0000361",
+      "company": "株式会社C",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "A",
+      "amount": 150000,
+      "weighted_amount": 120000,
+      "phase": "【CS-01】本番初期設定・キックオフ",
+      "is_won": true,
+      "billing_month": "2025-12-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 595,
+      "name": "案件0000363",
+      "company": "スマートシェア株式会社",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "C",
+      "amount": 500000,
+      "weighted_amount": 250000,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 596,
+      "name": "案件0000364",
+      "company": "株式会社overflow",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "A",
+      "amount": 480000,
+      "weighted_amount": 384000,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2025-12-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 337,
+      "name": "案件0000142",
+      "company": "株式会社トリニアス",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 338,
+      "name": "案件0000143",
+      "company": "株式会社サムシングファン",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 466,
+      "name": "案件0000271",
+      "company": "株式会社KSystem",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 597,
+      "name": "案件0000365",
+      "company": "株式会社シフト",
+      "categories": [
+        "Partner startup"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 598,
+      "name": "案件0000366",
+      "company": "助成金制度推進センター",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 50000,
+      "weighted_amount": 15000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 600,
+      "name": "案件0000368",
+      "company": "株式会社パーソルイノベーション",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 601,
+      "name": "案件0000369",
+      "company": "ジョーシス株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 602,
+      "name": "案件0000370",
+      "company": "株式会社xNEXT",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 50000,
+      "weighted_amount": 25000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 608,
+      "name": "案件0000376",
+      "company": "株式会社KAGEMUSHA",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 946,
+      "name": "案件0000714",
+      "company": "株式会社CockPit Sales",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-07-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 339,
+      "name": "案件0000144",
+      "company": "ivalue株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 340,
+      "name": "案件0000145",
+      "company": "株式会社Liberaware",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 559,
+      "name": "案件0000327",
+      "company": "株式会社Criacao",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 50000,
+      "weighted_amount": 15000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 609,
+      "name": "案件0000377",
+      "company": "モノグサ株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 610,
+      "name": "案件0000378",
+      "company": "balance株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 611,
+      "name": "案件0000379",
+      "company": "株式会社おしごとマーケティング",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 612,
+      "name": "案件0000380",
+      "company": "株式会社Growth Partner Maker",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 613,
+      "name": "案件0000381",
+      "company": "株式会社ラクス",
+      "categories": [
+        "Partner Boost",
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 620,
+      "name": "案件0000388",
+      "company": "株式会社テクノネットワーク",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 811,
+      "name": "案件0000579",
+      "company": "株式会社MAYAビジネスソリューションズ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 150000,
+      "weighted_amount": 45000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 888,
+      "name": "案件0000656",
+      "company": "WSST JAPAN 株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 906,
+      "name": "案件0000674",
+      "company": "スターティア株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 947,
+      "name": "案件0000715",
+      "company": "株式会社シコメルフードテック",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 342,
+      "name": "案件0000147",
+      "company": "株式会社キージェント",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 621,
+      "name": "案件0000389",
+      "company": "箱庭LAB合同会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 622,
+      "name": "案件0000390",
+      "company": "株式会社セントラル・デイリー",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-03】正式運用",
+      "is_won": true,
+      "billing_month": "2025-11-25",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 623,
+      "name": "案件0000391",
+      "company": "株式会社Sales Marker",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2025-11-30",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 624,
+      "name": "案件0000392",
+      "company": "SecureNavi株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-03】正式運用",
+      "is_won": true,
+      "billing_month": "2026-04-01",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 625,
+      "name": "案件0000393",
+      "company": "株式会社エネイブル",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2025-11-30",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 626,
+      "name": "案件0000394",
+      "company": "株式会社ドラEVER",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-03】正式運用",
+      "is_won": true,
+      "billing_month": "2026-02-04",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 627,
+      "name": "案件0000395",
+      "company": "株式会社Birth",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-01】本番初期設定・キックオフ",
+      "is_won": true,
+      "billing_month": "2025-06-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 949,
+      "name": "案件0000717",
+      "company": "Limelight株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 343,
+      "name": "案件0000148",
+      "company": "プライム・スター株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 628,
+      "name": "案件0000396",
+      "company": "スタディポケット株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-03】正式運用",
+      "is_won": true,
+      "billing_month": "2025-08-01",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 629,
+      "name": "案件0000397",
+      "company": "株式会社モビーレ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 630,
+      "name": "案件0000398",
+      "company": "株式会社バリューデザイン",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 631,
+      "name": "案件0000399",
+      "company": "株式会社スマートドライブ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 632,
+      "name": "案件0000400",
+      "company": "株式会社JX通信社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 634,
+      "name": "案件0000402",
+      "company": "ドーナッツロボティクス株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-03】正式運用",
+      "is_won": true,
+      "billing_month": "2025-09-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 635,
+      "name": "案件0000403",
+      "company": "株式会社グローバルワン",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-03】正式運用",
+      "is_won": true,
+      "billing_month": "2026-04-01",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 844,
+      "name": "案件0000612",
+      "company": "株式会社NSD",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 50000,
+      "weighted_amount": 15000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 950,
+      "name": "案件0000718",
+      "company": "合同会社La.Beat",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 350,
+      "name": "案件0000155",
+      "company": "株式会社アドケイト",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 578,
+      "name": "案件0000346",
+      "company": "SORABITO株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 951,
+      "name": "案件0000719",
+      "company": "株式会社Izul",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 352,
+      "name": "案件0000157",
+      "company": "株式会社アクティブアンドカンパニー",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-06】口頭受注",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 354,
+      "name": "案件0000159",
+      "company": "株式会社enstem",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-06】口頭受注",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 497,
+      "name": "案件0000302",
+      "company": "株式会社クライド",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 911,
+      "name": "案件0000679",
+      "company": "株式会社Speria",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 555,
+      "name": "案件0000037",
+      "company": "株式会社ベネッセコーポレーション",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "-",
+      "next_action": ""
+    },
+    {
+      "id": 636,
+      "name": "案件0000404",
+      "company": "サポートリンク株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-01】本番初期設定・キックオフ",
+      "is_won": true,
+      "billing_month": "2025-11-30",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 638,
+      "name": "案件0000406",
+      "company": "エリアリンク株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-03】正式運用",
+      "is_won": true,
+      "billing_month": "2026-04-01",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 639,
+      "name": "案件0000407",
+      "company": "株式会社イニシャルステート",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-03】正式運用",
+      "is_won": true,
+      "billing_month": "2025-06-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 640,
+      "name": "案件0000408",
+      "company": "株式会社エクスパートナーズ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-03】正式運用",
+      "is_won": true,
+      "billing_month": "2025-09-30",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 641,
+      "name": "案件0000409",
+      "company": "JAPAN AI株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-01】本番初期設定・キックオフ",
+      "is_won": true,
+      "billing_month": "2025-09-01",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 952,
+      "name": "案件0000720",
+      "company": "UNEAX株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 356,
+      "name": "案件0000161",
+      "company": "アラームボックス株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 357,
+      "name": "案件0000162",
+      "company": "株式会社OTOGI",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 358,
+      "name": "案件0000163",
+      "company": "株式会社マーキュロップ",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "C",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-05】継続受注",
+      "is_won": true,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 642,
+      "name": "案件0000410",
+      "company": "株式会社Merone",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2025-11-30",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 644,
+      "name": "案件0000412",
+      "company": "株式会社ウェルモ",
+      "categories": [
+        "Partner startup"
+      ],
+      "yomi": "C",
+      "amount": 500000,
+      "weighted_amount": 250000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 645,
+      "name": "案件0000413",
+      "company": "株式会社Banly",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 912,
+      "name": "案件0000680",
+      "company": "株式会社ワンキャリア",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 100000,
+      "weighted_amount": 30000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 361,
+      "name": "案件0000166",
+      "company": "弥生株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "A",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-06】口頭受注",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 503,
+      "name": "案件0000308",
+      "company": "Fantrec株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 815,
+      "name": "案件0000583",
+      "company": "ブレーメン",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 504,
+      "name": "案件0000309",
+      "company": "jinjer株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 647,
+      "name": "案件0000415",
+      "company": "株式会社シューマツワーカー",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-01】本番初期設定・キックオフ",
+      "is_won": true,
+      "billing_month": "2026-01-01",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 913,
+      "name": "案件0000681",
+      "company": "VIPソフトウェア株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 362,
+      "name": "案件0000167",
+      "company": "HelpTech株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 363,
+      "name": "案件0000168",
+      "company": "TLPC株式会社",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 816,
+      "name": "案件0000584",
+      "company": "株式会社VALTIC",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 364,
+      "name": "案件0000169",
+      "company": "株式会社アントアント",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 365,
+      "name": "案件0000170",
+      "company": "レッドフォックス株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 648,
+      "name": "案件0000416",
+      "company": "株式会社JasOne",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2025-08-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 914,
+      "name": "案件0000682",
+      "company": "ファイナンシャルスタンダード株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "C",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 817,
+      "name": "案件0000585",
+      "company": "株式会社SceneLive",
+      "categories": [
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "B",
+      "amount": 500000,
+      "weighted_amount": 350000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 370,
+      "name": "案件0000175",
+      "company": "株式会社iiba",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 649,
+      "name": "案件0000417",
+      "company": "最適でんき株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【CS-03】正式運用",
+      "is_won": true,
+      "billing_month": "2026-02-28",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 651,
+      "name": "案件0000419",
+      "company": "株式会社chipper",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-01】本番初期設定・キックオフ",
+      "is_won": true,
+      "billing_month": "2025-10-01",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 915,
+      "name": "案件0000683",
+      "company": "レベルアップ社会保険労務士法人",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 1,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 916,
+      "name": "案件0000684",
+      "company": "サクテキ株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 818,
+      "name": "案件0000586",
+      "company": "株式会社中島製作所",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 378,
+      "name": "案件0000183",
+      "company": "株式会社PKSHA Associates",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 652,
+      "name": "案件0000420",
+      "company": "リクルートラボ株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-01】本番初期設定・キックオフ",
+      "is_won": true,
+      "billing_month": "2025-10-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 380,
+      "name": "案件0000185",
+      "company": "株式会社ダトラ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 653,
+      "name": "案件0000421",
+      "company": "株式会社DiaL Shift",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "A",
+      "amount": 500000,
+      "weighted_amount": 400000,
+      "phase": "【CS-01】本番初期設定・キックオフ",
+      "is_won": true,
+      "billing_month": "2025-12-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 654,
+      "name": "案件0000422",
+      "company": "図研ネットウエイブ株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "B",
+      "amount": 200000,
+      "weighted_amount": 140000,
+      "phase": "【CS-05】継続受注",
+      "is_won": true,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 656,
+      "name": "案件0000424",
+      "company": "株式会社ネットプロテクションズ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 657,
+      "name": "案件0000425",
+      "company": "株式会社エンパワー",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "A",
+      "amount": 400000,
+      "weighted_amount": 320000,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 659,
+      "name": "案件0000427",
+      "company": "gf.Ｚ株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2025-12-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 660,
+      "name": "案件0000428",
+      "company": "浜松貿易株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2025-12-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 819,
+      "name": "案件0000587",
+      "company": "株式会社シンキー",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 846,
+      "name": "案件0000614",
+      "company": "株式会社CSE",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "A",
+      "amount": 500000,
+      "weighted_amount": 400000,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 917,
+      "name": "案件0000685",
+      "company": "ポノテク株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 381,
+      "name": "案件0000186",
+      "company": "VIPソフトウェア株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 433,
+      "name": "案件0000238",
+      "company": "株式会社カミナシ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 662,
+      "name": "案件0000430",
+      "company": "株式会社GeNEE",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "A",
+      "amount": 200000,
+      "weighted_amount": 160000,
+      "phase": "【FS-06】口頭受注",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 664,
+      "name": "案件0000432",
+      "company": "株式会社XAION DATA",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2025-12-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 668,
+      "name": "案件0000436",
+      "company": "アンドドット株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 669,
+      "name": "案件0000437",
+      "company": "株式会社イトーキ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 672,
+      "name": "案件0000440",
+      "company": "株式会社HataLuck and Person",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "B",
+      "amount": 500000,
+      "weighted_amount": 350000,
+      "phase": "【CS-01】本番初期設定・キックオフ",
+      "is_won": true,
+      "billing_month": "2026-01-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 673,
+      "name": "案件0000441",
+      "company": "デジタルダイナミック株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "B",
+      "amount": 1000000,
+      "weighted_amount": 700000,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 675,
+      "name": "案件0000443",
+      "company": "Sansan株式会社",
+      "categories": [
+        "CoPASS",
+        "Partner startup"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 918,
+      "name": "案件0000686",
+      "company": "株式会社GA technologies",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 384,
+      "name": "案件0000189",
+      "company": "株式会社Prodrone",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 848,
+      "name": "案件0000616",
+      "company": "社会保険労務士法人みらいパートナーズ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 663,
+      "name": "案件0000431",
+      "company": "SBIセキュリティ・ソリューションズ株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2025-12-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 677,
+      "name": "案件0000445",
+      "company": "案件0000445",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 919,
+      "name": "案件0000687",
+      "company": "ファンズ株式会社",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "C",
+      "amount": 50000,
+      "weighted_amount": 25000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 388,
+      "name": "案件0000193",
+      "company": "株式会社Leaner Technologies",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 678,
+      "name": "案件0000446",
+      "company": "株式会社マネーフォワード",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 70000,
+      "weighted_amount": 35000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 681,
+      "name": "案件0000449",
+      "company": "株式会社KOCHI",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "A",
+      "amount": 900000,
+      "weighted_amount": 720000,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2025-12-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 682,
+      "name": "案件0000450",
+      "company": "株式会社トロワ",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "A",
+      "amount": 400000,
+      "weighted_amount": 320000,
+      "phase": "【FS-06】口頭受注",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 684,
+      "name": "案件0000452",
+      "company": "インヴェンティット株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 150000,
+      "weighted_amount": 45000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 685,
+      "name": "案件0000453",
+      "company": "株式会社ベイカレント・コンサルティング",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2025-12-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 686,
+      "name": "案件0000454",
+      "company": "株式会社XiM",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 150000,
+      "weighted_amount": 75000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 689,
+      "name": "案件0000457",
+      "company": "株式会社イルグルム",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2025-12-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 690,
+      "name": "案件0000458",
+      "company": "クックビズ株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 150000,
+      "weighted_amount": 75000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 820,
+      "name": "案件0000588",
+      "company": "株式会社Mer",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "C",
+      "amount": 500000,
+      "weighted_amount": 250000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 849,
+      "name": "案件0000617",
+      "company": "ユーソナー株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 150000,
+      "weighted_amount": 45000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 691,
+      "name": "案件0000459",
+      "company": "SALES GO株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2025-12-31",
+      "owner": "SALES GO管理者",
+      "next_action": ""
+    },
+    {
+      "id": 692,
+      "name": "案件0000460",
+      "company": "株式会社ZenX",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 693,
+      "name": "案件0000461",
+      "company": "NTTコムオンラインマーケティングソリューション株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2025-12-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 694,
+      "name": "案件0000462",
+      "company": "Indeed Japan株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2025-12-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 234,
+      "name": "案件0000039",
+      "company": "ALSOK株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 235,
+      "name": "案件0000040",
+      "company": "案件0000040",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 821,
+      "name": "案件0000589",
+      "company": "株式会社LayerX",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 389,
+      "name": "案件0000194",
+      "company": "株式会社TRiCERA",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "A",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 695,
+      "name": "案件0000463",
+      "company": "株式会社ライオン事務器",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 696,
+      "name": "案件0000464",
+      "company": "A.R.メディコム・インク・アジア・リミテッド（メディコムジャパン）",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2025-12-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 698,
+      "name": "案件0000466",
+      "company": "Uniforce株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 700,
+      "name": "案件0000468",
+      "company": "株式会社カトルセ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 701,
+      "name": "案件0000469",
+      "company": "株式会社アプクロ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 702,
+      "name": "案件0000470",
+      "company": "株式会社Prediction",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 706,
+      "name": "案件0000474",
+      "company": "株式会社FIXER",
+      "categories": [
+        "Partner startup"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 850,
+      "name": "案件0000618",
+      "company": "株式会社ログラス",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 709,
+      "name": "案件0000477",
+      "company": "株式会社ジェムケリーグループホールディングス",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 150000,
+      "weighted_amount": 45000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 713,
+      "name": "案件0000481",
+      "company": "マンパワーグループ株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "A",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 714,
+      "name": "案件0000482",
+      "company": "Paintnote株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 715,
+      "name": "案件0000483",
+      "company": "株式会社リチカ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 50000,
+      "weighted_amount": 15000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 716,
+      "name": "案件0000484",
+      "company": "株式会社Avenir",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 717,
+      "name": "案件0000485",
+      "company": "シャープエネルギーソリューション株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 150000,
+      "weighted_amount": 45000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 718,
+      "name": "案件0000486",
+      "company": "株式会社ブランドクラウド",
+      "categories": [
+        "Partner startup"
+      ],
+      "yomi": "B",
+      "amount": 500000,
+      "weighted_amount": 350000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 822,
+      "name": "案件0000590",
+      "company": "受発注バスターズ株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 851,
+      "name": "案件0000619",
+      "company": "株式会社Agent Sun",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 236,
+      "name": "案件0000041",
+      "company": "株式会社光通信",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 852,
+      "name": "案件0000620",
+      "company": "株式会社シューマツワーカー",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 719,
+      "name": "案件0000487",
+      "company": "メディグル株式会社",
+      "categories": [
+        "Partner startup"
+      ],
+      "yomi": "C",
+      "amount": 500000,
+      "weighted_amount": 250000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 720,
+      "name": "案件0000488",
+      "company": "ミライエ株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 722,
+      "name": "案件0000490",
+      "company": "株式会社オープンエイト",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 723,
+      "name": "案件0000491",
+      "company": "SALESCORE株式会社",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 726,
+      "name": "案件0000494",
+      "company": "弥生株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 727,
+      "name": "案件0000495",
+      "company": "一般社団法人ロングライフサポート協会",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "B",
+      "amount": 125000,
+      "weighted_amount": 87500,
+      "phase": "【CS-02】代理店向け設定・キックオフ",
+      "is_won": true,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 729,
+      "name": "案件0000497",
+      "company": "弥生株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "C",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 730,
+      "name": "案件0000498",
+      "company": "株式会社カンネツ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 731,
+      "name": "案件0000499",
+      "company": "酒井重工業株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 732,
+      "name": "案件0000500",
+      "company": "ロシュ・ダイアグノスティックス株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 733,
+      "name": "案件0000501",
+      "company": "株式会社KUCHIKOMI",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 734,
+      "name": "案件0000502",
+      "company": "株式会社時空テクノロジーズ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 735,
+      "name": "案件0000503",
+      "company": "株式会社ジーアイボット",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 736,
+      "name": "案件0000504",
+      "company": "株式会社ツギノテ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 737,
+      "name": "案件0000505",
+      "company": "株式会社Luci",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 738,
+      "name": "案件0000506",
+      "company": "株式会社オプティム",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 150000,
+      "weighted_amount": 45000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 739,
+      "name": "案件0000507",
+      "company": "株式会社プロネクサス",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 740,
+      "name": "案件0000508",
+      "company": "株式会社セールスコムズ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "A",
+      "amount": 100000,
+      "weighted_amount": 80000,
+      "phase": "【CS-01】本番初期設定・キックオフ",
+      "is_won": true,
+      "billing_month": "2026-01-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 741,
+      "name": "案件0000509",
+      "company": "株式会社エンパワー",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-06-30",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 742,
+      "name": "案件0000510",
+      "company": "株式会社ゼネックコミュニケーション",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 743,
+      "name": "案件0000511",
+      "company": "株式会社キョウエイアドインターナショナル",
+      "categories": [
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 744,
+      "name": "案件0000512",
+      "company": "シン・エナジー株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "",
+      "amount": 300000,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 747,
+      "name": "案件0000515",
+      "company": "PLAINER株式会社",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 853,
+      "name": "案件0000621",
+      "company": "Anyflow株式会社",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-08-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 748,
+      "name": "案件0000516",
+      "company": "株式会社IFREA",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 150000,
+      "weighted_amount": 45000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 242,
+      "name": "案件0000047",
+      "company": "SCSK株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 750,
+      "name": "案件0000518",
+      "company": "株式会社JOYCLE",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-09-30",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 751,
+      "name": "案件0000519",
+      "company": "合同会社アウラント",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 755,
+      "name": "案件0000523",
+      "company": "メディフォン株式会社",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "C",
+      "amount": 500000,
+      "weighted_amount": 250000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 757,
+      "name": "案件0000525",
+      "company": "株式会社マネジメントソリューションズ",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 245,
+      "name": "案件0000050",
+      "company": "株式会社出前館",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 854,
+      "name": "案件0000622",
+      "company": "株式会社システム情報企画",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 763,
+      "name": "案件0000531",
+      "company": "ジェイズ・コミュニケーション株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 50000,
+      "weighted_amount": 15000,
+      "phase": "【FS-04】デモ環境発行",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 246,
+      "name": "案件0000051",
+      "company": "ミツウロコグリーンエネルギー株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 247,
+      "name": "案件0000052",
+      "company": "パシフィックコンサルタンツ株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 345,
+      "name": "案件0000150",
+      "company": "株式会社スリーシェイク",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 759,
+      "name": "案件0000527",
+      "company": "Sushi AI株式会社",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 760,
+      "name": "案件0000528",
+      "company": "株式会社sinsコスメティクス",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 761,
+      "name": "案件0000529",
+      "company": "株式会社ヒッツカンパニー",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 100000,
+      "weighted_amount": 50000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 762,
+      "name": "案件0000530",
+      "company": "株式会社STARUP",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "B",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 765,
+      "name": "案件0000533",
+      "company": "株式会社エヌティコーブン",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 766,
+      "name": "案件0000534",
+      "company": "株式会社アイ・ラーニング",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 150000,
+      "weighted_amount": 45000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 767,
+      "name": "案件0000535",
+      "company": "株式会社 All in Motions",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 150000,
+      "weighted_amount": 45000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 773,
+      "name": "案件0000541",
+      "company": "クリエイティブラビット株式会社",
+      "categories": [
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 776,
+      "name": "案件0000544",
+      "company": "株式会社AI Shift",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 779,
+      "name": "案件0000547",
+      "company": "株式会社イーネットワークシステムズ",
+      "categories": [
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 780,
+      "name": "案件0000548",
+      "company": "株式会社ROUTE06",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 150000,
+      "weighted_amount": 45000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 782,
+      "name": "案件0000550",
+      "company": "株式会社DDR",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 783,
+      "name": "案件0000551",
+      "company": "日本営業推進センター株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 500000,
+      "weighted_amount": 250000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 786,
+      "name": "案件0000554",
+      "company": "NECソリューションイノベータ株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 824,
+      "name": "案件0000592",
+      "company": "SANGO株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 324,
+      "name": "案件0000129",
+      "company": "株式会社Matchbox Technologies",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 842,
+      "name": "案件0000610",
+      "company": "AI inside株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 828,
+      "name": "案件0000596",
+      "company": "crack株式会社",
+      "categories": [
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "C",
+      "amount": 500000,
+      "weighted_amount": 250000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 839,
+      "name": "案件0000607",
+      "company": "株式会社プレックス",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 840,
+      "name": "案件0000608",
+      "company": "株式会社SocialDog",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 841,
+      "name": "案件0000609",
+      "company": "株式会社サイバーセキュリティクラウド",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "B",
+      "amount": 150000,
+      "weighted_amount": 105000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 832,
+      "name": "案件0000600",
+      "company": "株式会社尾鍋組",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 150000,
+      "weighted_amount": 75000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 845,
+      "name": "案件0000613",
+      "company": "Blue Bank株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 252,
+      "name": "案件0000057",
+      "company": "株式会社ネオキャリア",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 256,
+      "name": "案件0000061",
+      "company": "株式会社コベルコ科研",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 259,
+      "name": "案件0000064",
+      "company": "株式会社フォーバルテレコム",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 313,
+      "name": "案件0000118",
+      "company": "株式会社メディアブレイン",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 857,
+      "name": "案件0000625",
+      "company": "株式会社トレタ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 877,
+      "name": "案件0000645",
+      "company": "株式会社Future Sample",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 886,
+      "name": "案件0000654",
+      "company": "株式会社人財マネジメント",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 878,
+      "name": "案件0000646",
+      "company": "株式会社 ベルシステム24",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 885,
+      "name": "案件0000653",
+      "company": "ユーザックシステム株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 50000,
+      "weighted_amount": 15000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 260,
+      "name": "案件0000065",
+      "company": "セーフィー株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 261,
+      "name": "案件0000066",
+      "company": "レモンガス株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "A",
+      "amount": 200000,
+      "weighted_amount": 160000,
+      "phase": "【FS-06】口頭受注",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 304,
+      "name": "案件0000109",
+      "company": "インフォテクノ株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 858,
+      "name": "案件0000626",
+      "company": "イエロ株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 887,
+      "name": "案件0000655",
+      "company": "株式会社ユイコモンズ",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 889,
+      "name": "案件0000657",
+      "company": "株式会社マーキュロップ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 262,
+      "name": "案件0000067",
+      "company": "株式会社ブレインパッド",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 859,
+      "name": "案件0000627",
+      "company": "株式会社デジタルアンディバイド",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 395,
+      "name": "案件0000200",
+      "company": "株式会社Cloud3",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 892,
+      "name": "案件0000660",
+      "company": "株式会社ボルテックス",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 904,
+      "name": "案件0000672",
+      "company": "株式会社Jストリーム",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 891,
+      "name": "案件0000659",
+      "company": "福岡社会保険削減連合会",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 860,
+      "name": "案件0000628",
+      "company": "株式会社R&Cマネジメントリーダー",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 398,
+      "name": "案件0000203",
+      "company": "株式会社トラスクエタ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 264,
+      "name": "案件0000069",
+      "company": "株式会社Works Human Intelligence",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 268,
+      "name": "案件0000073",
+      "company": "保土谷化学工業株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 270,
+      "name": "案件0000075",
+      "company": "株式会社ビズリーチ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 100000,
+      "weighted_amount": 30000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 272,
+      "name": "案件0000077",
+      "company": "株式会社ニューズピックス",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 274,
+      "name": "案件0000079",
+      "company": "株式会社東具",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 255,
+      "name": "案件0000060",
+      "company": "株式会社ハヤカワカンパニー",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 861,
+      "name": "案件0000629",
+      "company": "株式会社Milly",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 241,
+      "name": "案件0000046",
+      "company": "株式会社メルカリ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 862,
+      "name": "案件0000630",
+      "company": "株式会社INVOX",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 243,
+      "name": "案件0000048",
+      "company": "NISSHA株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 414,
+      "name": "案件0000219",
+      "company": "株式会社レイデルジャパン",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 415,
+      "name": "案件0000220",
+      "company": "Now You See株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 233,
+      "name": "案件0000038",
+      "company": "伊藤忠エネクス株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "A",
+      "amount": 300000,
+      "weighted_amount": 240000,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 863,
+      "name": "案件0000631",
+      "company": "ソニー生命保険株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 865,
+      "name": "案件0000633",
+      "company": "セイコーソリューションズ株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 447,
+      "name": "案件0000252",
+      "company": "富士フイルムプリンティングシステムズ株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 868,
+      "name": "案件0000636",
+      "company": "株式会社Asobiya",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 486,
+      "name": "案件0000291",
+      "company": "合同会社人事設計",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 326,
+      "name": "案件0000131",
+      "company": "株式会社アルバイトタイムス",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 511,
+      "name": "案件0000316",
+      "company": "株式会社助太刀",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "A",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2025-11-30",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 512,
+      "name": "案件0000317",
+      "company": "日本放送協会",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 372,
+      "name": "案件0000177",
+      "company": "株式会社Fleekdrive",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 377,
+      "name": "案件0000182",
+      "company": "株式会社レオンテクノロジー",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 379,
+      "name": "案件0000184",
+      "company": "株式会社カスタメディア",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 570,
+      "name": "案件0000338",
+      "company": "株式会社エルティービー",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 386,
+      "name": "案件0000191",
+      "company": "株式会社アルダグラム",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 251,
+      "name": "案件0000056",
+      "company": "マンパワーグループ株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "A",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 397,
+      "name": "案件0000202",
+      "company": "株式会社ネットショップ支援室",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 592,
+      "name": "案件0000360",
+      "company": "株式会社インフォネット",
+      "categories": [
+        "Partner startup"
+      ],
+      "yomi": "C",
+      "amount": 500000,
+      "weighted_amount": 250000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 293,
+      "name": "案件0000098",
+      "company": "株式会社PLAN-B",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "A",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 402,
+      "name": "案件0000207",
+      "company": "株式会社ネクフル",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2025-11-30",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 633,
+      "name": "案件0000401",
+      "company": "GameWith ARTERIA株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 281,
+      "name": "案件0000086",
+      "company": "株式会社SICシステム",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 643,
+      "name": "案件0000411",
+      "company": "株式会社QTnet",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2025-10-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 658,
+      "name": "案件0000426",
+      "company": "株式会社テラスカイ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2025-12-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 680,
+      "name": "案件0000448",
+      "company": "株式会社グランフーズ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 150000,
+      "weighted_amount": 75000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 699,
+      "name": "案件0000467",
+      "company": "株式会社L is B",
+      "categories": [
+        "Partner startup"
+      ],
+      "yomi": "C",
+      "amount": 500000,
+      "weighted_amount": 250000,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 843,
+      "name": "案件0000611",
+      "company": "株式会社ゼンテクト",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 728,
+      "name": "案件0000496",
+      "company": "Co-Growth株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 756,
+      "name": "案件0000524",
+      "company": "株式会社AIメディカルサービス",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 856,
+      "name": "案件0000624",
+      "company": "株式会社ZAICO",
+      "categories": [
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 740000,
+      "weighted_amount": 222000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 864,
+      "name": "案件0000632",
+      "company": "株式会社S&Kエージェント",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 866,
+      "name": "案件0000634",
+      "company": "株式会社goo-dy.",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 867,
+      "name": "案件0000635",
+      "company": "ソニーマーケティング株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 855,
+      "name": "案件0000623",
+      "company": "DXO株式会社",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 870,
+      "name": "案件0000638",
+      "company": "株式会社マーキュロップ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 237600,
+      "weighted_amount": 0,
+      "phase": "【CS-05】継続受注",
+      "is_won": true,
+      "billing_month": "2026-03-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 893,
+      "name": "案件0000661",
+      "company": "クロスマート株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 267,
+      "name": "案件0000072",
+      "company": "株式会社タイミー",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 899,
+      "name": "案件0000667",
+      "company": "株式会社ライフアップ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 150000,
+      "weighted_amount": 45000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 895,
+      "name": "案件0000663",
+      "company": "株式会社リズムチェンジ",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 896,
+      "name": "案件0000664",
+      "company": "株式会社Re.建設",
+      "categories": [
+        "Partner Boost",
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 902,
+      "name": "案件0000670",
+      "company": "ハイタッチ・マーケティング有限責任事業組合",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 903,
+      "name": "案件0000671",
+      "company": "株式会社フェニックス",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 244,
+      "name": "案件0000049",
+      "company": "ダイトロン株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 908,
+      "name": "案件0000676",
+      "company": "コムテック株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 435,
+      "name": "案件0000240",
+      "company": "株式会社JME Partners",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 464,
+      "name": "案件0000269",
+      "company": "リーンマーケティング株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 560,
+      "name": "案件0000328",
+      "company": "案件0000328",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 566,
+      "name": "案件0000334",
+      "company": "リーバル株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 567,
+      "name": "案件0000335",
+      "company": "有限会社リビングCG",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "B",
+      "amount": 50000,
+      "weighted_amount": 35000,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 615,
+      "name": "案件0000383",
+      "company": "株式会社ニュートラルワークス",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-01】初回商談日FIX",
+      "is_won": false,
+      "billing_month": "",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 616,
+      "name": "案件0000384",
+      "company": "株式会社GATARI",
+      "categories": [
+        "Partner startup"
+      ],
+      "yomi": "B",
+      "amount": 500000,
+      "weighted_amount": 350000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-01-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 617,
+      "name": "案件0000385",
+      "company": "株式会社ソラミチシステム",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 50000,
+      "weighted_amount": 25000,
+      "phase": "【FS-05】デモ環境利用",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 637,
+      "name": "案件0000405",
+      "company": "サイバネットシステム株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-08】申込書回収",
+      "is_won": false,
+      "billing_month": "2025-11-30",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 650,
+      "name": "案件0000418",
+      "company": "株式会社リエネ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【CS-03】正式運用",
+      "is_won": true,
+      "billing_month": "2026-03-31",
+      "owner": "渡邉 皓太",
+      "next_action": ""
+    },
+    {
+      "id": 665,
+      "name": "案件0000433",
+      "company": "ナインアウト株式会社",
+      "categories": [
+        "Partner startup"
+      ],
+      "yomi": "D",
+      "amount": 500000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 687,
+      "name": "案件0000455",
+      "company": "百年計画株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "C",
+      "amount": 100000,
+      "weighted_amount": 50000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 724,
+      "name": "案件0000492",
+      "company": "株式会社スタジオ・アルカナ",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-02-28",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 770,
+      "name": "案件0000538",
+      "company": "アナリティカル・テクノロジーズ株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 794,
+      "name": "案件0000562",
+      "company": "株式会社オープンルーム",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 797,
+      "name": "案件0000565",
+      "company": "株式会社LOG",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 804,
+      "name": "案件0000572",
+      "company": "スマートキャンプ株式会社",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "B",
+      "amount": 1600000,
+      "weighted_amount": 1120000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-03-28",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 805,
+      "name": "案件0000573",
+      "company": "株式会社Tri Bridge",
+      "categories": [
+        "Partner Boost"
+      ],
+      "yomi": "C",
+      "amount": 500000,
+      "weighted_amount": 250000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-31",
+      "owner": "山﨑 泰資",
+      "next_action": ""
+    },
+    {
+      "id": 809,
+      "name": "案件0000577",
+      "company": "ハートコア株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 810,
+      "name": "案件0000578",
+      "company": "理想科学工業株式会社",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "B",
+      "amount": 250000,
+      "weighted_amount": 175000,
+      "phase": "【FS-03】本提案実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "牛丸 順登",
+      "next_action": ""
+    },
+    {
+      "id": 812,
+      "name": "案件0000580",
+      "company": "株式会社シグマクシス",
+      "categories": [
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "D",
+      "amount": 300000,
+      "weighted_amount": 90000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 813,
+      "name": "案件0000581",
+      "company": "株式会社アドバンテッジリスクマネジメント",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-01】アプローチ前",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 814,
+      "name": "案件0000582",
+      "company": "株式会社アクトプロ",
+      "categories": [
+        "CoPASS",
+        "CoPASS BPO"
+      ],
+      "yomi": "C",
+      "amount": 300000,
+      "weighted_amount": 150000,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 823,
+      "name": "案件0000591",
+      "company": "株式会社コラボスタイル",
+      "categories": [
+        "CoPASS"
+      ],
+      "yomi": "B",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 827,
+      "name": "案件0000595",
+      "company": "株式会社トライ・インターナショナル",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "D",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-03-31",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    },
+    {
+      "id": 909,
+      "name": "案件0000677",
+      "company": "キヤノンITソリューションズ株式会社",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "大森 健太朗",
+      "next_action": ""
+    },
+    {
+      "id": 910,
+      "name": "案件0000678",
+      "company": "株式会社Fied",
+      "categories": [
+        "未分類"
+      ],
+      "yomi": "",
+      "amount": 0,
+      "weighted_amount": 0,
+      "phase": "【IS-03】アプローチ済",
+      "is_won": false,
+      "billing_month": "2026-04-30",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    }
+  ],
+  "tasks": {
+    "standing": [
+      {
+        "id": "standing-0",
+        "type": "standing",
+        "title": "次回打ち合わせの準備",
+        "owner": null
+      },
+      {
+        "id": "standing-1",
+        "type": "standing",
+        "title": "本日のお礼メールの送付",
+        "owner": null
+      }
+    ],
+    "next_action": [
+      {
+        "id": "na-584",
+        "type": "next_action",
+        "owner": "山﨑 泰資",
+        "company": "株式会社ゼクウ",
+        "deal_name": "案件0000352",
+        "next_action": "・2025/12/9：初回商談",
+        "phase": "【FS-03】本提案実施済",
+        "yomi": "D"
+      }
+    ],
+    "slack": []
+  }
 }
