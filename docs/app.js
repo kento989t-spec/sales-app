@@ -665,20 +665,22 @@
     const el = document.getElementById("task-companies");
     if (!el) return;
 
-    const slackAll = DATA.tasks?.slack       ?? [];
-    const naAll    = DATA.tasks?.next_action ?? [];
+    const slackAll  = DATA.tasks?.slack          ?? [];
+    const naAll     = DATA.tasks?.next_action    ?? [];
+    const dealComps = DATA.tasks?.deal_companies ?? [];
 
     const slack = activeOwner ? slackAll.filter(t => !t.owner || t.owner === activeOwner) : slackAll;
     const na    = activeOwner ? naAll.filter(t => t.owner === activeOwner) : naAll;
-
-    if (slack.length === 0 && na.length === 0) {
-      el.innerHTML = `<p class="task-empty" style="padding:24px">タスクなし</p>`;
-      return;
-    }
+    const dcs   = activeOwner ? dealComps.filter(dc => !dc.owner || dc.owner === activeOwner) : dealComps;
 
     const companies = new Map();
     const meetingsByCompany = new Map();
 
+    // 管理対象全会社を起点にセクションを生成
+    for (const dc of dcs) {
+      const key = dc.company ?? "（会社不明）";
+      if (!companies.has(key)) companies.set(key, { slack: [], na: [], custom: [], owner: dc.owner });
+    }
     for (const t of slack) {
       const key = t.company ?? "（会社不明）";
       if (!companies.has(key)) companies.set(key, { slack: [], na: [], custom: [], owner: t.owner });
@@ -696,6 +698,11 @@
       const key = t.company ?? "（会社不明）";
       if (!companies.has(key)) companies.set(key, { slack: [], na: [], custom: [], owner: null });
       companies.get(key).custom.push(t);
+    }
+
+    if (companies.size === 0) {
+      el.innerHTML = `<p class="task-empty" style="padding:24px">タスクなし</p>`;
+      return;
     }
 
     const allDeals = DATA.all_deals ?? DATA.deals ?? [];
@@ -754,6 +761,13 @@
         for (let i = 0; i < STANDING_TITLES.length; i++) {
           const id = `standing-${company}-${ts}-${i}`;
           classify(taskCard(id, "standing-label", "定常", STANDING_TITLES[i], "", false, meetingDate), id);
+        }
+      }
+      // Slack議事録がない会社にも定常タスクを追加（全管理対象で定常を持てるように）
+      if (meetingTsList.size === 0) {
+        for (let i = 0; i < STANDING_TITLES.length; i++) {
+          const id = `standing-${company}-base-${i}`;
+          classify(taskCard(id, "standing-label", "定常", STANDING_TITLES[i], "", false, ""), id);
         }
       }
       for (const t of (cTasks ?? [])) {

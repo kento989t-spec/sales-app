@@ -168,6 +168,21 @@ async function main() {
       yomi: d.yomi,
     }));
 
+  // 管理対象会社一覧（タスク管理の起点として全案件会社を列挙）
+  const seenCompanies = new Set<string>();
+  const dealCompanies = allDeals
+    .filter(d => {
+      if (!d.company || seenCompanies.has(d.company)) return false;
+      seenCompanies.add(d.company);
+      return true;
+    })
+    .map(d => ({
+      company: d.company,
+      owner: d.owner,
+      yomi: d.yomi,
+      billing_month: d.billing_month,
+    }));
+
   // Slack議事録
   console.log("Slackタスク取得中...");
   const slackTasks = await fetchSlackTasks(CONFIG);
@@ -188,6 +203,7 @@ async function main() {
       standing: standingTasks,
       next_action: naTasks,
       slack: slackTasks,
+      deal_companies: dealCompanies,
     },
   };
 
