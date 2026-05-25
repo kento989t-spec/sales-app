@@ -1,3 +1,7 @@
+/**
+ * Frictio 議事録チャンネルから GoCoo登録_営業 プレイブックのスレッドを読み取り
+ * ネクストアクションを抽出する
+ */
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -8,20 +12,9 @@ export interface SlackTask {
   id: string;
   type: "slack";
   owner: string | null;
+  company: string | null;
   title: string;
   source_ts: string;
-  raw: string;
-}
-
-interface SlackMessage {
-  ts: string;
-  text: string;
-}
-
-interface SlackHistoryResponse {
-  ok: boolean;
-  messages?: SlackMessage[];
-  error?: string;
 }
 
 function extractBotToken(): string {
@@ -33,49 +26,93 @@ function extractBotToken(): string {
   return process.env.SLACK_BOT_TOKEN ?? "";
 }
 
+async function slackGet<T>(token: string, method: string, params: Record<string, string>): Promise<T> {
+  const url = new URL(`https://slack.com/api/${method}`);
+  Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+  const res = await fetch(url.toString(), { headers: { Authorization: `Bearer ${token}` } });
+  return res.json() as Promise<T>;
+}
+
+// Frictio スレッドの構造化フィールドをパース（*フィールド名*\n- 値 の形式）
+function parseStructuredFields(text: string): Record<string, string> {
+  const fields: Record<string, string> = {};
+  const regex = /\*([^*\n]+)\*\n-\s*([\s\S]*?)(?=\n\*[^*\n]+\*\n|$)/g;
+  let m: RegExpExecArray | null;
+  while ((m = regex.exec(text)) !== null) {
+    fields[m[1].trim()] = m[2].trim();
+  }
+  return fields;
+}
+
+// 親メッセージから担当者名を抽出
+function extractOwner(text: string): string | null {
+  const m = text.match(/:office_worker:\s+([^\n<>]+)/);
+  if (!m) return null;
+  return m[1].trim().replace(/\s+/g, " ") || null;
+}
+
 export async function fetchSlackTasks(config: {
   slack_minutes_channel?: string;
-  slack_na_patterns?: string[];
 }): Promise<SlackTask[]> {
   const token = extractBotToken();
   const channel = config.slack_minutes_channel ?? "";
-  const patterns = config.slack_na_patterns ?? ["NA:", "ネクストアクション:"];
-
   if (!token || !channel) return [];
 
   try {
-    const url = `https://slack.com/api/conversations.history?channel=${encodeURIComponent(channel)}&limit=50`;
-    const res = await fetch(url, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await res.json() as SlackHistoryResponse;
+    const history = await slackGet<{
+      ok: boolean; error?: string;
+      messages?: Array<{ ts: string; text: string; reply_count?: number }>;
+    }>(token, "conversations.history", { channel, limit: "50" });
 
-    if (!data.ok || !data.messages) {
-      console.warn(`Slack取得スキップ: ${data.error ?? "unknown error"}`);
+    if (!history.ok) {
+      console.warn(`Slack取得スキップ: ${history.error}`);
       return [];
     }
 
     const tasks: SlackTask[] = [];
-    for (const msg of data.messages) {
-      const lines = msg.text.split("\n");
-      for (const line of lines) {
-        const trimmed = line.trim();
-        if (!patterns.some(p => trimmed.includes(p))) continue;
-        // @mention または [名前] から担当者抽出
-        const ownerMatch = trimmed.match(/<@[A-Z0-9]+>\s*([^\s:：]+)|【([^】]+)】|\[([^\]]+)\]/);
-        const owner = ownerMatch
-          ? (ownerMatch[1] ?? ownerMatch[2] ?? ownerMatch[3] ?? null)
-          : null;
-        tasks.push({
-          id: `slack-${msg.ts}-${tasks.length}`,
-          type: "slack",
-          owner,
-          title: trimmed,
-          source_ts: msg.ts,
-          raw: trimmed,
-        });
+
+    // GoCoo登録_営業 プレイブックのメッセージのみ対象
+    const targetMsgs = (history.messages ?? []).filter(
+      m => m.text.includes("GoCoo登録_営業") && (m.reply_count ?? 0) > 0
+    );
+
+    for (const msg of targetMsgs) {
+      const owner = extractOwner(msg.text);
+
+      const thread = await slackGet<{
+        ok: boolean;
+        messages?: Array<{ ts: string; text: string }>;
+      }>(token, "conversations.replies", { channel, ts: msg.ts });
+
+      if (!thread.ok) continue;
+
+      for (const reply of (thread.messages ?? []).slice(1)) {
+        const fields = parseStructuredFields(reply.text);
+        const na = fields["ネクストアクション"] ?? "";
+        const company = fields["企業名"] ?? null;
+
+        if (!na) continue;
+
+        // "- テキスト- テキスト" 形式を個別タスクに分割
+        const naItems = na
+          .split(/(?<!\s)-\s+(?=[^\s])/)
+          .map(s => s.replace(/^-\s*/, "").trim())
+          .filter(s => s.length > 4);
+
+        for (let i = 0; i < naItems.length; i++) {
+          tasks.push({
+            id: `slack-${msg.ts}-${i}`,
+            type: "slack",
+            owner,
+            company,
+            title: naItems[i],
+            source_ts: msg.ts,
+          });
+        }
+        break;
       }
     }
+
     return tasks;
   } catch (e) {
     console.warn("Slack取得失敗（スキップ）:", e);

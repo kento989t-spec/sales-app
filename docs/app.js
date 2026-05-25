@@ -422,7 +422,10 @@
           <span class="task-label slack-label">Slack</span>
           <div class="task-card-body">
             <div class="task-title">${esc(t.title)}</div>
-            ${t.owner ? `<div class="task-meta"><span class="owner-chip">${esc(t.owner)}</span></div>` : ""}
+            <div class="task-meta">
+              ${t.company ? `<span>${esc(t.company)}</span>` : ""}
+              ${t.owner ? `<span class="owner-chip">${esc(t.owner)}</span>` : ""}
+            </div>
           </div>
         </div>
         <button class="status-toggle ${STATUS_CLASS[status]}" onclick="window._taskToggle('${esc(t.id)}')">
