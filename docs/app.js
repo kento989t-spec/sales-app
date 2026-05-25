@@ -322,10 +322,13 @@
 
   // ===== 案件行 =====
   function yomiSelect(d) {
+    const empty = !d.yomi;
+    const placeholder = empty ? `<option value="" selected>—</option>` : "";
     const opts = ["A", "B", "C", "D"].map(v =>
       `<option value="${v}" ${d.yomi === v ? "selected" : ""}>${v}</option>`
     ).join("");
-    return `<select class="yomi-select badge badge-${d.yomi}" data-deal-id="${d.id}" onchange="window._yomiChange(this, ${d.id})">${opts}</select>`;
+    const cls = empty ? "yomi-select badge badge-none" : `yomi-select badge badge-${d.yomi}`;
+    return `<select class="${cls}" data-deal-id="${d.id}" onchange="window._yomiChange(this, ${d.id})">${placeholder}${opts}</select>`;
   }
 
   function catDropdown(d) {
@@ -568,17 +571,17 @@
 
   window._yomiChange = async function(select, dealId) {
     const newYomi = select.value;
+    if (!newYomi) return;
     const choiceId = YOMI_OPTIONS[newYomi];
     select.className = `yomi-select badge badge-${newYomi}`;
     select.disabled = true;
     const ok = await triggerUpdate(dealId, F_YOMI, choiceId);
     select.disabled = false;
     if (!ok) {
-      // 失敗時は元の値に戻す（ローカルキャッシュを参照）
       const deal = (DATA.all_deals ?? DATA.deals ?? []).find(d => d.id === dealId);
       if (deal) {
-        select.value = deal.yomi;
-        select.className = `yomi-select badge badge-${deal.yomi}`;
+        select.value = deal.yomi ?? "";
+        select.className = `yomi-select badge badge-${deal.yomi || "none"}`;
       }
     }
   };
