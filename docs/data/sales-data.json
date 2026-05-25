@@ -1,19 +1,64 @@
 {
-  "generated_at": "2026-05-25T00:00:00.000Z",
+  "generated_at": "2026-05-25T02:31:45.742Z",
   "month": "2026-05",
-  "password_hash": "",
   "targets": {
     "CoPASS": 0,
     "CoPASS BPO": 0,
     "Partner Boost": 0
   },
-  "yomi_coefficients": { "A": 0.8, "B": 0.7, "C": 0.5, "D": 0.3 },
-  "categories": ["CoPASS", "CoPASS BPO", "Partner Boost"],
-  "summary": {
-    "CoPASS":        { "target": 0, "yomi_weighted": 0, "actual": 0, "gap": 0 },
-    "CoPASS BPO":    { "target": 0, "yomi_weighted": 0, "actual": 0, "gap": 0 },
-    "Partner Boost": { "target": 0, "yomi_weighted": 0, "actual": 0, "gap": 0 }
+  "yomi_coefficients": {
+    "A": 0.8,
+    "B": 0.7,
+    "C": 0.5,
+    "D": 0.3
   },
-  "total": { "target": 0, "yomi_weighted": 0, "actual": 0, "gap": 0 },
-  "deals": []
+  "categories": [
+    "CoPASS",
+    "CoPASS BPO",
+    "Partner Boost"
+  ],
+  "summary": {
+    "CoPASS": {
+      "target": 0,
+      "yomi_weighted": 0,
+      "actual": 0,
+      "gap": 0
+    },
+    "CoPASS BPO": {
+      "target": 0,
+      "yomi_weighted": 0,
+      "actual": 0,
+      "gap": 0
+    },
+    "Partner Boost": {
+      "target": 0,
+      "yomi_weighted": 0,
+      "actual": 0,
+      "gap": 0
+    }
+  },
+  "total": {
+    "target": 0,
+    "yomi_weighted": 0,
+    "actual": 0,
+    "gap": 0
+  },
+  "deals": [
+    {
+      "id": 956,
+      "name": "案件0000724",
+      "company": "Volta Networks株式会社",
+      "categories": [
+        "CoPASS BPO"
+      ],
+      "yomi": "",
+      "amount": 300000,
+      "weighted_amount": 0,
+      "phase": "【FS-02】初回商談実施済",
+      "is_won": false,
+      "billing_month": "2026-05-18",
+      "owner": "佐竹 洋政",
+      "next_action": ""
+    }
+  ]
 }
