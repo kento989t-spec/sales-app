@@ -33,6 +33,7 @@
     <nav class="tabs">
       <button class="tab active" data-tab="dashboard">ダッシュボード</button>
       <button class="tab" data-tab="deals">案件一覧</button>
+      <button class="tab" data-tab="tasks">タスク管理</button>
     </nav>
   </header>
 
@@ -71,8 +72,8 @@
             <th>企業名</th>
             <th>カテゴリ</th>
             <th>ヨミ</th>
-            <th>見込み金額</th>
-            <th>加重後</th>
+            <th class="num">見込み金額</th>
+            <th class="num">加重後</th>
             <th>フェーズ</th>
             <th>担当</th>
             <th>ネクストアクション</th>
@@ -89,6 +90,9 @@
       <div class="deals-header">
         <h2>案件一覧</h2>
         <div class="deals-filter">
+          <label class="show-all-toggle">
+            <input type="checkbox" id="show-all-months"> 当月以外も表示
+          </label>
           <select id="cat-filter">
             <option value="">カテゴリ: すべて</option>
             <option>CoPASS</option>
@@ -109,8 +113,8 @@
             <th>企業名</th>
             <th>カテゴリ</th>
             <th>ヨミ</th>
-            <th>見込み金額</th>
-            <th>加重後</th>
+            <th class="num">見込み金額</th>
+            <th class="num">加重後</th>
             <th>フェーズ</th>
             <th>計上月</th>
             <th>担当</th>
@@ -119,6 +123,22 @@
         </thead>
         <tbody id="deals-body-list"></tbody>
       </table>
+    </section>
+  </div>
+
+  <!-- タスク管理タブ -->
+  <div id="tab-tasks" class="tab-content hidden">
+    <section class="task-group" data-group="standing">
+      <h2>定常タスク</h2>
+      <div class="task-cards" id="task-cards-standing"></div>
+    </section>
+    <section class="task-group" data-group="next_action">
+      <h2>ネクストアクション <span class="task-count" id="na-count"></span></h2>
+      <div class="task-cards" id="task-cards-na"></div>
+    </section>
+    <section class="task-group" data-group="slack">
+      <h2>Slack議事録 <span class="task-count" id="slack-count"></span></h2>
+      <div class="task-cards" id="task-cards-slack"></div>
     </section>
   </div>
 </div>

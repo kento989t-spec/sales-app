@@ -7,6 +7,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { webcrypto } from "crypto";
 import { getAllPages } from "./gocoo-client.ts";
+import { fetchSlackTasks } from "./slack-client.ts";
 
 const crypto = webcrypto as unknown as Crypto;
 
@@ -16,24 +17,33 @@ const CONFIG = JSON.parse(fs.readFileSync(path.join(ROOT, "config.json"), "utf-8
 
 const DEAL_OBJECT_ID = 5;
 const CATEGORIES = ["CoPASS", "CoPASS BPO", "Partner Boost"] as const;
-type Category = typeof CATEGORIES[number];
 
-// GoCoo API レスポンス型（フィールドマッピングは実API確認後に調整）
+// フィールドUUID定数
+const F = {
+  YOMI:        "field_ed6f5306-135c-4105-a915-17e554dc5be2",
+  CATEGORIES:  "field_00c5a3dc-ea3e-4a19-84b2-d50dd44dcad0",
+  AMOUNT:      "field_76f2b2f7-af26-44bc-a4db-7817c1a07dcc",
+  BILLING:     "field_d8fd26b2-a857-450b-9f93-9cd44d0bb811",
+  OWNER:       "field_8fbb7b46-95c0-4268-833a-f65e9a8d09da",
+  COMPANY:     "field_a860ea33-f028-4d7e-9180-120baa01d84b",
+  NEXT_ACTION: "field_2b2fbca9-15f1-43b7-9ad6-516d48904c4a",
+};
+
+interface FieldValue {
+  display_name: string;
+  value: unknown;
+  formatted_value: string;
+}
+
 interface RawDeal {
   id: number;
-  name: string;
-  custom_field_values?: Array<{ field_name: string; value: unknown }>;
+  name: unknown;
+  path_id?: FieldValue;
   [key: string]: unknown;
 }
 
-function extractField(deal: RawDeal, fieldName: string): unknown {
-  // custom_field_values 配列形式
-  if (deal.custom_field_values) {
-    const found = deal.custom_field_values.find(f => f.field_name === fieldName);
-    return found?.value ?? null;
-  }
-  // フラット形式（field_nameがキーになっている場合）
-  return deal[fieldName] ?? null;
+function getField(deal: RawDeal, fieldKey: string): FieldValue | null {
+  return (deal[fieldKey] as FieldValue) ?? null;
 }
 
 function toNumber(v: unknown): number {
@@ -42,132 +52,179 @@ function toNumber(v: unknown): number {
   return 0;
 }
 
-function toString(v: unknown): string {
-  return v != null ? String(v) : "";
-}
-
-// 今月の期間（見込み計上月フィルタ）
 const now = new Date();
-const thisMonthStart = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`;
+const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+const thisMonthStart = `${currentMonth}-01`;
 const thisMonthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0)
   .toISOString().slice(0, 10);
 
 console.log(`対象月: ${thisMonthStart} 〜 ${thisMonthEnd}`);
 
-// 全案件取得（失注・ペンディング以外）
-const allDeals = await getAllPages<RawDeal>(`/custom-objects/${DEAL_OBJECT_ID}/values`);
-console.log(`取得件数: ${allDeals.length}件`);
-
-// 今月分フィルタ + 失注除外
-const filtered = allDeals.filter(d => {
-  const billingMonth = toString(extractField(d, "見込み計上月"));
-  if (!billingMonth) return false;
-  const phase = toString(extractField(d, "フェーズ"));
-  if (phase === "失注" || phase === "ペンディング") return false;
-  // 見込み計上月が今月内
-  return billingMonth >= thisMonthStart && billingMonth <= thisMonthEnd;
-});
-console.log(`今月対象: ${filtered.length}件`);
-
 const yomiCoeff: Record<string, number> = CONFIG.yomi_coefficients;
-const wonPhases: string[] = CONFIG.won_phases;
 
-// 案件データ整形
-const deals = filtered.map(d => {
-  const yomi = toString(extractField(d, "ヨミ確度")).split(":")[0] as string;
-  const amount = toNumber(extractField(d, "見込み金額（税抜）"));
-  const coeff = yomiCoeff[yomi] ?? 0;
-  const phase = toString(extractField(d, "フェーズ"));
-  const rawCategories = extractField(d, "提案商材");
-  const categories: string[] = Array.isArray(rawCategories)
-    ? rawCategories.map(String)
-    : rawCategories ? [toString(rawCategories)] : [];
+// 案件を整形する共通関数
+function mapDeal(d: RawDeal) {
+  const rawName = d.name as unknown;
+  const dealName = typeof rawName === "object" && rawName !== null
+    ? ((rawName as FieldValue).formatted_value ?? (rawName as FieldValue).value as string)
+    : String(rawName ?? "");
+
+  const yomiRaw = getField(d, F.YOMI)?.formatted_value ?? "";
+  const yomi = yomiRaw.charAt(0).match(/[A-D]/) ? yomiRaw.charAt(0) : "";
+
+  const amount = toNumber(getField(d, F.AMOUNT)?.value);
+  const coeff = yomi ? (yomiCoeff[yomi] ?? 0) : 0;
+
+  const phase = d.path_id?.formatted_value ?? "";
+  const isWon = phase.includes("CS-");
+
+  const catRaw = getField(d, F.CATEGORIES)?.value;
+  const categories: string[] = Array.isArray(catRaw)
+    ? (catRaw as Array<{ name: string }>).map(c => c.name)
+    : [];
+
+  const billingVal = (getField(d, F.BILLING)?.value as string) ?? "";
 
   return {
     id: d.id,
-    name: d.name,
-    company: toString(extractField(d, "企業名")),
+    name: dealName,
+    company: getField(d, F.COMPANY)?.formatted_value ?? dealName,
     categories: categories.length > 0 ? categories : ["未分類"],
     yomi,
     amount,
     weighted_amount: Math.round(amount * coeff),
     phase,
-    is_won: wonPhases.includes(phase),
-    billing_month: toString(extractField(d, "見込み計上月")),
-    owner: toString(extractField(d, "営業主担当者")),
-    next_action: toString(extractField(d, "ネクストアクション")),
+    is_won: isWon,
+    billing_month: billingVal,
+    owner: getField(d, F.OWNER)?.formatted_value ?? "",
+    next_action: (getField(d, F.NEXT_ACTION)?.value as string) ?? "",
   };
-});
-
-// カテゴリ別集計
-type CategorySummary = {
-  target: number;
-  yomi_weighted: number;
-  actual: number;
-  gap: number;
-};
-const summary: Record<string, CategorySummary> = {};
-
-for (const cat of CATEGORIES) {
-  const target = CONFIG.monthly_targets[cat] ?? 0;
-  const catDeals = deals.filter(d => d.categories.includes(cat));
-  const yomi_weighted = catDeals.reduce((s, d) => s + d.weighted_amount, 0);
-  const actual = catDeals.filter(d => d.is_won).reduce((s, d) => s + d.amount, 0);
-  summary[cat] = { target, yomi_weighted, actual, gap: yomi_weighted - target };
 }
 
-// 合計
-const total = {
-  target: CATEGORIES.reduce((s, c) => s + (CONFIG.monthly_targets[c] ?? 0), 0),
-  yomi_weighted: Object.values(summary).reduce((s, v) => s + v.yomi_weighted, 0),
-  actual: Object.values(summary).reduce((s, v) => s + v.actual, 0),
-  gap: 0,
-};
-total.gap = total.yomi_weighted - total.target;
+async function main() {
+  // 全件取得
+  const allRaw = await getAllPages<RawDeal>(`/custom-objects/${DEAL_OBJECT_ID}/values`);
+  console.log(`取得件数: ${allRaw.length}件`);
 
-const output = {
-  generated_at: new Date().toISOString(),
-  month: `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`,
-  targets: CONFIG.monthly_targets,
-  yomi_coefficients: CONFIG.yomi_coefficients,
-  categories: CATEGORIES,
-  summary,
-  total,
-  deals,
-};
+  // アクティブ案件（失注・ペンディング除外）
+  const allActive = allRaw.filter(d => {
+    const phase = d.path_id?.formatted_value ?? "";
+    return !phase.includes("失注") && !phase.includes("ペンディング");
+  });
 
-const outPath = path.join(ROOT, "docs", "data", "sales-data.json");
-const password = CONFIG.password as string | undefined;
+  // 全アクティブ案件を整形
+  const allDeals = allActive.map(mapDeal);
+  console.log(`アクティブ件数: ${allDeals.length}件`);
 
-if (password) {
-  // AES-GCM 暗号化（パスワード設定時）
-  const salt = crypto.getRandomValues(new Uint8Array(16));
-  const iv = crypto.getRandomValues(new Uint8Array(12));
-  const keyMaterial = await crypto.subtle.importKey(
-    "raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]
+  // 今月分
+  const deals = allDeals.filter(d =>
+    d.billing_month >= thisMonthStart && d.billing_month <= thisMonthEnd
   );
-  const key = await crypto.subtle.deriveKey(
-    { name: "PBKDF2", salt, iterations: 100000, hash: "SHA-256" },
-    keyMaterial,
-    { name: "AES-GCM", length: 256 },
-    false,
-    ["encrypt"]
-  );
-  const plaintext = new TextEncoder().encode(JSON.stringify(output));
-  const ciphertext = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, plaintext);
+  console.log(`今月対象: ${deals.length}件`);
 
-  const toHex = (buf: ArrayBuffer) =>
-    [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+  // カテゴリ別集計（今月分ベース）
+  type CategorySummary = { target: number; yomi_weighted: number; actual: number; gap: number };
+  const summary: Record<string, CategorySummary> = {};
 
-  const encrypted = {
-    encrypted: true,
-    salt: toHex(salt.buffer),
-    iv: toHex(iv.buffer),
-    ciphertext: toHex(ciphertext),
+  for (const cat of CATEGORIES) {
+    const target = CONFIG.monthly_targets[cat] ?? 0;
+    const catDeals = deals.filter(d => d.categories.includes(cat));
+    const yomi_weighted = catDeals.reduce((s, d) => s + d.weighted_amount, 0);
+    const actual = catDeals.filter(d => d.is_won).reduce((s, d) => s + d.amount, 0);
+    summary[cat] = { target, yomi_weighted, actual, gap: yomi_weighted - target };
+  }
+
+  const total = {
+    target: CATEGORIES.reduce((s, c) => s + (CONFIG.monthly_targets[c] ?? 0), 0),
+    yomi_weighted: Object.values(summary).reduce((s, v) => s + v.yomi_weighted, 0),
+    actual: Object.values(summary).reduce((s, v) => s + v.actual, 0),
+    gap: 0,
   };
-  fs.writeFileSync(outPath, JSON.stringify(encrypted));
-  console.log(`✅ ${outPath} を暗号化して生成しました`);
-} else {
-  fs.writeFileSync(outPath, JSON.stringify(output, null, 2));
-  console.log(`✅ ${outPath} を生成しました（非暗号化モード）`);
+  total.gap = total.yomi_weighted - total.target;
+
+  // ===== タスク集約 =====
+
+  // 定常タスク
+  const standingTasks = ((CONFIG.standing_tasks ?? []) as string[]).map((title, i) => ({
+    id: `standing-${i}`,
+    type: "standing" as const,
+    title,
+    owner: null as string | null,
+  }));
+
+  // GoCoo Next Action
+  const naTasks = allDeals
+    .filter(d => d.next_action && d.next_action.trim().length > 0)
+    .map(d => ({
+      id: `na-${d.id}`,
+      type: "next_action" as const,
+      owner: d.owner,
+      company: d.company,
+      deal_name: d.name,
+      next_action: d.next_action,
+      phase: d.phase,
+      yomi: d.yomi,
+    }));
+
+  // Slack議事録
+  console.log("Slackタスク取得中...");
+  const slackTasks = await fetchSlackTasks(CONFIG);
+  console.log(`Slackタスク: ${slackTasks.length}件`);
+
+  // ===== 出力 =====
+  const output = {
+    generated_at: new Date().toISOString(),
+    month: currentMonth,
+    targets: CONFIG.monthly_targets,
+    yomi_coefficients: CONFIG.yomi_coefficients,
+    categories: [...CATEGORIES],
+    summary,
+    total,
+    deals,
+    all_deals: allDeals,
+    tasks: {
+      standing: standingTasks,
+      next_action: naTasks,
+      slack: slackTasks,
+    },
+  };
+
+  const outPath = path.join(ROOT, "docs", "data", "sales-data.json");
+  fs.mkdirSync(path.dirname(outPath), { recursive: true });
+
+  const password = CONFIG.password as string | undefined;
+
+  if (password) {
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const keyMaterial = await crypto.subtle.importKey(
+      "raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]
+    );
+    const key = await crypto.subtle.deriveKey(
+      { name: "PBKDF2", salt, iterations: 100000, hash: "SHA-256" },
+      keyMaterial,
+      { name: "AES-GCM", length: 256 },
+      false,
+      ["encrypt"]
+    );
+    const plaintext = new TextEncoder().encode(JSON.stringify(output));
+    const ciphertext = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, plaintext);
+
+    const toHex = (buf: ArrayBuffer) =>
+      [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+
+    const encrypted = {
+      encrypted: true,
+      salt: toHex(salt.buffer),
+      iv: toHex(iv.buffer),
+      ciphertext: toHex(ciphertext),
+    };
+    fs.writeFileSync(outPath, JSON.stringify(encrypted));
+    console.log(`✅ ${outPath} を暗号化して生成しました`);
+  } else {
+    fs.writeFileSync(outPath, JSON.stringify(output, null, 2));
+    console.log(`✅ ${outPath} を生成しました（非暗号化モード）`);
+  }
 }
+
+main().catch(e => { console.error(e); process.exit(1); });

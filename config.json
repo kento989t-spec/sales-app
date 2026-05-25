@@ -1,8 +1,8 @@
 {
   "monthly_targets": {
-    "CoPASS": 0,
-    "CoPASS BPO": 0,
-    "Partner Boost": 0
+    "CoPASS": 500000,
+    "CoPASS BPO": 1000000,
+    "Partner Boost": 440000
   },
   "yomi_coefficients": {
     "A": 0.8,
@@ -11,5 +11,8 @@
     "D": 0.3
   },
   "won_phases": ["CS-01", "CS-02", "CS-03", "CS-04", "CS-05"],
+  "standing_tasks": ["次回打ち合わせの準備", "本日のお礼メールの送付"],
+  "slack_minutes_channel": "",
+  "slack_na_patterns": ["NA:", "ネクストアクション:", "→ "],
   "password": ""
 }

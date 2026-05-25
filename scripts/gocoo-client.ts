@@ -5,8 +5,8 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TOKENS_FILE = path.join(__dirname, ".tokens.json");
 export const TENANT_BASE = "https://deex.sfa.salesgo.jp/organizations/deex";
-export const OAUTH_BASE = "https://sfa.salesgo.jp";  // OAuthはグローバルURL
-const API_BASE = `${TENANT_BASE}/v1`;
+export const OAUTH_BASE = "https://sfa.salesgo.jp";
+const API_BASE = "https://sfa.salesgo.jp/api/v1";
 
 export const CLIENT_ID = "a1d2317b-3927-4143-8b17-0dd8565229fd";       // Webアプリ（未使用）
 export const CLIENT_SECRET = "fNs1ulqqP27vJBkGeZiPCocGCtT6n3z1YKYxZJgl"; // Webアプリ（未使用）
@@ -98,21 +98,26 @@ export async function apiPatch<T>(path: string, body: unknown): Promise<T> {
   return res.json() as Promise<T>;
 }
 
+// GoCoo API のレスポンス型（records / fields / paths キーで返る）
+interface GoCooPagedResponse<T> {
+  records?: T[];
+  fields?: T[];
+  paths?: T[];
+  results: { next_page_url: string | null; per_page: number; total: number };
+}
+
 export async function getAllPages<T>(
   path: string,
   extraParams?: Record<string, string | number>
 ): Promise<T[]> {
-  const results: T[] = [];
+  const items: T[] = [];
   let page = 1;
   while (true) {
-    const data = await apiGet<{ data: T[]; meta?: { total_pages?: number; current_page?: number } }>(
-      path,
-      { page, per_page: 100, ...extraParams }
-    );
-    results.push(...data.data);
-    const meta = data.meta;
-    if (!meta || !meta.total_pages || page >= meta.total_pages) break;
+    const data = await apiGet<GoCooPagedResponse<T>>(path, { page, per_page: 100, ...extraParams });
+    const chunk = data.records ?? data.fields ?? data.paths ?? [];
+    items.push(...(chunk as T[]));
+    if (!data.results.next_page_url) break;
     page++;
   }
-  return results;
+  return items;
 }

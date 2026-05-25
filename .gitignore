@@ -1,5 +1,7 @@
 node_modules/
 dist/
 scripts/.tokens.json
+scripts/.slack-secret.json
+.env
 *.log
 .DS_Store

@@ -1,6 +1,7 @@
 (() => {
   // ===== 暗号化ユーティリティ =====
   const SESSION_KEY = "sales_app_pw";
+  const TASK_STATUS_KEY = "sales_app_task_status";
 
   function fromHex(hex) {
     const arr = new Uint8Array(hex.length / 2);
@@ -38,6 +39,23 @@
     return sessionStorage.getItem(SESSION_KEY) ?? "";
   }
 
+  // ===== タスクステータス（localStorage）=====
+  function loadTaskStatus() {
+    try {
+      return JSON.parse(localStorage.getItem(TASK_STATUS_KEY) ?? "{}");
+    } catch { return {}; }
+  }
+
+  function setTaskStatus(id, status) {
+    const map = loadTaskStatus();
+    map[id] = status;
+    localStorage.setItem(TASK_STATUS_KEY, JSON.stringify(map));
+  }
+
+  function getTaskStatus(id) {
+    return loadTaskStatus()[id] ?? "todo";
+  }
+
   // ===== ユーティリティ =====
   function yen(n) {
     return "¥" + Math.abs(n).toLocaleString("ja-JP");
@@ -45,10 +63,6 @@
 
   function esc(s) {
     return String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  }
-
-  function fmt(n, prefix = "") {
-    return prefix + yen(n);
   }
 
   function gapClass(n) {
@@ -82,8 +96,9 @@
     document.getElementById("updated-at").textContent =
       "最終更新: " + d.toLocaleString("ja-JP", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" });
 
-    // 担当者フィルタ
-    const owners = [...new Set(DATA.deals.map(d => d.owner).filter(Boolean))].sort();
+    // 担当者フィルタ: all_deals（全月）から収集
+    const source = DATA.all_deals ?? DATA.deals ?? [];
+    const owners = [...new Set(source.map(d => d.owner).filter(Boolean))].sort();
     const sel = document.getElementById("owner-filter");
     owners.forEach(o => {
       const opt = document.createElement("option");
@@ -97,20 +112,20 @@
     });
   }
 
-  // ===== フィルタ適用 =====
+  // ===== フィルタ適用（ダッシュボード用・今月分のみ）=====
   function filteredDeals(extraYomi = null) {
     const yomi = extraYomi !== null ? extraYomi : activeYomi;
-    return DATA.deals.filter(d => {
+    const source = DATA.deals ?? [];
+    return source.filter(d => {
       if (activeOwner && d.owner !== activeOwner) return false;
       if (yomi && d.yomi !== yomi) return false;
       return true;
     });
   }
 
-  // ===== サマリー再集計（担当者フィルタ対応）=====
+  // ===== サマリー再集計 =====
   function calcSummary() {
     const deals = filteredDeals("");
-    const coeffs = DATA.yomi_coefficients;
     const summary = {};
     for (const cat of DATA.categories) {
       const target = activeOwner ? 0 : (DATA.targets[cat] ?? 0);
@@ -217,11 +232,20 @@
   function renderDealsList() {
     const catFilter = document.getElementById("cat-filter").value;
     const phaseFilter = document.getElementById("phase-filter").value;
-    const deals = filteredDeals("").filter(d => {
+    const showAllMonths = document.getElementById("show-all-months").checked;
+
+    // 全月表示ONなら all_deals、OFFなら今月分（deals）
+    const source = showAllMonths
+      ? (DATA.all_deals ?? DATA.deals ?? [])
+      : (DATA.deals ?? []);
+
+    const deals = source.filter(d => {
+      if (activeOwner && d.owner !== activeOwner) return false;
       if (catFilter && !(d.categories || []).includes(catFilter)) return false;
-      if (phaseFilter && !d.phase.startsWith(phaseFilter)) return false;
+      if (phaseFilter && !d.phase.includes(phaseFilter)) return false;
       return true;
     });
+
     const tbody = document.getElementById("deals-body-list");
     if (deals.length === 0) {
       tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--text-sub);padding:24px">該当案件なし</td></tr>`;
@@ -230,11 +254,121 @@
     }
   }
 
+  // ===== タスク管理タブ =====
+  const STATUS_LABELS = { todo: "未対応", doing: "対応中", done: "完了" };
+  const STATUS_NEXT = { todo: "doing", doing: "done", done: "todo" };
+  const STATUS_CLASS = { todo: "status-todo", doing: "status-doing", done: "status-done" };
+
+  function taskStatusToggle(id) {
+    const current = getTaskStatus(id);
+    setTaskStatus(id, STATUS_NEXT[current]);
+    renderTasks();
+  }
+
+  function renderStandingTasks() {
+    const el = document.getElementById("task-cards-standing");
+    const tasks = DATA.tasks?.standing ?? [];
+    if (tasks.length === 0) {
+      el.innerHTML = `<p class="task-empty">定常タスクなし</p>`;
+      return;
+    }
+    el.innerHTML = tasks.map(t => {
+      const status = getTaskStatus(t.id);
+      return `<div class="task-card ${status === "done" ? "task-done" : ""}">
+        <div class="task-card-main">
+          <span class="task-label standing-label">定常</span>
+          <span class="task-title">${esc(t.title)}</span>
+        </div>
+        <button class="status-toggle ${STATUS_CLASS[status]}" onclick="window._taskToggle('${esc(t.id)}')">
+          ${STATUS_LABELS[status]}
+        </button>
+      </div>`;
+    }).join("");
+  }
+
+  function renderNaTasks() {
+    const el = document.getElementById("task-cards-na");
+    const countEl = document.getElementById("na-count");
+    const all = DATA.tasks?.next_action ?? [];
+    const tasks = activeOwner
+      ? all.filter(t => t.owner === activeOwner)
+      : all;
+
+    countEl.textContent = tasks.length > 0 ? `(${tasks.length}件)` : "";
+
+    if (tasks.length === 0) {
+      el.innerHTML = `<p class="task-empty">ネクストアクションなし</p>`;
+      return;
+    }
+    el.innerHTML = tasks.map(t => {
+      const status = getTaskStatus(t.id);
+      return `<div class="task-card ${status === "done" ? "task-done" : ""}">
+        <div class="task-card-main">
+          <span class="task-label na-label">NA</span>
+          <div class="task-card-body">
+            <div class="task-title">${esc(t.next_action)}</div>
+            <div class="task-meta">
+              <span>${esc(t.company)}</span>
+              <span class="badge badge-${t.yomi}">${esc(t.yomi || "—")}</span>
+              <span class="phase-text">${esc(t.phase)}</span>
+              ${t.owner ? `<span class="owner-chip">${esc(t.owner)}</span>` : ""}
+            </div>
+          </div>
+        </div>
+        <button class="status-toggle ${STATUS_CLASS[status]}" onclick="window._taskToggle('${esc(t.id)}')">
+          ${STATUS_LABELS[status]}
+        </button>
+      </div>`;
+    }).join("");
+  }
+
+  function renderSlackTasks() {
+    const el = document.getElementById("task-cards-slack");
+    const countEl = document.getElementById("slack-count");
+    const all = DATA.tasks?.slack ?? [];
+    const tasks = activeOwner
+      ? all.filter(t => !t.owner || t.owner === activeOwner)
+      : all;
+
+    countEl.textContent = tasks.length > 0 ? `(${tasks.length}件)` : "";
+
+    if (tasks.length === 0) {
+      el.innerHTML = `<p class="task-empty">Slack議事録タスクなし${!all.length ? "（チャンネル未設定）" : ""}</p>`;
+      return;
+    }
+    el.innerHTML = tasks.map(t => {
+      const status = getTaskStatus(t.id);
+      return `<div class="task-card ${status === "done" ? "task-done" : ""}">
+        <div class="task-card-main">
+          <span class="task-label slack-label">Slack</span>
+          <div class="task-card-body">
+            <div class="task-title">${esc(t.title)}</div>
+            ${t.owner ? `<div class="task-meta"><span class="owner-chip">${esc(t.owner)}</span></div>` : ""}
+          </div>
+        </div>
+        <button class="status-toggle ${STATUS_CLASS[status]}" onclick="window._taskToggle('${esc(t.id)}')">
+          ${STATUS_LABELS[status]}
+        </button>
+      </div>`;
+    }).join("");
+  }
+
+  function renderTasks() {
+    renderStandingTasks();
+    renderNaTasks();
+    renderSlackTasks();
+  }
+
+  // グローバルハンドラ（onclick="window._taskToggle()"用）
+  window._taskToggle = taskStatusToggle;
+
+  // ===== 全レンダリング =====
   function renderAll() {
     renderSummary();
     renderProgress();
     renderDashboardDeals();
     renderDealsList();
+    renderTasks();
   }
 
   // ===== タブ切替 =====
@@ -265,6 +399,7 @@
   function initDealsFilter() {
     document.getElementById("cat-filter").addEventListener("change", renderDealsList);
     document.getElementById("phase-filter").addEventListener("change", renderDealsList);
+    document.getElementById("show-all-months").addEventListener("change", renderDealsList);
   }
 
   // ===== 起動 =====
@@ -297,7 +432,6 @@
         document.getElementById("app").classList.remove("hidden");
         initApp();
       } catch (_) {
-        // トークン切れ → 再認証
         sessionStorage.removeItem(SESSION_KEY);
         document.getElementById("pw-error").textContent = "セッションが切れました。再度ログインしてください";
         document.getElementById("pw-error").classList.remove("hidden");

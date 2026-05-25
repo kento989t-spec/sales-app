@@ -286,6 +286,132 @@ header {
   cursor: pointer;
 }
 
+/* ===== 案件一覧フィルタ拡張 ===== */
+.show-all-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-sub);
+  cursor: pointer;
+  padding: 4px 0;
+  white-space: nowrap;
+}
+.show-all-toggle input { cursor: pointer; }
+
+/* ===== タスク管理タブ ===== */
+.task-group {
+  margin-bottom: 28px;
+}
+.task-group h2 {
+  font-size: 15px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.task-count {
+  font-size: 13px;
+  color: var(--text-sub);
+  font-weight: normal;
+}
+.task-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.task-empty {
+  color: var(--text-sub);
+  font-size: 13px;
+  padding: 12px 0;
+}
+.task-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: var(--shadow);
+  transition: opacity .2s;
+}
+.task-card.task-done {
+  opacity: .5;
+}
+.task-card-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+.task-card-body {
+  flex: 1;
+  min-width: 0;
+}
+.task-label {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.standing-label { background: #f3e8ff; color: #7c3aed; }
+.na-label       { background: #dbeafe; color: #1d4ed8; }
+.slack-label    { background: #fef3c7; color: #d97706; }
+
+.task-title {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  word-break: break-all;
+}
+.task-card.task-done .task-title { text-decoration: line-through; }
+
+.task-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-sub);
+}
+.owner-chip {
+  background: #f3f4f6;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--text);
+}
+.phase-text {
+  font-size: 11px;
+  color: var(--text-sub);
+}
+
+/* ステータストグルボタン */
+.status-toggle {
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background .15s;
+}
+.status-todo  { background: #f3f4f6; color: var(--text-sub); }
+.status-doing { background: #fef3c7; color: #b45309; border-color: #fcd34d; }
+.status-done  { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
+.status-toggle:hover { filter: brightness(.95); }
+
 @media (max-width: 768px) {
   .header-inner { flex-direction: column; align-items: flex-start; gap: 8px; }
   .progress-section { grid-template-columns: 1fr; }
