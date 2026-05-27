@@ -242,8 +242,16 @@
 
   // ===== GitHub PAT =====
   const PAT_KEY = "sales_app_github_pat";
-  function savePat(pat) { if (pat) sessionStorage.setItem(PAT_KEY, pat); }
-  function getPat() { return sessionStorage.getItem(PAT_KEY) ?? ""; }
+  // sessionStorage → localStorage への一回限りのマイグレーション
+  (function migratePat() {
+    const old = sessionStorage.getItem(PAT_KEY);
+    if (old && !localStorage.getItem(PAT_KEY)) {
+      localStorage.setItem(PAT_KEY, old);
+      sessionStorage.removeItem(PAT_KEY);
+    }
+  })();
+  function savePat(pat) { localStorage.setItem(PAT_KEY, pat ?? ""); }
+  function getPat() { return localStorage.getItem(PAT_KEY) ?? ""; }
 
   // ===== トースト =====
   function toast(msg, type = "info") {
@@ -1095,11 +1103,27 @@
     updatePatBtn();
     btn.addEventListener("click", () => {
       const current = getPat();
-      const val = prompt("GitHub PAT を入力してください（編集機能に使用）:", current);
+      const label = current
+        ? `現在のPAT: ${current.slice(0, 8)}...（設定済み）\n\n新しいPATを入力（変更しない場合はそのままOK、削除する場合は空欄）:`
+        : "GitHub PAT を入力してください（管理者から共有されたPATを貼り付け）:";
+      const val = prompt(label, current);
       if (val !== null) {
-        savePat(val.trim());
+        const trimmed = val.trim();
+        savePat(trimmed);
         updatePatBtn();
-        toast(val.trim() ? "PAT を保存しました" : "PAT をクリアしました", "success");
+        if (trimmed) {
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(trimmed).then(() => {
+              toast("PAT を保存しました（クリップボードにコピー済み）", "success");
+            }).catch(() => {
+              toast("PAT を保存しました", "success");
+            });
+          } else {
+            toast("PAT を保存しました", "success");
+          }
+        } else {
+          toast("PAT をクリアしました", "success");
+        }
       }
     });
   }
@@ -1107,7 +1131,9 @@
   function updatePatBtn() {
     const btn = document.getElementById("pat-setting-btn");
     if (!btn) return;
-    btn.style.background = getPat() ? "var(--success)" : "var(--warning)";
+    const hasPat = !!getPat();
+    btn.style.background = hasPat ? "var(--success)" : "var(--warning)";
+    btn.title = hasPat ? "PAT設定済み（クリックして変更）" : "PAT未設定（クリックして設定）";
   }
 
   main();
