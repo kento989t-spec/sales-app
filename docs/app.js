@@ -133,8 +133,31 @@
   }
 
   // ===== 共有ストア（project-dashboard API）=====
-  // trycloudflare URL は LaunchAgent 常時起動で維持される。URL が変わった場合は下記を更新する。
-  const SALES_API = "https://warranties-wireless-presentations-tab.trycloudflare.com";
+  // API URLは api-config.json から動的取得。Mac Mini 再起動時に LaunchAgent が自動更新してpushする。
+  let SALES_API = "";
+
+  async function resolveSalesApi() {
+    // キャッシュを確認（5分有効）
+    const cached = localStorage.getItem("sales_api_url");
+    const cachedTs = parseInt(localStorage.getItem("sales_api_url_ts") ?? "0", 10);
+    if (cached && Date.now() - cachedTs < 5 * 60 * 1000) {
+      SALES_API = cached;
+      return;
+    }
+    try {
+      const res = await fetch("api-config.json?_=" + Date.now());
+      const cfg = await res.json();
+      if (cfg.apiUrl) {
+        SALES_API = cfg.apiUrl;
+        localStorage.setItem("sales_api_url", SALES_API);
+        localStorage.setItem("sales_api_url_ts", String(Date.now()));
+      }
+    } catch (e) {
+      // フォールバック: キャッシュを使う（期限切れでも）
+      if (cached) SALES_API = cached;
+      console.warn("api-config.json fetch failed, using cached URL:", SALES_API, e);
+    }
+  }
 
   // メモリ上の共有状態（初期化時に API から一括取得、更新時に API へ書き込み）
   let sharedState = {
@@ -146,6 +169,7 @@
   };
 
   async function apiFetchKey(key) {
+    if (!SALES_API) return null;
     try {
       const res = await fetch(`${SALES_API}/api/sales/store?key=${encodeURIComponent(key)}`);
       if (!res.ok) return null;
@@ -155,6 +179,7 @@
   }
 
   async function apiSaveKey(key, value) {
+    if (!SALES_API) return;
     try {
       await fetch(`${SALES_API}/api/sales/store`, {
         method: "POST",
@@ -167,13 +192,16 @@
   }
 
   async function loadSharedState() {
+    await resolveSalesApi();
     try {
       const [taskStatus, customTasks, comments, taskDates, config] = await Promise.all([
         apiFetchKey("task_status"),
         apiFetchKey("custom_tasks"),
         apiFetchKey("comments"),
         apiFetchKey("task_dates"),
-        fetch(`${SALES_API}/api/sales/config`).then(r => r.ok ? r.json() : { pat: "" }).catch(() => ({ pat: "" })),
+        SALES_API
+          ? fetch(`${SALES_API}/api/sales/config`).then(r => r.ok ? r.json() : { pat: "" }).catch(() => ({ pat: "" }))
+          : Promise.resolve({ pat: "" }),
       ]);
       sharedState.taskStatus  = taskStatus  ?? {};
       sharedState.customTasks = customTasks ?? {};
