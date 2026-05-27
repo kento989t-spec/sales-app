@@ -132,67 +132,105 @@
     renderDealsList();
   }
 
-  // ===== タスクステータス（localStorage）=====
-  function loadTaskStatus() {
+  // ===== 共有ストア（project-dashboard API）=====
+  // trycloudflare URL は LaunchAgent 常時起動で維持される。URL が変わった場合は下記を更新する。
+  const SALES_API = "https://warranties-wireless-presentations-tab.trycloudflare.com";
+
+  // メモリ上の共有状態（初期化時に API から一括取得、更新時に API へ書き込み）
+  let sharedState = {
+    taskStatus: {},
+    customTasks: {},
+    comments: {},
+    taskDates: {},
+    pat: "",
+  };
+
+  async function apiFetchKey(key) {
     try {
-      return JSON.parse(localStorage.getItem(TASK_STATUS_KEY) ?? "{}");
-    } catch { return {}; }
+      const res = await fetch(`${SALES_API}/api/sales/store?key=${encodeURIComponent(key)}`);
+      if (!res.ok) return null;
+      const json = await res.json();
+      return json.value ?? null;
+    } catch { return null; }
   }
 
-  function setTaskStatus(id, status) {
-    const map = loadTaskStatus();
-    map[id] = status;
-    localStorage.setItem(TASK_STATUS_KEY, JSON.stringify(map));
+  async function apiSaveKey(key, value) {
+    try {
+      await fetch(`${SALES_API}/api/sales/store`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key, value }),
+      });
+    } catch (e) {
+      console.warn("apiSaveKey failed:", key, e);
+    }
   }
 
+  async function loadSharedState() {
+    try {
+      const [taskStatus, customTasks, comments, taskDates, config] = await Promise.all([
+        apiFetchKey("task_status"),
+        apiFetchKey("custom_tasks"),
+        apiFetchKey("comments"),
+        apiFetchKey("task_dates"),
+        fetch(`${SALES_API}/api/sales/config`).then(r => r.ok ? r.json() : { pat: "" }).catch(() => ({ pat: "" })),
+      ]);
+      sharedState.taskStatus  = taskStatus  ?? {};
+      sharedState.customTasks = customTasks ?? {};
+      sharedState.comments    = comments    ?? {};
+      sharedState.taskDates   = taskDates   ?? {};
+      // PAT: ローカルオーバーライドがあればそちら優先
+      const override = localStorage.getItem("sales_app_pat_override");
+      sharedState.pat = override || config.pat || "";
+    } catch (e) {
+      console.warn("loadSharedState failed, using empty state:", e);
+    }
+  }
+
+  // ===== タスクステータス（sharedState）=====
   function getTaskStatus(id) {
-    const s = loadTaskStatus()[id] ?? "todo";
+    const s = sharedState.taskStatus[id] ?? "todo";
     return s === "skipped" ? "cancelled" : s;
   }
 
-  // ===== カスタムタスク（localStorage）=====
+  function setTaskStatus(id, status) {
+    sharedState.taskStatus[id] = status;
+    apiSaveKey("task_status", sharedState.taskStatus);
+  }
+
+  // ===== カスタムタスク（sharedState）=====
   function loadCustomTasks() {
-    try { return JSON.parse(localStorage.getItem(CUSTOM_TASKS_KEY) ?? "{}"); }
-    catch { return {}; }
+    return sharedState.customTasks;
   }
+
   function saveCustomTask(company, title) {
-    const tasks = loadCustomTasks();
     const id = `custom-${Date.now()}-${Math.floor(Math.random() * 9999)}`;
-    tasks[id] = { id, company, title, created_at: new Date().toISOString() };
-    localStorage.setItem(CUSTOM_TASKS_KEY, JSON.stringify(tasks));
+    sharedState.customTasks[id] = { id, company, title, created_at: new Date().toISOString() };
+    apiSaveKey("custom_tasks", sharedState.customTasks);
   }
+
   function deleteCustomTask(id) {
-    const tasks = loadCustomTasks();
-    delete tasks[id];
-    localStorage.setItem(CUSTOM_TASKS_KEY, JSON.stringify(tasks));
-    const all = loadAllComments();
-    delete all[id];
-    localStorage.setItem(COMMENTS_KEY, JSON.stringify(all));
+    delete sharedState.customTasks[id];
+    apiSaveKey("custom_tasks", sharedState.customTasks);
+    delete sharedState.comments[id];
+    apiSaveKey("comments", sharedState.comments);
   }
 
-  // ===== コメント（localStorage）=====
-  function loadAllComments() {
-    try { return JSON.parse(localStorage.getItem(COMMENTS_KEY) ?? "{}"); }
-    catch { return {}; }
-  }
-  function getComments(taskId) { return loadAllComments()[taskId] ?? []; }
+  // ===== コメント（sharedState）=====
+  function getComments(taskId) { return sharedState.comments[taskId] ?? []; }
+
   function addComment(taskId, text) {
-    const all = loadAllComments();
-    if (!all[taskId]) all[taskId] = [];
-    all[taskId].push({ text, ts: Date.now() });
-    localStorage.setItem(COMMENTS_KEY, JSON.stringify(all));
+    if (!sharedState.comments[taskId]) sharedState.comments[taskId] = [];
+    sharedState.comments[taskId].push({ text, ts: Date.now() });
+    apiSaveKey("comments", sharedState.comments);
   }
 
-  // ===== タスク日付（localStorage）=====
-  function loadTaskDates() {
-    try { return JSON.parse(localStorage.getItem(TASK_DATES_KEY) ?? "{}"); }
-    catch { return {}; }
-  }
-  function getTaskDue(id) { return loadTaskDates()[id] ?? ""; }
+  // ===== タスク日付（sharedState）=====
+  function getTaskDue(id) { return sharedState.taskDates[id] ?? ""; }
+
   function setTaskDue(id, date) {
-    const map = loadTaskDates();
-    map[id] = date;
-    localStorage.setItem(TASK_DATES_KEY, JSON.stringify(map));
+    sharedState.taskDates[id] = date;
+    apiSaveKey("task_dates", sharedState.taskDates);
   }
 
   // コメントパネルが開いているタスクID（再描画後に復元）
@@ -241,17 +279,19 @@
   ];
 
   // ===== GitHub PAT =====
-  const PAT_KEY = "sales_app_github_pat";
-  // sessionStorage → localStorage への一回限りのマイグレーション
-  (function migratePat() {
-    const old = sessionStorage.getItem(PAT_KEY);
-    if (old && !localStorage.getItem(PAT_KEY)) {
-      localStorage.setItem(PAT_KEY, old);
-      sessionStorage.removeItem(PAT_KEY);
+  // PAT は sharedState.pat（サーバー共有）を使用。
+  // ユーザーが独自 PAT を使いたい場合は localStorage の sales_app_pat_override に保存し優先される。
+  const PAT_KEY = "sales_app_pat_override";
+  function savePat(pat) {
+    if (pat) {
+      localStorage.setItem(PAT_KEY, pat);
+      sharedState.pat = pat;
+    } else {
+      localStorage.removeItem(PAT_KEY);
+      // オーバーライドを消したら再度サーバー値を使う（既に sharedState.pat にサーバー値が入っている）
     }
-  })();
-  function savePat(pat) { localStorage.setItem(PAT_KEY, pat ?? ""); }
-  function getPat() { return localStorage.getItem(PAT_KEY) ?? ""; }
+  }
+  function getPat() { return sharedState.pat ?? ""; }
 
   // ===== トースト =====
   function toast(msg, type = "info") {
@@ -1026,6 +1066,8 @@
 
   // ===== 起動 =====
   async function main() {
+    // 共有ストアをバックグラウンドで取得（認証と並行）
+    const sharedStatePromise = loadSharedState();
     const authed = await checkAuth();
 
     if (!authed) {
@@ -1034,7 +1076,7 @@
         const errEl = document.getElementById("pw-error");
         errEl.classList.add("hidden");
         try {
-          await loadData(pw);
+          await Promise.all([loadData(pw), sharedStatePromise]);
           sessionStorage.setItem(SESSION_KEY, pw);
           document.getElementById("auth-gate").classList.add("hidden");
           document.getElementById("app").classList.remove("hidden");
@@ -1049,7 +1091,7 @@
       });
     } else {
       try {
-        await loadData(getSavedPassword());
+        await Promise.all([loadData(getSavedPassword()), sharedStatePromise]);
         document.getElementById("auth-gate").classList.add("hidden");
         document.getElementById("app").classList.remove("hidden");
         initApp();
@@ -1068,7 +1110,7 @@
       btn.disabled = true;
       btn.textContent = "⏳";
       try {
-        await loadData(getSavedPassword());
+        await Promise.all([loadData(getSavedPassword()), loadSharedState()]);
         renderAll();
         toast("データを更新しました", "success");
       } catch {
@@ -1103,9 +1145,11 @@
     updatePatBtn();
     btn.addEventListener("click", () => {
       const current = getPat();
+      const isOverride = !!localStorage.getItem(PAT_KEY);
+      const sourceNote = isOverride ? "（ローカル上書き中）" : "（サーバー共有）";
       const label = current
-        ? `現在のPAT: ${current.slice(0, 8)}...（設定済み）\n\n新しいPATを入力（変更しない場合はそのままOK、削除する場合は空欄）:`
-        : "GitHub PAT を入力してください（管理者から共有されたPATを貼り付け）:";
+        ? `現在のPAT: ${current.slice(0, 8)}...${sourceNote}\n\n独自PATを入力（空欄にするとサーバー共有PATに戻る）:`
+        : "GitHub PAT を入力してください（空欄にするとサーバー共有PATを使用）:";
       const val = prompt(label, current);
       if (val !== null) {
         const trimmed = val.trim();
