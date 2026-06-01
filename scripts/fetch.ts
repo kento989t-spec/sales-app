@@ -58,8 +58,8 @@ function toNumber(v: unknown): number {
 const now = new Date();
 const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
 const thisMonthStart = `${currentMonth}-01`;
-const thisMonthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0)
-  .toISOString().slice(0, 10);
+const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+const thisMonthEnd = `${lastDay.getFullYear()}-${String(lastDay.getMonth() + 1).padStart(2, "0")}-${String(lastDay.getDate()).padStart(2, "0")}`;
 
 console.log(`対象月: ${thisMonthStart} 〜 ${thisMonthEnd}`);
 
