@@ -20,13 +20,16 @@ const CATEGORIES = ["CoPASS", "CoPASS BPO", "Partner Boost"] as const;
 
 // フィールドUUID定数
 const F = {
-  YOMI:        "field_ed6f5306-135c-4105-a915-17e554dc5be2",
-  CATEGORIES:  "field_00c5a3dc-ea3e-4a19-84b2-d50dd44dcad0",
-  AMOUNT:      "field_76f2b2f7-af26-44bc-a4db-7817c1a07dcc",
-  BILLING:     "field_d8fd26b2-a857-450b-9f93-9cd44d0bb811",
-  OWNER:       "field_8fbb7b46-95c0-4268-833a-f65e9a8d09da",
-  COMPANY:     "field_a860ea33-f028-4d7e-9180-120baa01d84b",
-  NEXT_ACTION: "field_2b2fbca9-15f1-43b7-9ad6-516d48904c4a",
+  YOMI:           "field_ed6f5306-135c-4105-a915-17e554dc5be2",
+  CATEGORIES:     "field_00c5a3dc-ea3e-4a19-84b2-d50dd44dcad0",
+  AMOUNT:         "field_76f2b2f7-af26-44bc-a4db-7817c1a07dcc",
+  BILLING:        "field_d8fd26b2-a857-450b-9f93-9cd44d0bb811",
+  OWNER:          "field_8fbb7b46-95c0-4268-833a-f65e9a8d09da",
+  COMPANY:        "field_a860ea33-f028-4d7e-9180-120baa01d84b",
+  NEXT_ACTION:    "field_2b2fbca9-15f1-43b7-9ad6-516d48904c4a",
+  UNIT_PRICE:     "field_926adfac-c80a-4d66-9845-27e2f4cf9f15", // 受注単価（万円）
+  CONTRACT_START: "field_06127d83-46cc-43a9-a2b6-4d44c3a437f2", // 契約開始日
+  CONTRACT_END:   "field_a939a2bc-be58-4422-8540-4535eb593f7d", // 契約終了日
 };
 
 interface FieldValue {
@@ -86,6 +89,7 @@ function mapDeal(d: RawDeal) {
   const billingVal = (getField(d, F.BILLING)?.value as string) ?? "";
 
   const ownerField = getField(d, F.OWNER);
+  const unitPriceMan = toNumber(getField(d, F.UNIT_PRICE)?.value); // 万円単位
   return {
     id: d.id,
     name: dealName,
@@ -94,6 +98,9 @@ function mapDeal(d: RawDeal) {
     yomi,
     amount,
     weighted_amount: Math.round(amount * coeff),
+    monthly_price: unitPriceMan > 0 ? Math.round(unitPriceMan * 10000) : null,
+    contract_start: (getField(d, F.CONTRACT_START)?.value as string) ?? "",
+    contract_end:   (getField(d, F.CONTRACT_END)?.value as string) ?? "",
     phase,
     path_id_raw: (d.path_id?.value as number) ?? null,
     is_won: isWon,

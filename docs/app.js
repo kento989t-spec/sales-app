@@ -456,13 +456,38 @@
 
   // ===== サマリー再集計 =====
   function calcSummary() {
-    const deals = filteredDeals("");
+    const deals = filteredDeals(""); // 当月 billing_month ベース（ヨミ集計用）
+    const allDeals = activeOwner
+      ? (DATA.all_deals ?? DATA.deals ?? []).filter(d => d.owner === activeOwner)
+      : (DATA.all_deals ?? DATA.deals ?? []);
+
+    // 当月の開始日・終了日
+    const [y, m] = DATA.month.split("-").map(Number);
+    const monthStart = DATA.month + "-01";
+    const monthEnd = new Date(y, m, 0).toISOString().slice(0, 10);
+
     const summary = {};
     for (const cat of DATA.categories) {
       const target = activeOwner ? 0 : (DATA.targets[cat] ?? 0);
       const catDeals = deals.filter(d => d.categories?.includes(cat));
       const yomi_weighted = catDeals.reduce((s, d) => s + d.weighted_amount, 0);
-      const actual = catDeals.filter(d => d.is_won).reduce((s, d) => s + d.amount, 0);
+
+      // 実績: 契約期間が当月をまたぐCS案件を受注単価で集計（ない場合は見込み金額でフォールバック）
+      const countedIds = new Set();
+      let actual = 0;
+      for (const d of allDeals) {
+        if (!(d.categories ?? []).includes(cat) || !d.is_won) continue;
+        if (d.contract_start && d.contract_end &&
+            d.contract_start <= monthEnd && d.contract_end >= monthStart) {
+          actual += d.monthly_price ?? d.amount ?? 0;
+          countedIds.add(d.id);
+        }
+      }
+      // 契約日未入力の当月受注案件は従来方式で加算（二重計上防止）
+      for (const d of catDeals) {
+        if (d.is_won && !countedIds.has(d.id)) actual += d.amount ?? 0;
+      }
+
       summary[cat] = { target, yomi_weighted, actual, gap: yomi_weighted - target };
     }
     const total = {
