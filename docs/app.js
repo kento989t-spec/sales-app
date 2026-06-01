@@ -276,6 +276,10 @@
   const openComments = new Set();
 
   // ===== ユーティリティ =====
+  function catLabel(cat) {
+    return (DATA.category_labels ?? {})[cat] ?? cat;
+  }
+
   function yen(n) {
     return "¥" + Math.abs(n).toLocaleString("ja-JP");
   }
@@ -511,7 +515,7 @@
       const v = summary[cat];
       const achieved = v.target > 0 && v.yomi_weighted >= v.target;
       return `<tr>
-        <td>${esc(cat)}</td>
+        <td>${esc(catLabel(cat))}</td>
         <td>${yen(v.target)}</td>
         <td class="${achieved ? "achieved" : ""}">${yen(v.yomi_weighted)}</td>
         <td>${yen(v.actual)}</td>
@@ -539,7 +543,7 @@
       const yomiPct = v.target > 0 ? Math.min(100, Math.round(v.yomi_weighted / v.target * 100)) : 0;
       const actualPct = v.target > 0 ? Math.min(100, Math.round(v.actual / v.target * 100)) : 0;
       return `<div class="progress-card">
-        <h3>${esc(cat)}</h3>
+        <h3>${esc(catLabel(cat))}</h3>
         <div class="progress-nums">
           <span>ヨミ: ${yen(v.yomi_weighted)} <small style="color:var(--text-sub)">(${yomiPct}%)</small></span>
           <span style="color:var(--text-sub)">目標: ${yen(v.target)}</span>

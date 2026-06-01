@@ -82,9 +82,11 @@ function mapDeal(d: RawDeal) {
   const isWon = phase.includes("CS-");
 
   const catRaw = getField(d, F.CATEGORIES)?.value;
-  const categories: string[] = Array.isArray(catRaw)
+  const categoryAliases: Record<string, string> = CONFIG.category_aliases ?? {};
+  const rawCategories: string[] = Array.isArray(catRaw)
     ? (catRaw as Array<{ name: string }>).map(c => c.name)
     : [];
+  const categories: string[] = [...new Set(rawCategories.map(c => categoryAliases[c] ?? c))];
 
   const billingVal = (getField(d, F.BILLING)?.value as string) ?? "";
 
@@ -215,6 +217,7 @@ async function main() {
     generated_at: new Date().toISOString(),
     month: currentMonth,
     users,
+    category_labels: CONFIG.category_labels ?? {},
     targets: CONFIG.monthly_targets,
     yomi_coefficients: CONFIG.yomi_coefficients,
     categories: [...CATEGORIES],

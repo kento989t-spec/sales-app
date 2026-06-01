@@ -4,6 +4,15 @@
     "CoPASS BPO": 1000000,
     "Partner Boost": 440000
   },
+  "category_aliases": {
+    "Partner startup": "CoPASS",
+    "BPO(開拓以外）": "CoPASS BPO"
+  },
+  "category_labels": {
+    "CoPASS": "CoPASS（パートナースタートアップ含む）",
+    "CoPASS BPO": "CoPASS BPO（開拓以外含む）",
+    "Partner Boost": "Partner Boost"
+  },
   "yomi_coefficients": {
     "A": 0.8,
     "B": 0.7,
