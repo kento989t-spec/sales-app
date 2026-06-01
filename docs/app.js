@@ -663,12 +663,9 @@
     const catFilter          = document.getElementById("cat-filter").value;
     const phaseFilter        = document.getElementById("phase-filter").value;
     const billingMonthFilter = document.getElementById("billing-month-filter")?.value ?? "";
-    const showAllMonths      = document.getElementById("show-all-months").checked || !!billingMonthFilter;
 
-    // 全月表示ONなら all_deals、OFFなら今月分（deals）
-    const source = showAllMonths
-      ? (DATA.all_deals ?? DATA.deals ?? [])
-      : (DATA.deals ?? []);
+    // 全案件を対象にし、計上月フィルターで絞り込む
+    const source = DATA.all_deals ?? DATA.deals ?? [];
 
     const deals = source.filter(d => {
       if (activeOwner && d.owner !== activeOwner) return false;
@@ -1186,7 +1183,6 @@
   function initDealsFilter() {
     document.getElementById("cat-filter").addEventListener("change", renderDealsList);
     document.getElementById("phase-filter").addEventListener("change", renderDealsList);
-    document.getElementById("show-all-months").addEventListener("change", renderDealsList);
     document.getElementById("billing-month-filter")?.addEventListener("change", renderDealsList);
   }
 
@@ -1202,6 +1198,8 @@
       opt.textContent = m.replace("-", "年") + "月";
       sel.appendChild(opt);
     });
+    // 当月をデフォルト選択
+    sel.value = DATA.month;
   }
 
   // ===== 起動 =====

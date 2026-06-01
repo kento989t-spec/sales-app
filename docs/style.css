@@ -331,18 +331,6 @@ header {
   cursor: pointer;
 }
 
-/* ===== 案件一覧フィルタ拡張 ===== */
-.show-all-toggle {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  color: var(--text-sub);
-  cursor: pointer;
-  padding: 4px 0;
-  white-space: nowrap;
-}
-.show-all-toggle input { cursor: pointer; }
 
 /* ===== タスク管理タブ ===== */
 .task-group {
