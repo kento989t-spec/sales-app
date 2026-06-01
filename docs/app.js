@@ -420,12 +420,16 @@
   }
 
   // ===== ヘッダー =====
-  function renderHeader() {
+  function renderUpdatedAt() {
     document.getElementById("month-label").textContent =
       DATA.month.replace("-", "年") + "月";
     const d = new Date(DATA.generated_at);
     document.getElementById("updated-at").textContent =
       "最終更新: " + d.toLocaleString("ja-JP", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" });
+  }
+
+  function renderHeader() {
+    renderUpdatedAt();
 
     // 担当者フィルタ: all_deals（全月）から収集
     const source = DATA.all_deals ?? DATA.deals ?? [];
@@ -1173,6 +1177,7 @@
 
   // ===== 全レンダリング =====
   function renderAll() {
+    renderUpdatedAt();
     renderSummary();
     renderProgress();
     renderDashboardDeals();
