@@ -165,6 +165,7 @@
     customTasks: {},
     comments: {},
     taskDates: {},
+    taskOwners: {},
     pat: "",
   };
 
@@ -194,11 +195,12 @@
   async function loadSharedState() {
     await resolveSalesApi();
     try {
-      const [taskStatus, customTasks, comments, taskDates, config] = await Promise.all([
+      const [taskStatus, customTasks, comments, taskDates, taskOwners, config] = await Promise.all([
         apiFetchKey("task_status"),
         apiFetchKey("custom_tasks"),
         apiFetchKey("comments"),
         apiFetchKey("task_dates"),
+        apiFetchKey("task_owners"),
         SALES_API
           ? fetch(`${SALES_API}/api/sales/config`).then(r => r.ok ? r.json() : { pat: "" }).catch(() => ({ pat: "" }))
           : Promise.resolve({ pat: "" }),
@@ -207,6 +209,7 @@
       sharedState.customTasks = customTasks ?? {};
       sharedState.comments    = comments    ?? {};
       sharedState.taskDates   = taskDates   ?? {};
+      sharedState.taskOwners  = taskOwners  ?? {};
       // PAT: ローカルオーバーライドがあればそちら優先
       const override = localStorage.getItem("sales_app_pat_override");
       sharedState.pat = override || config.pat || "";
@@ -261,6 +264,14 @@
     apiSaveKey("task_dates", sharedState.taskDates);
   }
 
+  function getTaskOwner(id) { return sharedState.taskOwners[id] ?? ""; }
+
+  function setTaskOwner(id, owner) {
+    if (owner) sharedState.taskOwners[id] = owner;
+    else delete sharedState.taskOwners[id];
+    apiSaveKey("task_owners", sharedState.taskOwners);
+  }
+
   // コメントパネルが開いているタスクID（再描画後に復元）
   const openComments = new Set();
 
@@ -289,6 +300,7 @@
   const F_NEXT_ACTION = "field_2b2fbca9-15f1-43b7-9ad6-516d48904c4a";
   const F_CATEGORIES  = "field_00c5a3dc-ea3e-4a19-84b2-d50dd44dcad0";
   const F_PATH        = "path_id";
+  const F_OWNER       = "field_8fbb7b46-95c0-4268-833a-f65e9a8d09da";
   const YOMI_OPTIONS  = { A: 120, B: 121, C: 122, D: 123 };
   // GoCoo path step IDs (from /custom-objects/5/paths)
   const PATH_ID = { 商談中: 5, 保留: 19, 失注: 20, 受注: 12 };
@@ -382,6 +394,19 @@
   let DATA = null;
   let activeYomi = "";
   let activeOwner = "";
+  let OWNER_OPTIONS = []; // { id: number, name: string }[]
+
+  function initOwnerOptions() {
+    if (DATA.users?.length > 0) {
+      OWNER_OPTIONS = DATA.users;
+    } else {
+      const map = new Map();
+      for (const d of DATA.all_deals ?? []) {
+        if (d.owner_id != null && d.owner) map.set(d.owner_id, d.owner);
+      }
+      OWNER_OPTIONS = [...map.entries()].sort((a, b) => a[0] - b[0]).map(([id, name]) => ({ id, name }));
+    }
+  }
 
   async function loadData(password = "") {
     const res = await fetch("data/sales-data.json?_=" + Date.now());
@@ -575,6 +600,13 @@
     return `<select class="status-deal-select status-deal-${current}" data-deal-id="${d.id}" onchange="window._statusChange(this, ${d.id})">${opts}</select>`;
   }
 
+  function ownerSelect(d) {
+    const opts = OWNER_OPTIONS.map(u =>
+      `<option value="${u.id}" data-name="${esc(u.name)}" ${d.owner_id === u.id ? "selected" : ""}>${esc(u.name)}</option>`
+    ).join("");
+    return `<select class="owner-deal-select" data-deal-id="${d.id}" onchange="window._ownerChange(this, ${d.id})">${opts}</select>`;
+  }
+
   function catDropdown(d) {
     const current = d.categories || [];
     const tags = current.length > 0
@@ -610,7 +642,7 @@
       <td class="num">${yen(d.weighted_amount)}</td>
       <td>${wonBadge}${statusSelect(d)}</td>
       ${billingCell}
-      <td>${esc(d.owner)}</td>
+      <td>${ownerSelect(d)}</td>
       ${updatedCell}
     </tr>`;
   }
@@ -628,9 +660,10 @@
 
   // ===== 案件一覧タブ =====
   function renderDealsList() {
-    const catFilter = document.getElementById("cat-filter").value;
-    const phaseFilter = document.getElementById("phase-filter").value;
-    const showAllMonths = document.getElementById("show-all-months").checked;
+    const catFilter          = document.getElementById("cat-filter").value;
+    const phaseFilter        = document.getElementById("phase-filter").value;
+    const billingMonthFilter = document.getElementById("billing-month-filter")?.value ?? "";
+    const showAllMonths      = document.getElementById("show-all-months").checked || !!billingMonthFilter;
 
     // 全月表示ONなら all_deals、OFFなら今月分（deals）
     const source = showAllMonths
@@ -641,6 +674,7 @@
       if (activeOwner && d.owner !== activeOwner) return false;
       if (catFilter && !(d.categories || []).includes(catFilter)) return false;
       if (phaseFilter && !d.phase.includes(phaseFilter)) return false;
+      if (billingMonthFilter && !d.billing_month?.startsWith(billingMonthFilter)) return false;
       return true;
     });
 
@@ -671,6 +705,10 @@
 
     const due = getTaskDue(id) || defaultDue;
     const dueClass = due && due < new Date().toISOString().slice(0, 10) ? "due-overdue" : "";
+    const taskOwnerVal = getTaskOwner(id);
+    const ownerOpts = `<option value="">担当: -</option>` +
+      OWNER_OPTIONS.map(u => `<option value="${esc(u.name)}" ${taskOwnerVal === u.name ? "selected" : ""}>${esc(u.name)}</option>`).join("");
+    const taskOwnerRow = `<div class="task-owner-row"><select class="task-owner-select" data-task-id="${esc(id)}" onchange="window._setTaskOwner('${esc(id)}',this.value)">${ownerOpts}</select></div>`;
     const comments = getComments(id);
     const isOpen = openComments.has(id);
     const commentListHtml = comments.length > 0
@@ -694,6 +732,7 @@
               <input type="date" class="task-due-input ${dueClass}" value="${esc(due)}" data-task-id="${esc(id)}"
                 onchange="window._setTaskDue('${esc(id)}',this.value)">
             </div>
+            ${taskOwnerRow}
             ${meta ? `<div class="task-meta">${meta}</div>` : ""}
           </div>
         </div>
@@ -716,6 +755,7 @@
 
   let activeTaskYomi  = "";
   let activeTaskMonth = "";
+  let activeTaskDue   = "";
 
   function initTaskFilters() {
     const yomiFil  = document.getElementById("task-yomi-filter");
@@ -735,6 +775,9 @@
 
     yomiFil.addEventListener("change",  () => { activeTaskYomi  = yomiFil.value;  renderTasks(); });
     monthFil.addEventListener("change", () => { activeTaskMonth = monthFil.value; renderTasks(); });
+
+    const dueFil = document.getElementById("task-due-filter");
+    if (dueFil) dueFil.addEventListener("change", () => { activeTaskDue = dueFil.value; renderTasks(); });
   }
 
   function renderTasks() {
@@ -830,6 +873,24 @@
       const inactiveTasks = [];
 
       function classify(card, id) {
+        if (activeTaskDue) {
+          const due = getTaskDue(id);
+          const today = new Date().toISOString().slice(0, 10);
+          let matches = false;
+          if (activeTaskDue === "overdue") {
+            matches = !!due && due < today;
+          } else if (activeTaskDue === "today") {
+            matches = due === today;
+          } else if (activeTaskDue === "week") {
+            const weekEnd = new Date();
+            weekEnd.setDate(weekEnd.getDate() + 7);
+            const weekEndStr = weekEnd.toISOString().slice(0, 10);
+            matches = !!due && due >= today && due <= weekEndStr;
+          } else if (activeTaskDue === "none") {
+            matches = !due;
+          }
+          if (!matches) return;
+        }
         const s = STATUSES[getTaskStatus(id)] ?? STATUSES.todo;
         (s.active ? activeTasks : inactiveTasks).push(card);
       }
@@ -919,6 +980,42 @@
     document.getElementById("new-task-company").value = "";
     document.getElementById("new-task-title").value = "";
     renderTasks();
+  };
+
+  window._setTaskOwner = function(taskId, owner) {
+    setTaskOwner(taskId, owner);
+  };
+
+  window._ownerChange = async function(select, dealId) {
+    const newOwnerId = parseInt(select.value, 10);
+    const opt = select.options[select.selectedIndex];
+    const newOwnerName = opt?.dataset?.name ?? opt?.textContent ?? "";
+
+    const origDeal = [...(DATA.all_deals ?? []), ...(DATA.deals ?? [])].find(d => d.id === dealId);
+    const origOwnerId = origDeal?.owner_id ?? null;
+    const origOwnerName = origDeal?.owner ?? "";
+
+    // 楽観的更新
+    for (const arr of [DATA.deals, DATA.all_deals]) {
+      const d = (arr ?? []).find(d => d.id === dealId);
+      if (d) { d.owner = newOwnerName; d.owner_id = newOwnerId; }
+    }
+    setPending(dealId, "owner", newOwnerName);
+    setPending(dealId, "owner_id", newOwnerId);
+    renderDashboardDeals();
+    renderDealsList();
+
+    const ok = await triggerUpdate(dealId, F_OWNER, newOwnerId);
+    if (!ok) {
+      for (const arr of [DATA.deals, DATA.all_deals]) {
+        const d = (arr ?? []).find(d => d.id === dealId);
+        if (d) { d.owner = origOwnerName; d.owner_id = origOwnerId; }
+      }
+      clearPending(dealId, "owner");
+      clearPending(dealId, "owner_id");
+      renderDashboardDeals();
+      renderDealsList();
+    }
   };
 
   window._setTaskDue = function(taskId, date) {
@@ -1090,6 +1187,21 @@
     document.getElementById("cat-filter").addEventListener("change", renderDealsList);
     document.getElementById("phase-filter").addEventListener("change", renderDealsList);
     document.getElementById("show-all-months").addEventListener("change", renderDealsList);
+    document.getElementById("billing-month-filter")?.addEventListener("change", renderDealsList);
+  }
+
+  function initBillingMonthFilter() {
+    const sel = document.getElementById("billing-month-filter");
+    if (!sel) return;
+    const months = [...new Set(
+      (DATA.all_deals ?? []).map(d => d.billing_month ? d.billing_month.slice(0, 7) : "").filter(Boolean)
+    )].sort().reverse();
+    months.forEach(m => {
+      const opt = document.createElement("option");
+      opt.value = m;
+      opt.textContent = m.replace("-", "年") + "月";
+      sel.appendChild(opt);
+    });
   }
 
   // ===== 起動 =====
@@ -1151,10 +1263,12 @@
   }
 
   function initApp() {
+    initOwnerOptions();
     renderHeader();
     initTabs();
     initYomiFilter();
     initDealsFilter();
+    initBillingMonthFilter();
     initSortHeaders();
     initPatButton();
     initRefreshButton();

@@ -85,6 +85,7 @@ function mapDeal(d: RawDeal) {
 
   const billingVal = (getField(d, F.BILLING)?.value as string) ?? "";
 
+  const ownerField = getField(d, F.OWNER);
   return {
     id: d.id,
     name: dealName,
@@ -97,7 +98,8 @@ function mapDeal(d: RawDeal) {
     path_id_raw: (d.path_id?.value as number) ?? null,
     is_won: isWon,
     billing_month: billingVal,
-    owner: getField(d, F.OWNER)?.formatted_value ?? "",
+    owner: ownerField?.formatted_value ?? "",
+    owner_id: (ownerField?.value as number) ?? null,
     next_action: (getField(d, F.NEXT_ACTION)?.value as string) ?? "",
     updated_at: (d.updated_at as FieldValue)?.value as string ?? "",
   };
@@ -189,10 +191,23 @@ async function main() {
   const slackTasks = await fetchSlackTasks(CONFIG);
   console.log(`Slackタスク: ${slackTasks.length}件`);
 
+  // ===== ユーザーマップ（担当者ID→名前）=====
+  const usersMap = new Map<number, string>();
+  for (const d of allActive) {
+    const ownerField = getField(d, F.OWNER);
+    if (ownerField?.value != null) {
+      usersMap.set(ownerField.value as number, ownerField.formatted_value);
+    }
+  }
+  const users = [...usersMap.entries()]
+    .sort((a, b) => a[0] - b[0])
+    .map(([id, name]) => ({ id, name }));
+
   // ===== 出力 =====
   const output = {
     generated_at: new Date().toISOString(),
     month: currentMonth,
+    users,
     targets: CONFIG.monthly_targets,
     yomi_coefficients: CONFIG.yomi_coefficients,
     categories: [...CATEGORIES],

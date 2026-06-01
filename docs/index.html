@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>deex 営業ダッシュボード</title>
-  <link rel="stylesheet" href="style.css?v=19">
+  <link rel="stylesheet" href="style.css?v=20">
 </head>
 <body>
 
@@ -106,6 +106,9 @@
             <option value="FS">FS</option>
             <option value="CS">CS（受注）</option>
           </select>
+          <select id="billing-month-filter">
+            <option value="">計上月: すべて</option>
+          </select>
         </div>
       </div>
       <table class="deals-table">
@@ -138,11 +141,18 @@
     <div class="task-filter-bar">
       <select id="task-yomi-filter"><option value="">ヨミ: すべて</option><option value="A">A（80%↑）</option><option value="B">B（60〜80%）</option><option value="C">C（40〜60%）</option><option value="D">D（40%↓）</option></select>
       <select id="task-month-filter"><option value="">計上月: すべて</option></select>
+      <select id="task-due-filter">
+        <option value="">期日: すべて</option>
+        <option value="overdue">期限超過</option>
+        <option value="today">今日</option>
+        <option value="week">今週</option>
+        <option value="none">期限なし</option>
+      </select>
     </div>
     <div id="task-companies"></div>
   </div>
 </div>
 
-<script src="app.js?v=19"></script>
+<script src="app.js?v=20"></script>
 </body>
 </html>
