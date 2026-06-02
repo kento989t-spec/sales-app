@@ -1215,7 +1215,7 @@
     document.getElementById("has-meeting-filter")?.addEventListener("change", renderDealsList);
   }
 
-  function makeMonthPills(containerId, selectedSet, onChangeCallback) {
+  function makeMonthPills(containerId, selectedSet, onChangeCallback, defaultAll = false) {
     const container = document.getElementById(containerId);
     if (!container) return;
     const months = [...new Set(
@@ -1235,7 +1235,7 @@
 
     // デフォルト選択
     const defBtn = container.querySelector(`[data-month="${DATA.month}"]`);
-    if (defBtn && selectedSet !== null) {
+    if (defBtn && !defaultAll) {
       defBtn.classList.add("active");
       selectedSet.add(DATA.month);
     } else {
@@ -1270,8 +1270,7 @@
   }
 
   function initTaskMonthFilter() {
-    // タスクはデフォルト「すべて」表示（selectedTaskMonths は空＝全月）
-    makeMonthPills("task-month-filter", null, renderTasks);
+    makeMonthPills("task-month-filter", selectedTaskMonths, renderTasks, true);
   }
 
   // ===== 起動 =====
