@@ -399,6 +399,8 @@
   let activeYomi = "";
   let activeOwner = "";
   let OWNER_OPTIONS = []; // { id: number, name: string }[]
+  let selectedBillingMonths = new Set();
+  let selectedTaskMonths = new Set();
 
   function initOwnerOptions() {
     if (DATA.users?.length > 0) {
@@ -693,18 +695,20 @@
 
   // ===== 案件一覧タブ =====
   function renderDealsList() {
-    const catFilter          = document.getElementById("cat-filter").value;
-    const phaseFilter        = document.getElementById("phase-filter").value;
-    const billingMonthFilter = document.getElementById("billing-month-filter")?.value ?? "";
+    const catFilter   = document.getElementById("cat-filter").value;
+    const phaseFilter = document.getElementById("phase-filter").value;
+    const hasMeeting  = document.getElementById("has-meeting-filter")?.checked ?? false;
 
-    // 全案件を対象にし、計上月フィルターで絞り込む
     const source = DATA.all_deals ?? DATA.deals ?? [];
 
     const deals = source.filter(d => {
       if (activeOwner && d.owner !== activeOwner) return false;
       if (catFilter && !(d.categories || []).includes(catFilter)) return false;
-      if (phaseFilter && !d.phase.includes(phaseFilter)) return false;
-      if (billingMonthFilter && !d.billing_month?.startsWith(billingMonthFilter)) return false;
+      if (phaseFilter === "won:1" && !d.is_won) return false;
+      if (phaseFilter === "won:0" && d.is_won) return false;
+      if (phaseFilter && !phaseFilter.startsWith("won:") && !d.phase.includes(phaseFilter)) return false;
+      if (selectedBillingMonths.size > 0 && !selectedBillingMonths.has(d.billing_month?.slice(0, 7) ?? "")) return false;
+      if (hasMeeting && !d.initial_meeting_date) return false;
       return true;
     });
 
@@ -788,26 +792,14 @@
   let activeTaskDue   = "";
 
   function initTaskFilters() {
-    const yomiFil  = document.getElementById("task-yomi-filter");
-    const monthFil = document.getElementById("task-month-filter");
-    if (!yomiFil || !monthFil) return;
-
-    // 計上月の選択肢を all_deals から生成
-    const months = [...new Set(
-      (DATA.all_deals ?? []).map(d => d.billing_month ? d.billing_month.slice(0, 7) : "").filter(Boolean)
-    )].sort().reverse();
-    months.forEach(m => {
-      const opt = document.createElement("option");
-      opt.value = m;
-      opt.textContent = "計上月: " + m.replace("-", "年") + "月";
-      monthFil.appendChild(opt);
-    });
-
-    yomiFil.addEventListener("change",  () => { activeTaskYomi  = yomiFil.value;  renderTasks(); });
-    monthFil.addEventListener("change", () => { activeTaskMonth = monthFil.value; renderTasks(); });
+    const yomiFil = document.getElementById("task-yomi-filter");
+    if (yomiFil) yomiFil.addEventListener("change", () => { activeTaskYomi = yomiFil.value; renderTasks(); });
 
     const dueFil = document.getElementById("task-due-filter");
     if (dueFil) dueFil.addEventListener("change", () => { activeTaskDue = dueFil.value; renderTasks(); });
+
+    const meetingFil = document.getElementById("task-has-meeting-filter");
+    if (meetingFil) meetingFil.addEventListener("change", renderTasks);
   }
 
   function renderTasks() {
@@ -858,13 +850,16 @@
 
     const allDeals = DATA.all_deals ?? DATA.deals ?? [];
 
-    // 計上月・ヨミフィルタ: 会社に紐づく案件でマッチング
+    // 計上月・ヨミ・商談済みフィルタ: 会社に紐づく案件でマッチング
+    const taskHasMeeting = document.getElementById("task-has-meeting-filter")?.checked ?? false;
     function companyMatchesFilter(company) {
-      if (!activeTaskYomi && !activeTaskMonth) return true;
+      const hasFilter = activeTaskYomi || selectedTaskMonths.size > 0 || taskHasMeeting;
+      if (!hasFilter) return true;
       const deal = allDeals.find(d => (d.company || d.name) === company);
-      if (!deal) return !activeTaskYomi && !activeTaskMonth; // 案件なし会社はフィルタ時除外
-      if (activeTaskYomi  && deal.yomi !== activeTaskYomi)                          return false;
-      if (activeTaskMonth && !deal.billing_month?.startsWith(activeTaskMonth))      return false;
+      if (!deal) return false;
+      if (activeTaskYomi && deal.yomi !== activeTaskYomi) return false;
+      if (selectedTaskMonths.size > 0 && !selectedTaskMonths.has(deal.billing_month?.slice(0, 7) ?? "")) return false;
+      if (taskHasMeeting && !deal.initial_meeting_date) return false;
       return true;
     }
 
@@ -1217,23 +1212,66 @@
   function initDealsFilter() {
     document.getElementById("cat-filter").addEventListener("change", renderDealsList);
     document.getElementById("phase-filter").addEventListener("change", renderDealsList);
-    document.getElementById("billing-month-filter")?.addEventListener("change", renderDealsList);
+    document.getElementById("has-meeting-filter")?.addEventListener("change", renderDealsList);
   }
 
-  function initBillingMonthFilter() {
-    const sel = document.getElementById("billing-month-filter");
-    if (!sel) return;
+  function makeMonthPills(containerId, selectedSet, onChangeCallback) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
     const months = [...new Set(
       (DATA.all_deals ?? []).map(d => d.billing_month ? d.billing_month.slice(0, 7) : "").filter(Boolean)
     )].sort().reverse();
-    months.forEach(m => {
-      const opt = document.createElement("option");
-      opt.value = m;
-      opt.textContent = m.replace("-", "年") + "月";
-      sel.appendChild(opt);
+
+    function createBtn(month, label) {
+      const btn = document.createElement("button");
+      btn.className = "month-btn";
+      btn.dataset.month = month;
+      btn.textContent = label;
+      return btn;
+    }
+    const allBtn = createBtn("", "すべて");
+    container.appendChild(allBtn);
+    months.forEach(m => container.appendChild(createBtn(m, m.replace("-", "年") + "月")));
+
+    // デフォルト選択
+    const defBtn = container.querySelector(`[data-month="${DATA.month}"]`);
+    if (defBtn && selectedSet !== null) {
+      defBtn.classList.add("active");
+      selectedSet.add(DATA.month);
+    } else {
+      allBtn.classList.add("active");
+    }
+
+    container.addEventListener("click", e => {
+      const btn = e.target.closest(".month-btn");
+      if (!btn) return;
+      const month = btn.dataset.month;
+      if (month === "") {
+        selectedSet.clear();
+        container.querySelectorAll(".month-btn").forEach(b => b.classList.remove("active"));
+        allBtn.classList.add("active");
+      } else {
+        allBtn.classList.remove("active");
+        if (selectedSet.has(month)) {
+          selectedSet.delete(month);
+          btn.classList.remove("active");
+          if (selectedSet.size === 0) allBtn.classList.add("active");
+        } else {
+          selectedSet.add(month);
+          btn.classList.add("active");
+        }
+      }
+      onChangeCallback();
     });
-    // 当月をデフォルト選択
-    sel.value = DATA.month;
+  }
+
+  function initBillingMonthFilter() {
+    makeMonthPills("billing-month-filter", selectedBillingMonths, renderDealsList);
+  }
+
+  function initTaskMonthFilter() {
+    // タスクはデフォルト「すべて」表示（selectedTaskMonths は空＝全月）
+    makeMonthPills("task-month-filter", null, renderTasks);
   }
 
   // ===== 起動 =====
@@ -1305,6 +1343,7 @@
     initPatButton();
     initRefreshButton();
     initTaskFilters();
+    initTaskMonthFilter();
     document.addEventListener("click", e => {
       if (!e.target.closest(".cat-dropdown-wrap")) {
         document.querySelectorAll(".cat-dropdown:not(.hidden)").forEach(d => d.classList.add("hidden"));

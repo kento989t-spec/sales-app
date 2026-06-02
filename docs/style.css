@@ -819,6 +819,42 @@ th.sortable:hover { background: #f3f4f6; }
 }
 .amount-input:disabled { opacity: .5; }
 
+/* ===== 計上月ピルフィルター ===== */
+.month-filter-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px 0 8px;
+}
+.month-btn {
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 12px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+  white-space: nowrap;
+}
+.month-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.month-btn:hover:not(.active) { background: #f3f4f6; }
+
+/* ===== 商談済みフィルター ===== */
+.meeting-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-sub);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.meeting-toggle input { cursor: pointer; }
+
 /* ===== 担当者セレクト（案件一覧）===== */
 .owner-deal-select {
   border: 1px solid var(--border);

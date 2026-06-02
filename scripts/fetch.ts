@@ -27,9 +27,10 @@ const F = {
   OWNER:          "field_8fbb7b46-95c0-4268-833a-f65e9a8d09da",
   COMPANY:        "field_a860ea33-f028-4d7e-9180-120baa01d84b",
   NEXT_ACTION:    "field_2b2fbca9-15f1-43b7-9ad6-516d48904c4a",
-  UNIT_PRICE:     "field_926adfac-c80a-4d66-9845-27e2f4cf9f15", // 受注単価（万円）
-  CONTRACT_START: "field_06127d83-46cc-43a9-a2b6-4d44c3a437f2", // 契約開始日
-  CONTRACT_END:   "field_a939a2bc-be58-4422-8540-4535eb593f7d", // 契約終了日
+  UNIT_PRICE:       "field_926adfac-c80a-4d66-9845-27e2f4cf9f15", // 受注単価（万円）
+  CONTRACT_START:   "field_06127d83-46cc-43a9-a2b6-4d44c3a437f2", // 契約開始日
+  CONTRACT_END:     "field_a939a2bc-be58-4422-8540-4535eb593f7d", // 契約終了日
+  INITIAL_MEETING:  "field_0977ff67-f40f-40bd-a8df-457d57f2fc32", // 初回商談日
 };
 
 interface FieldValue {
@@ -110,6 +111,7 @@ function mapDeal(d: RawDeal) {
     owner: ownerField?.formatted_value ?? "",
     owner_id: (ownerField?.value as number) ?? null,
     next_action: (getField(d, F.NEXT_ACTION)?.value as string) ?? "",
+    initial_meeting_date: (getField(d, F.INITIAL_MEETING)?.value as string) ?? "",
     updated_at: (d.updated_at as FieldValue)?.value as string ?? "",
   };
 }

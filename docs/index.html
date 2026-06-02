@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>deex 営業ダッシュボード</title>
-  <link rel="stylesheet" href="style.css?v=21">
+  <link rel="stylesheet" href="style.css?v=25">
 </head>
 <body>
 
@@ -98,16 +98,17 @@
             <option>Partner Boost</option>
           </select>
           <select id="phase-filter">
-            <option value="">フェーズ: すべて</option>
-            <option value="IS">IS</option>
+            <option value="">ステータス: すべて</option>
+            <option value="won:0">商談中</option>
             <option value="FS">FS</option>
-            <option value="CS">CS（受注）</option>
+            <option value="won:1">受注（CS）</option>
           </select>
-          <select id="billing-month-filter">
-            <option value="">計上月: すべて</option>
-          </select>
+          <label class="meeting-toggle">
+            <input type="checkbox" id="has-meeting-filter"> 商談済みのみ
+          </label>
         </div>
       </div>
+      <div id="billing-month-filter" class="month-filter-pills"></div>
       <table class="deals-table">
         <thead>
           <tr>
@@ -137,7 +138,6 @@
     </div>
     <div class="task-filter-bar">
       <select id="task-yomi-filter"><option value="">ヨミ: すべて</option><option value="A">A（80%↑）</option><option value="B">B（60〜80%）</option><option value="C">C（40〜60%）</option><option value="D">D（40%↓）</option></select>
-      <select id="task-month-filter"><option value="">計上月: すべて</option></select>
       <select id="task-due-filter">
         <option value="">期日: すべて</option>
         <option value="overdue">期限超過</option>
@@ -145,11 +145,15 @@
         <option value="week">今週</option>
         <option value="none">期限なし</option>
       </select>
+      <label class="meeting-toggle">
+        <input type="checkbox" id="task-has-meeting-filter"> 商談済みのみ
+      </label>
     </div>
+    <div id="task-month-filter" class="month-filter-pills"></div>
     <div id="task-companies"></div>
   </div>
 </div>
 
-<script src="app.js?v=24"></script>
+<script src="app.js?v=25"></script>
 </body>
 </html>
