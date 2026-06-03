@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>deex 営業ダッシュボード</title>
-  <link rel="stylesheet" href="style.css?v=25">
+  <link rel="stylesheet" href="style.css?v=27">
 </head>
 <body>
 
@@ -132,8 +132,7 @@
   <div id="tab-tasks" class="tab-content hidden">
     <div class="new-company-task-row">
       <input type="text" id="new-task-company" placeholder="会社名">
-      <input type="text" id="new-task-title" placeholder="タスク内容"
-        onkeydown="if(event.key==='Enter')window._addNewCompanyTask()">
+      <input type="text" id="new-task-title" placeholder="タスク内容">
       <button onclick="window._addNewCompanyTask()">+ 追加</button>
     </div>
     <div class="task-filter-bar">
@@ -150,10 +149,15 @@
       </label>
     </div>
     <div id="task-month-filter" class="month-filter-pills"></div>
+    <div id="bulk-delete-bar" class="bulk-delete-bar hidden">
+      <span><span id="bulk-delete-count">0</span>件選択中</span>
+      <button onclick="window._bulkDeleteTasks()">一括削除</button>
+      <button onclick="window._clearTaskSelection()">選択解除</button>
+    </div>
     <div id="task-companies"></div>
   </div>
 </div>
 
-<script src="app.js?v=26"></script>
+<script src="app.js?v=27"></script>
 </body>
 </html>

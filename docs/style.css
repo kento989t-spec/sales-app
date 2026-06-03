@@ -855,6 +855,62 @@ th.sortable:hover { background: #f3f4f6; }
 }
 .meeting-toggle input { cursor: pointer; }
 
+/* ===== コメント削除ボタン ===== */
+.comment-del-btn {
+  padding: 1px 5px;
+  border: none;
+  background: none;
+  color: var(--text-sub);
+  font-size: 10px;
+  cursor: pointer;
+  opacity: 0;
+  flex-shrink: 0;
+  transition: opacity .15s;
+}
+.comment-item:hover .comment-del-btn { opacity: 1; }
+.comment-del-btn:hover { color: var(--danger); }
+
+/* ===== タスク選択チェックボックス ===== */
+.task-select-cb {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  flex-shrink: 0;
+  accent-color: var(--danger);
+}
+
+/* ===== 一括削除バー ===== */
+.bulk-delete-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px;
+  background: #fff3cd;
+  border: 1px solid #fcd34d;
+  border-radius: var(--radius);
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+.bulk-delete-bar button:first-of-type {
+  padding: 4px 14px;
+  background: var(--danger);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.bulk-delete-bar button:first-of-type:hover { opacity: .85; }
+.bulk-delete-bar button:last-of-type {
+  padding: 4px 12px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
 /* ===== 担当者セレクト（案件一覧）===== */
 .owner-deal-select {
   border: 1px solid var(--border);

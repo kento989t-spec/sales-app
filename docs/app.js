@@ -256,6 +256,13 @@
     apiSaveKey("comments", sharedState.comments);
   }
 
+  function removeComment(taskId, index) {
+    if (!sharedState.comments[taskId]) return;
+    sharedState.comments[taskId].splice(index, 1);
+    if (sharedState.comments[taskId].length === 0) delete sharedState.comments[taskId];
+    apiSaveKey("comments", sharedState.comments);
+  }
+
   // ===== タスク日付（sharedState）=====
   function getTaskDue(id) { return sharedState.taskDates[id] ?? ""; }
 
@@ -401,6 +408,7 @@
   let OWNER_OPTIONS = []; // { id: number, name: string }[]
   let selectedBillingMonths = new Set();
   let selectedTaskMonths = new Set();
+  let selectedTasks = new Set();
 
   function initOwnerOptions() {
     if (DATA.users?.length > 0) {
@@ -746,13 +754,20 @@
     const comments = getComments(id);
     const isOpen = openComments.has(id);
     const commentListHtml = comments.length > 0
-      ? comments.map(c => {
+      ? comments.map((c, i) => {
           const d = new Date(c.ts);
           const t = d.toLocaleString("ja-JP", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" });
-          return `<div class="comment-item"><span class="comment-text">${esc(c.text)}</span><span class="comment-ts">${t}</span></div>`;
+          return `<div class="comment-item">
+            <span class="comment-text">${esc(c.text)}</span>
+            <span class="comment-ts">${t}</span>
+            <button class="comment-del-btn" onclick="window._deleteComment('${esc(id)}',${i})" title="削除">✕</button>
+          </div>`;
         }).join("")
       : `<p class="no-comments">コメントなし</p>`;
     const commentCount = comments.length > 0 ? `<span class="comment-count">${comments.length}</span>` : "";
+    const isSelected = selectedTasks.has(id);
+    const selectCb = deletable
+      ? `<input type="checkbox" class="task-select-cb" ${isSelected ? "checked" : ""} onclick="event.stopPropagation()" onchange="window._toggleTaskSelect('${esc(id)}',this.checked)">` : "";
     const deleteBtn = deletable
       ? `<button class="task-delete-btn" onclick="window._deleteTask('${esc(id)}')" title="削除">✕</button>` : "";
 
@@ -771,6 +786,7 @@
           </div>
         </div>
         <div class="task-card-right">
+          ${selectCb}
           <button class="comment-btn ${isOpen ? "comment-btn-open" : ""}" onclick="window._toggleComments('${esc(id)}')" title="コメント">💬${commentCount}</button>
           ${deleteBtn}
           <select class="status-select ${st.cls}" data-task-id="${esc(id)}" onchange="window._taskStatusChange(this)">${opts}</select>
@@ -779,8 +795,7 @@
       <div class="task-comment-panel ${isOpen ? "" : "hidden"}">
         <div class="comment-list">${commentListHtml}</div>
         <div class="comment-input-row">
-          <input type="text" class="comment-input" placeholder="コメントを追加..." data-task-id="${esc(id)}"
-            onkeydown="if(event.key==='Enter')window._submitComment('${esc(id)}',this)">
+          <input type="text" class="comment-input" placeholder="コメントを追加..." data-task-id="${esc(id)}">
           <button class="comment-submit" onclick="window._submitComment('${esc(id)}',this.previousElementSibling)">送信</button>
         </div>
       </div>
@@ -964,8 +979,7 @@
         <div class="task-cards">${activeTasks.join("") || '<p class="task-empty" style="padding:8px 12px">アクティブなタスクなし</p>'}</div>
         ${completedSection}
         <div class="add-task-row">
-          <input type="text" class="add-task-input" placeholder="+ タスクを追加..."
-            onkeydown="if(event.key==='Enter'&&this.value.trim())window._addCustomTask('${esc(company)}',this)">
+          <input type="text" class="add-task-input" placeholder="+ タスクを追加...">
           <button class="add-task-btn" onclick="window._addCustomTask('${esc(company)}',this.previousElementSibling)">追加</button>
         </div>
       </section>`;
@@ -1029,6 +1043,7 @@
     setPending(dealId, "owner_id", newOwnerId);
     renderDashboardDeals();
     renderDealsList();
+    renderTasks();
 
     const ok = await triggerUpdate(dealId, F_OWNER, newOwnerId);
     if (!ok) {
@@ -1040,6 +1055,7 @@
       clearPending(dealId, "owner_id");
       renderDashboardDeals();
       renderDealsList();
+      renderTasks();
     }
   };
 
@@ -1056,8 +1072,46 @@
   window._deleteTask = function(taskId) {
     deleteCustomTask(taskId);
     openComments.delete(taskId);
+    selectedTasks.delete(taskId);
+    updateBulkDeleteBar();
     renderTasks();
   };
+
+  window._deleteComment = function(taskId, index) {
+    removeComment(taskId, index);
+    openComments.add(taskId);
+    renderTasks();
+  };
+
+  window._toggleTaskSelect = function(taskId, checked) {
+    if (checked) selectedTasks.add(taskId);
+    else selectedTasks.delete(taskId);
+    updateBulkDeleteBar();
+  };
+
+  window._clearTaskSelection = function() {
+    selectedTasks.clear();
+    updateBulkDeleteBar();
+    renderTasks();
+  };
+
+  window._bulkDeleteTasks = function() {
+    for (const id of [...selectedTasks]) {
+      deleteCustomTask(id);
+      openComments.delete(id);
+    }
+    selectedTasks.clear();
+    updateBulkDeleteBar();
+    renderTasks();
+  };
+
+  function updateBulkDeleteBar() {
+    const bar = document.getElementById("bulk-delete-bar");
+    const countEl = document.getElementById("bulk-delete-count");
+    if (!bar || !countEl) return;
+    countEl.textContent = selectedTasks.size;
+    bar.classList.toggle("hidden", selectedTasks.size === 0);
+  }
 
   window._statusChange = async function(select, dealId) {
     const newStatus = select.value;
@@ -1162,15 +1216,21 @@
   window._billingChange = async function(input, dealId) {
     const newMonth = input.value; // "YYYY-MM"
     if (!newMonth) return;
-    // GoCoo の計上月は月末日 (YYYY-MM-DD)
+    // GoCoo の計上月は月末日 (YYYY-MM-DD) ※toISOString はタイムゾーンバグがあるため使わない
     const [y, m] = newMonth.split("-").map(Number);
-    const lastDay = new Date(y, m, 0).toISOString().slice(0, 10);
+    const d = new Date(y, m, 0);
+    const lastDay = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+
+    const origBilling = (DATA.all_deals ?? DATA.deals ?? []).find(dd => dd.id === dealId)?.billing_month ?? "";
+
+    optimisticUpdate(dealId, "billing_month", lastDay);
     input.disabled = true;
+
     const ok = await triggerUpdate(dealId, F_BILLING, lastDay);
     input.disabled = false;
     if (!ok) {
-      const deal = (DATA.all_deals ?? DATA.deals ?? []).find(d => d.id === dealId);
-      if (deal) input.value = deal.billing_month ? deal.billing_month.slice(0, 7) : "";
+      revertUpdate(dealId, "billing_month", origBilling);
+      input.value = origBilling ? origBilling.slice(0, 7) : "";
     }
   };
 
