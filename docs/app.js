@@ -359,36 +359,22 @@
     el._timer = setTimeout(() => { el.style.opacity = "0"; }, 3000);
   }
 
-  // ===== GoCoo 更新（GitHub Actions 経由）=====
+  // ===== GoCoo 更新（Mac Mini API 経由）=====
   async function triggerUpdate(dealId, fieldKey, fieldValue) {
-    const pat = getPat();
-    if (!pat) {
-      toast("GitHub PATが未設定です。再ログインしてPATを入力してください", "error");
+    if (!SALES_API) await resolveSalesApi();
+    if (!SALES_API) {
+      toast("Mac Mini に接続できません", "error");
       return false;
     }
     toast("更新中...", "info");
     try {
-      const res = await fetch(
-        `https://api.github.com/repos/${GOCOO_REPO}/actions/workflows/update-deal.yml/dispatches`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${pat}`,
-            Accept: "application/vnd.github+json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ref: "main",
-            inputs: {
-              deal_id: String(dealId),
-              field_key: fieldKey,
-              field_value: JSON.stringify(fieldValue),
-            },
-          }),
-        }
-      );
-      if (res.status === 204) {
-        toast("更新しました（GoCooへの反映は~60秒後）", "success");
+      const res = await fetch(`${SALES_API}/api/sales/gocoo-update`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ deal_id: dealId, field_key: fieldKey, field_value: fieldValue }),
+      });
+      if (res.ok) {
+        toast("更新しました", "success");
         return true;
       } else {
         const body = await res.text();
