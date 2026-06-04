@@ -73,13 +73,35 @@ async function getAccessToken(): Promise<string> {
   return tokens.access_token;
 }
 
+async function fetchWithTokenRetry(
+  url: string,
+  init: RequestInit,
+  isRetry = false
+): Promise<Response> {
+  const res = await fetch(url, init);
+  if (res.status === 401 && !isRetry) {
+    // access_token が期限切れ → 強制リフレッシュして1回リトライ
+    const tokens = loadTokens();
+    const refreshed = await refreshAccessToken(tokens.refresh_token);
+    const newInit = {
+      ...init,
+      headers: {
+        ...(init.headers as Record<string, string>),
+        Authorization: `Bearer ${refreshed.access_token}`,
+      },
+    };
+    return fetchWithTokenRetry(url, newInit, true);
+  }
+  return res;
+}
+
 export async function apiGet<T>(path: string, params?: Record<string, string | number>): Promise<T> {
   const token = await getAccessToken();
   const url = new URL(`${API_BASE}${path}`);
   if (params) {
     Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, String(v)));
   }
-  const res = await fetch(url.toString(), {
+  const res = await fetchWithTokenRetry(url.toString(), {
     headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
   });
   if (!res.ok) {
@@ -91,7 +113,7 @@ export async function apiGet<T>(path: string, params?: Record<string, string | n
 
 export async function apiPatch<T>(path: string, body: unknown): Promise<T> {
   const token = await getAccessToken();
-  const res = await fetch(`${API_BASE}${path}`, {
+  const res = await fetchWithTokenRetry(`${API_BASE}${path}`, {
     method: "PATCH",
     headers: {
       Authorization: `Bearer ${token}`,
