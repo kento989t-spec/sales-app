@@ -36,6 +36,7 @@ jobs:
           GOCOO_CLIENT_ID: ${{ secrets.GOCOO_CLIENT_ID }}
       - name: Rotate refresh token secret
         if: env.NEW_GOCOO_REFRESH_TOKEN != ''
+        continue-on-error: true
         run: echo "$NEW_GOCOO_REFRESH_TOKEN" | gh secret set GOCOO_REFRESH_TOKEN
         env:
           GH_TOKEN: ${{ secrets.GH_PAT_FOR_SECRETS }}
