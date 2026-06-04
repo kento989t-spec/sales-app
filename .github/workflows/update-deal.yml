@@ -16,6 +16,10 @@ on:
         required: true
         type: string
 
+concurrency:
+  group: gocoo-update
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
