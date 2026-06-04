@@ -23,5 +23,5 @@
   "standing_tasks": ["次回打ち合わせの準備", "本日のお礼メールの送付", "次回打ち合わせ日程の調整"],
   "slack_minutes_channel": "C0A8E0R4THR",
   "slack_na_patterns": ["NA:", "ネクストアクション:", "→ "],
-  "password": "Deex!2026"
+  "password": "maintenance_2026_locked"
 }
