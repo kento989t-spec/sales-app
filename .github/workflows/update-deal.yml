@@ -16,9 +16,6 @@ on:
         required: true
         type: string
 
-permissions:
-  secrets: write
-
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -41,4 +38,4 @@ jobs:
         if: env.NEW_GOCOO_REFRESH_TOKEN != ''
         run: echo "$NEW_GOCOO_REFRESH_TOKEN" | gh secret set GOCOO_REFRESH_TOKEN
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GH_PAT_FOR_SECRETS }}
