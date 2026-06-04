@@ -1387,6 +1387,7 @@
     initSortHeaders();
     initPatButton();
     initRefreshButton();
+    initExportButton();
     initTaskFilters();
     initTaskMonthFilter();
     document.addEventListener("click", e => {
@@ -1395,6 +1396,61 @@
       }
     });
     renderAll();
+  }
+
+  // ===== CSV エクスポート =====
+  // ボタン押下 → Mac Mini API がその場で GoCoo を叩き CSV を返す → ダウンロード
+  function initExportButton() {
+    const btn = document.getElementById("export-btn");
+    const menu = document.getElementById("export-menu");
+    if (!btn || !menu) return;
+
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      menu.classList.toggle("hidden");
+    });
+    document.addEventListener("click", e => {
+      if (!e.target.closest(".export-wrap")) menu.classList.add("hidden");
+    });
+
+    menu.querySelectorAll(".export-item").forEach(item => {
+      item.addEventListener("click", async () => {
+        const objectId = item.dataset.object;
+        const labelText = item.textContent;
+        menu.classList.add("hidden");
+        item.disabled = true;
+        const orig = item.textContent;
+        item.textContent = "⏳ 出力中…";
+        try {
+          const url = `${SALES_API}/api/sales/gocoo-export?object=${objectId}&key=${encodeURIComponent(getSavedPassword())}`;
+          const res = await fetch(url);
+          if (!res.ok) {
+            const body = await res.json().catch(() => ({}));
+            throw new Error(body.error || `HTTP ${res.status}`);
+          }
+          const blob = await res.blob();
+          // Content-Disposition のファイル名を使う。取れなければオブジェクト名で代替
+          let filename = { "2": "企業.csv", "4": "個人.csv", "5": "案件.csv" }[objectId] || "export.csv";
+          const cd = res.headers.get("Content-Disposition");
+          const m = cd && cd.match(/filename\*=UTF-8''([^;]+)/);
+          if (m) try { filename = decodeURIComponent(m[1]); } catch { /* noop */ }
+          const dlUrl = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = dlUrl;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(dlUrl);
+          toast(`${labelText} をダウンロードしました`, "success");
+        } catch (err) {
+          toast(`CSV出力に失敗しました: ${err.message}`, "error");
+        } finally {
+          item.disabled = false;
+          item.textContent = orig;
+        }
+      });
+    });
   }
 
   function initPatButton() {

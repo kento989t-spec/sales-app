@@ -760,6 +760,46 @@ th.sortable:hover { background: #f3f4f6; }
 }
 #pat-setting-btn:hover { opacity: .85; }
 
+/* ===== CSVエクスポート ===== */
+.export-wrap { position: relative; display: inline-block; }
+#export-btn {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--surface);
+  cursor: pointer;
+  transition: opacity .15s;
+}
+#export-btn:hover { opacity: .7; }
+.export-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
+  z-index: 50;
+  min-width: 120px;
+  overflow: hidden;
+}
+.export-menu.hidden { display: none; }
+.export-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.export-item:hover { background: var(--bg); }
+.export-item:disabled { opacity: .5; cursor: default; }
+
 /* ===== インライン編集 ===== */
 .yomi-select {
   border: none;
