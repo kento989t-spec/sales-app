@@ -5,3 +5,6 @@ scripts/.slack-secret.json
 .env
 *.log
 .DS_Store
+scripts/.health-state.json
+scripts/.update-alert-state.json
+health-check.log
