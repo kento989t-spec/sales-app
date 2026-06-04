@@ -27,7 +27,13 @@ async function getAccessToken(): Promise<string> {
     const body = await res.text();
     throw new Error(`トークン更新失敗: ${res.status} ${body}`);
   }
-  const data = await res.json() as { access_token: string };
+  const data = await res.json() as { access_token: string; refresh_token?: string };
+  // GoCoo はリフレッシュトークンをローテーションする。
+  // GitHub Actions 環境では GITHUB_ENV 経由で次ステップに新トークンを渡す。
+  if (data.refresh_token && process.env.GITHUB_ENV) {
+    const { appendFileSync } = await import("fs");
+    appendFileSync(process.env.GITHUB_ENV, `NEW_GOCOO_REFRESH_TOKEN=${data.refresh_token}\n`);
+  }
   return data.access_token;
 }
 

@@ -16,6 +16,9 @@ on:
         required: true
         type: string
 
+permissions:
+  secrets: write
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -34,3 +37,8 @@ jobs:
           FIELD_VALUE: ${{ inputs.field_value }}
           GOCOO_REFRESH_TOKEN: ${{ secrets.GOCOO_REFRESH_TOKEN }}
           GOCOO_CLIENT_ID: ${{ secrets.GOCOO_CLIENT_ID }}
+      - name: Rotate refresh token secret
+        if: env.NEW_GOCOO_REFRESH_TOKEN != ''
+        run: echo "$NEW_GOCOO_REFRESH_TOKEN" | gh secret set GOCOO_REFRESH_TOKEN
+        env:
+          GH_TOKEN: ${{ github.token }}
