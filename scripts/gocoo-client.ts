@@ -50,8 +50,17 @@ async function refreshAccessToken(refresh_token: string): Promise<Tokens> {
     access_token: data.access_token,
     refresh_token: data.refresh_token,
     expires_at: Date.now() + (data.expires_in - 60) * 1000,
+    ...(saved as { client_id?: string }).client_id ? { client_id: (saved as { client_id?: string }).client_id } : {},
   };
   saveTokens(refreshed);
+  // GitHub Actions との競合防止: Mac Mini でトークンが更新されたら GitHub Secret も同期
+  try {
+    const { execSync } = await import("child_process");
+    execSync(
+      `printf '%s' '${refreshed.refresh_token}' | gh secret set GOCOO_REFRESH_TOKEN --repo kento989t-spec/sales-app`,
+      { stdio: "pipe" }
+    );
+  } catch { /* gh CLI 未認証環境（CI等）では無視 */ }
   return refreshed;
 }
 
