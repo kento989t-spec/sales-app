@@ -31,6 +31,7 @@ const F = {
   CONTRACT_START:   "field_06127d83-46cc-43a9-a2b6-4d44c3a437f2", // 契約開始日
   CONTRACT_END:     "field_a939a2bc-be58-4422-8540-4535eb593f7d", // 契約終了日
   INITIAL_MEETING:  "field_0977ff67-f40f-40bd-a8df-457d57f2fc32", // 初回商談日
+  INITIAL_MEETING_DONE: "field_bdff4e65-2f04-4a56-aecd-e1532e337799", // 初回商談実施済
 };
 
 interface FieldValue {
@@ -112,6 +113,7 @@ function mapDeal(d: RawDeal) {
     owner_id: (ownerField?.value as number) ?? null,
     next_action: (getField(d, F.NEXT_ACTION)?.value as string) ?? "",
     initial_meeting_date: (getField(d, F.INITIAL_MEETING)?.value as string) ?? "",
+    initial_meeting_done: Boolean(getField(d, F.INITIAL_MEETING_DONE)?.value),
     updated_at: (d.updated_at as FieldValue)?.value as string ?? "",
   };
 }

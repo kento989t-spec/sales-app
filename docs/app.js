@@ -702,7 +702,7 @@
       if (phaseFilter === "won:0" && d.is_won) return false;
       if (phaseFilter && !phaseFilter.startsWith("won:") && !d.phase.includes(phaseFilter)) return false;
       if (selectedBillingMonths.size > 0 && !selectedBillingMonths.has(d.billing_month?.slice(0, 7) ?? "")) return false;
-      if (hasMeeting && !d.initial_meeting_date) return false;
+      if (hasMeeting && !d.initial_meeting_done) return false;
       return true;
     });
 
@@ -860,7 +860,7 @@
       if (!deal) return false;
       if (activeTaskYomi && deal.yomi !== activeTaskYomi) return false;
       if (selectedTaskMonths.size > 0 && !selectedTaskMonths.has(deal.billing_month?.slice(0, 7) ?? "")) return false;
-      if (taskHasMeeting && !deal.initial_meeting_date) return false;
+      if (taskHasMeeting && !deal.initial_meeting_done) return false;
       return true;
     }
 
@@ -912,6 +912,11 @@
             weekEnd.setDate(weekEnd.getDate() + 7);
             const weekEndStr = weekEnd.toISOString().slice(0, 10);
             matches = !!due && due >= today && due <= weekEndStr;
+          } else if (activeTaskDue === "month") {
+            const now = new Date();
+            const monthStart = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0") + "-01";
+            const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().slice(0, 10);
+            matches = !!due && due >= monthStart && due <= monthEnd;
           } else if (activeTaskDue === "none") {
             matches = !due;
           }
