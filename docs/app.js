@@ -359,6 +359,20 @@
     el._timer = setTimeout(() => { el.style.opacity = "0"; }, 3000);
   }
 
+  // ===== 書き込み後の遅延fetch（debounce: 15秒）=====
+  let _postWriteTimer = null;
+  let _lastFetchAt = 0;
+
+  function schedulePostWriteFetch() {
+    clearTimeout(_postWriteTimer);
+    _postWriteTimer = setTimeout(async () => {
+      try {
+        await Promise.all([loadData(getSavedPassword()), loadSharedState()]);
+        renderAll();
+      } catch { /* サイレント失敗 */ }
+    }, 15000);
+  }
+
   // ===== GoCoo 更新（Mac Mini API 経由）=====
   async function triggerUpdate(dealId, fieldKey, fieldValue) {
     if (!SALES_API) await resolveSalesApi();
@@ -375,6 +389,7 @@
       });
       if (res.ok) {
         toast("更新しました", "success");
+        schedulePostWriteFetch();
         return true;
       } else {
         const body = await res.text();
@@ -417,6 +432,7 @@
       DATA = raw;
     }
     applyPending(); // ペンディング中の変更をデータに上書き
+    _lastFetchAt = Date.now();
   }
 
   // ===== ヘッダー =====
@@ -1230,12 +1246,14 @@
 
   // ===== 全レンダリング =====
   function renderAll() {
+    const scrollY = window.scrollY;
     renderUpdatedAt();
     renderSummary();
     renderProgress();
     renderDashboardDeals();
     renderDealsList();
     renderTasks();
+    window.scrollTo({ top: scrollY, behavior: "instant" });
   }
 
   // ===== タブ切替 =====
@@ -1402,6 +1420,16 @@
       if (!e.target.closest(".cat-dropdown-wrap")) {
         document.querySelectorAll(".cat-dropdown:not(.hidden)").forEach(d => d.classList.add("hidden"));
       }
+    });
+
+    // タブ復帰時: 最終fetchから5分以上経過していたら自動更新
+    document.addEventListener("visibilitychange", async () => {
+      if (document.visibilityState !== "visible") return;
+      if (Date.now() - _lastFetchAt < 5 * 60 * 1000) return;
+      try {
+        await Promise.all([loadData(getSavedPassword()), loadSharedState()]);
+        renderAll();
+      } catch { /* サイレント失敗 */ }
     });
     renderAll();
   }
