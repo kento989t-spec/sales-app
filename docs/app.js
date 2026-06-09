@@ -702,7 +702,7 @@
       if (phaseFilter === "won:0" && d.is_won) return false;
       if (phaseFilter && !phaseFilter.startsWith("won:") && !d.phase.includes(phaseFilter)) return false;
       if (selectedBillingMonths.size > 0 && !selectedBillingMonths.has(d.billing_month?.slice(0, 7) ?? "")) return false;
-      if (hasMeeting && !(d.initial_meeting_date && d.initial_meeting_date <= new Date().toISOString().slice(0, 10))) return false;
+      if (hasMeeting && !d.initial_meeting_done) return false;
       return true;
     });
 
@@ -860,7 +860,7 @@
       if (!deal) return false;
       if (activeTaskYomi && deal.yomi !== activeTaskYomi) return false;
       if (selectedTaskMonths.size > 0 && !selectedTaskMonths.has(deal.billing_month?.slice(0, 7) ?? "")) return false;
-      if (taskHasMeeting && !(deal.initial_meeting_date && deal.initial_meeting_date <= new Date().toISOString().slice(0, 10))) return false;
+      if (taskHasMeeting && !deal.initial_meeting_done) return false;
       return true;
     }
 
@@ -953,6 +953,9 @@
       for (const t of (cTasks ?? [])) {
         classify(taskCard(t.id, "custom-label", "追加", t.title, "", true), t.id);
       }
+
+      // 期日フィルターが有効なとき、アクティブタスクが1件もない企業はスキップ
+      if (activeTaskDue && activeTasks.length === 0) continue;
 
       const completedSection = inactiveTasks.length > 0
         ? `<details class="completed-section">
