@@ -184,6 +184,13 @@ async function main() {
     }));
 
   // 管理対象会社一覧（タスク管理の起点として全案件会社を列挙）
+  // 1社に複数担当者がいるケースに対応するため owners[] を保持
+  const companyOwnersMap = new Map<string, Set<string>>();
+  for (const d of allDeals) {
+    if (!d.company || !d.owner) continue;
+    if (!companyOwnersMap.has(d.company)) companyOwnersMap.set(d.company, new Set());
+    companyOwnersMap.get(d.company)!.add(d.owner);
+  }
   const seenCompanies = new Set<string>();
   const dealCompanies = allDeals
     .filter(d => {
@@ -194,6 +201,7 @@ async function main() {
     .map(d => ({
       company: d.company,
       owner: d.owner,
+      owners: [...(companyOwnersMap.get(d.company) ?? [d.owner])],
       yomi: d.yomi,
       billing_month: d.billing_month,
       updated_at: d.updated_at ?? "",

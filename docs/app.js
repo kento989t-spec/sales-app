@@ -829,7 +829,13 @@
 
     const slack = activeOwner ? slackAll.filter(t => !t.owner || t.owner === activeOwner) : slackAll;
     const na    = activeOwner ? naAll.filter(t => t.owner === activeOwner) : naAll;
-    const dcs   = activeOwner ? dealComps.filter(dc => !dc.owner || dc.owner === activeOwner) : dealComps;
+    // owners[] で全担当者を判定（旧データは owner フォールバック）
+    const dcs   = activeOwner
+      ? dealComps.filter(dc => {
+          const owners = dc.owners ?? (dc.owner ? [dc.owner] : []);
+          return owners.length === 0 || owners.includes(activeOwner);
+        })
+      : dealComps;
 
     const companies = new Map();
     const meetingsByCompany = new Map();
@@ -838,7 +844,7 @@
     const companyUpdatedAt = new Map();
     for (const dc of dcs) {
       const key = dc.company ?? "（会社不明）";
-      if (!companies.has(key)) companies.set(key, { slack: [], na: [], custom: [], owner: dc.owner });
+      if (!companies.has(key)) companies.set(key, { slack: [], na: [], custom: [], owner: dc.owner, owners: dc.owners ?? (dc.owner ? [dc.owner] : []) });
       if (dc.updated_at) companyUpdatedAt.set(key, dc.updated_at);
     }
     for (const t of slack) {
@@ -888,13 +894,14 @@
     });
 
     let html = "";
-    for (const [company, { slack: sTasks, na: naTasks, custom: cTasks, owner }] of sortedCompanies) {
+    for (const [company, { slack: sTasks, na: naTasks, custom: cTasks, owner, owners }] of sortedCompanies) {
       if (!companyMatchesFilter(company)) continue;
       const meetingTsList = meetingsByCompany.get(company) ?? new Set();
       const updatedAt = companyUpdatedAt.get(company) ?? "";
       const updatedLabel = updatedAt
         ? `<span class="company-updated-at">GoCoo更新: ${updatedAt.slice(0, 10)}</span>` : "";
-      const ownerChip = owner ? `<span class="owner-chip">${esc(owner)}</span>` : "";
+      const ownerList = owners?.length ? owners : (owner ? [owner] : []);
+      const ownerChip = ownerList.map(o => `<span class="owner-chip">${esc(o)}</span>`).join(" ");
 
       // 案件情報バー
       const deal = allDeals.find(d => (d.company || d.name) === company);
