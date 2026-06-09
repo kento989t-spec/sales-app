@@ -97,12 +97,14 @@
             <option>CoPASS BPO</option>
             <option>Partner Boost</option>
           </select>
-          <select id="phase-filter">
-            <option value="">ステータス: すべて</option>
-            <option value="won:0">商談中</option>
-            <option value="FS">FS</option>
-            <option value="won:1">受注（CS）</option>
-          </select>
+          <div id="phase-filter-chips" class="phase-chip-bar">
+            <span class="phase-chip-label">ステータス:</span>
+            <button class="month-btn phase-chip" data-phase="IS">IS</button>
+            <button class="month-btn phase-chip" data-phase="FS">FS</button>
+            <button class="month-btn phase-chip" data-phase="CS">CS</button>
+            <button class="month-btn phase-chip" data-phase="保留">保留</button>
+            <button class="month-btn phase-chip" data-phase="失注">失注</button>
+          </div>
           <label class="meeting-toggle">
             <input type="checkbox" id="has-meeting-filter"> 商談済みのみ
           </label>

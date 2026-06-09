@@ -267,6 +267,7 @@ header {
 .badge-C { background: #fef9c3; color: #854d0e; }
 .badge-D { background: #fee2e2; color: #991b1b; }
 .badge-won { background: #d1fae5; color: #065f46; }
+.badge-CS  { background: #d1fae5; color: #065f46; }
 
 .na-text { color: var(--text-sub); font-size: 12px; max-width: 200px; }
 
@@ -830,10 +831,11 @@ th.sortable:hover { background: #f3f4f6; }
   text-align: center;
 }
 .status-deal-select:disabled { opacity: .5; cursor: default; }
-.status-deal-商談中 { background: #e0f2fe; color: #0369a1; border-color: #7dd3fc; }
-.status-deal-受注   { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
-.status-deal-保留   { background: #fef3c7; color: #b45309; border-color: #fcd34d; }
-.status-deal-失注   { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+.status-deal-IS   { background: #f3e8ff; color: #6b21a8; border-color: #d8b4fe; }
+.status-deal-FS   { background: #e0f2fe; color: #0369a1; border-color: #7dd3fc; }
+.status-deal-CS   { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
+.status-deal-保留  { background: #fef3c7; color: #b45309; border-color: #fcd34d; }
+.status-deal-失注  { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
 
 .billing-input {
   border: 1px solid var(--border);
@@ -882,6 +884,19 @@ th.sortable:hover { background: #f3f4f6; }
   border-color: var(--primary);
 }
 .month-btn:hover:not(.active) { background: #f3f4f6; }
+
+/* ===== ステータスフィルターチップ ===== */
+.phase-chip-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+.phase-chip-label {
+  font-size: 12px;
+  color: var(--text-sub);
+  white-space: nowrap;
+}
 
 /* ===== 商談済みフィルター ===== */
 .meeting-toggle {

@@ -314,8 +314,9 @@
   const F_OWNER       = "field_8fbb7b46-95c0-4268-833a-f65e9a8d09da";
   const YOMI_OPTIONS  = { A: 120, B: 121, C: 122, D: 123 };
   // GoCoo path step IDs (from /custom-objects/5/paths)
-  const PATH_ID = { 商談中: 5, 保留: 19, 失注: 20, 受注: 12 };
+  const PATH_ID = { IS: 3, FS: 5, 保留: 19, 失注: 20, CS: 12 };
   const PATH_PHASE_FROM_ID = {
+    3:  "【IS-03】アプローチ済",
     5:  "【FS-02】初回商談実施済",
     12: "【CS-01】本番初期設定・キックオフ",
     19: "ペンディング",
@@ -408,6 +409,7 @@
   let activeOwner = "";
   let OWNER_OPTIONS = []; // { id: number, name: string }[]
   let selectedBillingMonths = new Set();
+  let selectedPhases = new Set();
   let selectedTaskMonths = new Set();
   let selectedTasks = new Set();
 
@@ -630,17 +632,21 @@
   }
 
   function deriveStatus(phase) {
-    if (!phase) return "商談中";
-    if (String(phase).includes("CS-")) return "受注";
-    if (phase === "ペンディング") return "保留";
-    if (phase === "失注") return "失注";
-    return "商談中";
+    if (!phase) return "FS";
+    const p = String(phase);
+    if (p.includes("CS-")) return "CS";
+    if (p.includes("IS-")) return "IS";
+    if (p.includes("FS-")) return "FS";
+    if (p === "ペンディング") return "保留";
+    if (p === "失注") return "失注";
+    return "FS";
   }
 
+  const STATUS_LABELS = { IS: "IS（アプローチ）", FS: "FS（商談中）", 保留: "保留", 失注: "失注", CS: "CS（受注）" };
   function statusSelect(d) {
     const current = deriveStatus(d.phase);
     const opts = Object.keys(PATH_ID).map(v =>
-      `<option value="${v}" ${current === v ? "selected" : ""}>${v}</option>`
+      `<option value="${v}" ${current === v ? "selected" : ""}>${STATUS_LABELS[v] ?? v}</option>`
     ).join("");
     return `<select class="status-deal-select status-deal-${current}" data-deal-id="${d.id}" onchange="window._statusChange(this, ${d.id})">${opts}</select>`;
   }
@@ -670,7 +676,7 @@
   }
 
   function dealRow(d, showBillingMonth = false) {
-    const wonBadge = d.is_won ? `<span class="badge badge-won">受注</span> ` : "";
+    const wonBadge = d.is_won ? `<span class="badge badge-CS">CS（受注）</span> ` : "";
     const billingVal = d.billing_month ? d.billing_month.slice(0, 7) : "";
     const billingCell = showBillingMonth
       ? `<td><input type="month" class="billing-input" value="${billingVal}" data-deal-id="${d.id}" onchange="window._billingChange(this, ${d.id})"></td>`
@@ -705,18 +711,15 @@
 
   // ===== 案件一覧タブ =====
   function renderDealsList() {
-    const catFilter   = document.getElementById("cat-filter").value;
-    const phaseFilter = document.getElementById("phase-filter").value;
-    const hasMeeting  = document.getElementById("has-meeting-filter")?.checked ?? false;
+    const catFilter  = document.getElementById("cat-filter").value;
+    const hasMeeting = document.getElementById("has-meeting-filter")?.checked ?? false;
 
     const source = DATA.all_deals ?? DATA.deals ?? [];
 
     const deals = source.filter(d => {
       if (activeOwner && d.owner !== activeOwner) return false;
       if (catFilter && !(d.categories || []).includes(catFilter)) return false;
-      if (phaseFilter === "won:1" && !d.is_won) return false;
-      if (phaseFilter === "won:0" && d.is_won) return false;
-      if (phaseFilter && !phaseFilter.startsWith("won:") && !d.phase.includes(phaseFilter)) return false;
+      if (selectedPhases.size > 0 && !selectedPhases.has(deriveStatus(d.phase))) return false;
       if (selectedBillingMonths.size > 0 && !selectedBillingMonths.has(d.billing_month?.slice(0, 7) ?? "")) return false;
       if (hasMeeting && !d.initial_meeting_done) return false;
       return true;
@@ -955,7 +958,7 @@
       for (const t of naTasks) {
         classify(
           taskCard(t.id, "na-label", "GoCoo", t.next_action,
-            `<span class="badge badge-${t.yomi}">${esc(t.yomi || "—")}</span><span class="phase-text">${esc(t.phase)}</span>`),
+            `<span class="badge badge-${t.yomi}">${esc(t.yomi || "—")}</span><span class="phase-text">${esc(deriveStatus(t.phase))}</span>`),
           t.id
         );
       }
@@ -1132,7 +1135,7 @@
 
   window._statusChange = async function(select, dealId) {
     const newStatus = select.value;
-    const newPathId = PATH_ID[newStatus] ?? PATH_ID["商談中"];
+    const newPathId = PATH_ID[newStatus] ?? PATH_ID["FS"];
     const newPhase  = PATH_PHASE_FROM_ID[newPathId] ?? "";
 
     const deal = [...(DATA.all_deals ?? []), ...(DATA.deals ?? [])].find(d => d.id === dealId);
@@ -1290,8 +1293,20 @@
   // ===== 案件一覧フィルタ =====
   function initDealsFilter() {
     document.getElementById("cat-filter").addEventListener("change", renderDealsList);
-    document.getElementById("phase-filter").addEventListener("change", renderDealsList);
     document.getElementById("has-meeting-filter")?.addEventListener("change", renderDealsList);
+    document.querySelectorAll(".phase-chip").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const phase = btn.dataset.phase;
+        if (selectedPhases.has(phase)) {
+          selectedPhases.delete(phase);
+          btn.classList.remove("active");
+        } else {
+          selectedPhases.add(phase);
+          btn.classList.add("active");
+        }
+        renderDealsList();
+      });
+    });
   }
 
   function makeMonthPills(containerId, selectedSet, onChangeCallback, defaultAll = false) {

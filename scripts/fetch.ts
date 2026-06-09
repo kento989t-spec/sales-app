@@ -123,18 +123,20 @@ async function main() {
   const allRaw = await getAllPages<RawDeal>(`/custom-objects/${DEAL_OBJECT_ID}/values`);
   console.log(`取得件数: ${allRaw.length}件`);
 
-  // アクティブ案件（失注・ペンディング除外）
+  // 表示用全案件（失注・ペンディング含む）
+  const allDeals = allRaw.map(mapDeal);
+  console.log(`全案件整形: ${allDeals.length}件`);
+
+  // アクティブ案件（失注・ペンディング除外）- KPI集計・タスク管理用
   const allActive = allRaw.filter(d => {
     const phase = d.path_id?.formatted_value ?? "";
     return !phase.includes("失注") && !phase.includes("ペンディング");
   });
+  const allActiveDeals = allActive.map(mapDeal);
+  console.log(`アクティブ件数: ${allActiveDeals.length}件`);
 
-  // 全アクティブ案件を整形
-  const allDeals = allActive.map(mapDeal);
-  console.log(`アクティブ件数: ${allDeals.length}件`);
-
-  // 今月分
-  const deals = allDeals.filter(d =>
+  // 今月分（アクティブのみ）
+  const deals = allActiveDeals.filter(d =>
     d.billing_month >= thisMonthStart && d.billing_month <= thisMonthEnd
   );
   console.log(`今月対象: ${deals.length}件`);
@@ -169,8 +171,8 @@ async function main() {
     owner: null as string | null,
   }));
 
-  // GoCoo Next Action
-  const naTasks = allDeals
+  // GoCoo Next Action（アクティブ案件のみ）
+  const naTasks = allActiveDeals
     .filter(d => d.next_action && d.next_action.trim().length > 0)
     .map(d => ({
       id: `na-${d.id}`,
@@ -183,16 +185,16 @@ async function main() {
       yomi: d.yomi,
     }));
 
-  // 管理対象会社一覧（タスク管理の起点として全案件会社を列挙）
+  // 管理対象会社一覧（タスク管理の起点 - アクティブ案件のみ）
   // 1社に複数担当者がいるケースに対応するため owners[] を保持
   const companyOwnersMap = new Map<string, Set<string>>();
-  for (const d of allDeals) {
+  for (const d of allActiveDeals) {
     if (!d.company || !d.owner) continue;
     if (!companyOwnersMap.has(d.company)) companyOwnersMap.set(d.company, new Set());
     companyOwnersMap.get(d.company)!.add(d.owner);
   }
   const seenCompanies = new Set<string>();
-  const dealCompanies = allDeals
+  const dealCompanies = allActiveDeals
     .filter(d => {
       if (!d.company || seenCompanies.has(d.company)) return false;
       seenCompanies.add(d.company);
@@ -214,7 +216,7 @@ async function main() {
 
   // ===== ユーザーマップ（担当者ID→名前）=====
   const usersMap = new Map<number, string>();
-  for (const d of allActive) {
+  for (const d of allRaw) {
     const ownerField = getField(d, F.OWNER);
     if (ownerField?.value != null) {
       usersMap.set(ownerField.value as number, ownerField.formatted_value);
