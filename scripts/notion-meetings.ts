@@ -7,9 +7,13 @@
  */
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 
 const HOME = process.env.HOME || "/Users/knt";
 const LOG_FILE = path.join(HOME, ".company/operations/logs/slack-posted-events.json");
+// 過去分の一括スナップショット（Notion「顧客アポ_議事」DBをタイトルからパースして生成）。
+// 今後の新規分はカレンダー自動作成ログに乗るため、このアーカイブは過去分の補完用。
+const ARCHIVE_FILE = path.join(path.dirname(fileURLToPath(import.meta.url)), "notion-meetings-archive.json");
 
 export interface NotionMeeting {
   date: string; // YYYY-MM-DD
@@ -90,9 +94,33 @@ export function loadMeetingMap(): Map<string, NotionMeeting[]> {
     list.push(meeting);
   }
 
+  // 過去分アーカイブをマージ（page_id 重複は除外）
+  mergeArchive(map);
+
   // 各社内を日付降順ソート
   for (const list of map.values()) {
     list.sort((a, b) => b.date.localeCompare(a.date));
   }
   return map;
+}
+
+/** 過去分スナップショット（notion-meetings-archive.json）を既存マップに追記する */
+function mergeArchive(map: Map<string, NotionMeeting[]>): void {
+  if (!fs.existsSync(ARCHIVE_FILE)) return;
+  let archive: Record<string, NotionMeeting[]>;
+  try {
+    archive = JSON.parse(fs.readFileSync(ARCHIVE_FILE, "utf-8"));
+  } catch (e) {
+    console.warn("議事録アーカイブのパース失敗（スキップ）:", e);
+    return;
+  }
+  for (const [key, meetings] of Object.entries(archive)) {
+    if (!key || !Array.isArray(meetings)) continue;
+    if (!map.has(key)) map.set(key, []);
+    const list = map.get(key)!;
+    for (const m of meetings) {
+      if (!m?.page_id || list.some(x => x.page_id === m.page_id)) continue;
+      list.push({ date: m.date ?? "", url: m.url || `https://www.notion.so/${m.page_id.replace(/-/g, "")}`, page_id: m.page_id });
+    }
+  }
 }
