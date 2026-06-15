@@ -426,15 +426,25 @@
   }
 
   async function loadData(password = "") {
-    const res = await fetch("data/sales-data.json?_=" + Date.now());
-    const raw = await res.json();
-    if (raw.encrypted) {
-      DATA = await decryptData(raw, password);
-    } else {
-      DATA = raw;
+    // デプロイ窓・一時的なネットワーク不調で data.json が非200/部分応答を返すことがあるため、
+    // res.ok を検証し、失敗時は短い間隔でリトライする。成功するまで DATA は上書きしない。
+    let lastErr;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        const res = await fetch("data/sales-data.json?_=" + Date.now(), { cache: "no-store" });
+        if (!res.ok) throw new Error("データ取得失敗 HTTP " + res.status);
+        const raw = await res.json();
+        const data = raw.encrypted ? await decryptData(raw, password) : raw;
+        DATA = data;
+        applyPending(); // ペンディング中の変更をデータに上書き
+        _lastFetchAt = Date.now();
+        return;
+      } catch (e) {
+        lastErr = e;
+        if (attempt < 2) await new Promise(r => setTimeout(r, 600));
+      }
     }
-    applyPending(); // ペンディング中の変更をデータに上書き
-    _lastFetchAt = Date.now();
+    throw lastErr;
   }
 
   // ===== ヘッダー =====
@@ -1434,7 +1444,8 @@
         await Promise.all([loadData(getSavedPassword()), loadSharedState()]);
         renderAll();
         toast("データを更新しました", "success");
-      } catch {
+      } catch (e) {
+        console.error("更新失敗:", e);
         toast("更新に失敗しました", "error");
       } finally {
         btn.disabled = false;
