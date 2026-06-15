@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import { webcrypto } from "crypto";
 import { getAllPages } from "./gocoo-client.ts";
 import { fetchSlackTasks } from "./slack-client.ts";
+import { loadMeetingMap, normalizeCompany } from "./notion-meetings.ts";
 
 const crypto = webcrypto as unknown as Crypto;
 
@@ -193,6 +194,10 @@ async function main() {
     if (!companyOwnersMap.has(d.company)) companyOwnersMap.set(d.company, new Set());
     companyOwnersMap.get(d.company)!.add(d.owner);
   }
+  // Notion議事録マップ（カレンダー自動作成ログ由来）
+  const meetingMap = loadMeetingMap();
+  const matchedMeetingKeys = new Set<string>();
+
   const seenCompanies = new Set<string>();
   const dealCompanies = allActiveDeals
     .filter(d => {
@@ -200,14 +205,28 @@ async function main() {
       seenCompanies.add(d.company);
       return true;
     })
-    .map(d => ({
-      company: d.company,
-      owner: d.owner,
-      owners: [...(companyOwnersMap.get(d.company) ?? [d.owner])],
-      yomi: d.yomi,
-      billing_month: d.billing_month,
-      updated_at: d.updated_at ?? "",
-    }));
+    .map(d => {
+      const meetingKey = normalizeCompany(d.company);
+      const notion_meetings = meetingMap.get(meetingKey) ?? [];
+      if (notion_meetings.length > 0) matchedMeetingKeys.add(meetingKey);
+      return {
+        company: d.company,
+        owner: d.owner,
+        owners: [...(companyOwnersMap.get(d.company) ?? [d.owner])],
+        yomi: d.yomi,
+        billing_month: d.billing_month,
+        updated_at: d.updated_at ?? "",
+        notion_meetings,
+      };
+    });
+
+  // マッチ状況の診断ログ
+  const matchedCompanies = dealCompanies.filter(c => c.notion_meetings.length > 0).length;
+  console.log(`Notion議事録: 管理対象${dealCompanies.length}社中 ${matchedCompanies}社にリンク付与`);
+  const unmatchedMeetingKeys = [...meetingMap.keys()].filter(k => !matchedMeetingKeys.has(k));
+  if (unmatchedMeetingKeys.length > 0) {
+    console.log(`議事録はあるがGoCoo管理対象に未マッチ: ${unmatchedMeetingKeys.length}社`);
+  }
 
   // Slack議事録
   console.log("Slackタスク取得中...");

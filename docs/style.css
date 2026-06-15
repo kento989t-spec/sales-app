@@ -704,6 +704,7 @@ header {
 .company-task-header {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   padding: 10px 16px;
   background: #f3f4f6;
@@ -719,6 +720,68 @@ header {
   font-size: 11px;
   color: var(--text-sub);
 }
+/* ===== Notion議事録リンク ===== */
+.notion-meetings {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.notion-meeting-link {
+  font-size: 11px;
+  font-weight: 600;
+  color: #1f6feb;
+  text-decoration: none;
+  background: #eaf2ff;
+  border: 1px solid #cfe0ff;
+  border-radius: 4px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+.notion-meeting-link:hover { background: #dbe9ff; }
+.notion-meeting-more {
+  display: inline-block;
+  position: relative;
+  font-size: 11px;
+}
+.notion-meeting-more > summary {
+  cursor: pointer;
+  color: var(--text-sub);
+  list-style: none;
+  padding: 2px 6px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  user-select: none;
+}
+.notion-meeting-more > summary::-webkit-details-marker { display: none; }
+.notion-meeting-more[open] > summary { color: var(--text); }
+.notion-meeting-list {
+  position: absolute;
+  right: 0;
+  z-index: 20;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  max-height: 240px;
+  overflow-y: auto;
+}
+.notion-meeting-item {
+  font-size: 11px;
+  color: #1f6feb;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+.notion-meeting-item:hover { background: #eaf2ff; }
+
 .company-task-group .task-cards {
   padding: 8px 12px;
   display: flex;

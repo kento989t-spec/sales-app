@@ -847,7 +847,7 @@
     const companyUpdatedAt = new Map();
     for (const dc of dcs) {
       const key = dc.company ?? "（会社不明）";
-      if (!companies.has(key)) companies.set(key, { slack: [], na: [], custom: [], owner: dc.owner, owners: dc.owners ?? (dc.owner ? [dc.owner] : []) });
+      if (!companies.has(key)) companies.set(key, { slack: [], na: [], custom: [], owner: dc.owner, owners: dc.owners ?? (dc.owner ? [dc.owner] : []), notion_meetings: dc.notion_meetings ?? [] });
       if (dc.updated_at) companyUpdatedAt.set(key, dc.updated_at);
     }
     for (const t of slack) {
@@ -897,9 +897,26 @@
     });
 
     let html = "";
-    for (const [company, { slack: sTasks, na: naTasks, custom: cTasks, owner, owners }] of sortedCompanies) {
+    for (const [company, { slack: sTasks, na: naTasks, custom: cTasks, owner, owners, notion_meetings }] of sortedCompanies) {
       if (!companyMatchesFilter(company)) continue;
       const meetingTsList = meetingsByCompany.get(company) ?? new Set();
+
+      // Notion議事録リンク（最新1件 + 全件展開）
+      const nm = notion_meetings ?? [];
+      let notionLinksHtml = "";
+      if (nm.length > 0) {
+        const fmt = d => (d || "").replace(/^(\d{4})-(\d{2})-(\d{2})$/, "$2/$3");
+        const latest = nm[0];
+        const latestLink = `<a class="notion-meeting-link" href="${esc(latest.url)}" target="_blank" rel="noopener" title="Notion議事録を開く">📝 議事録${latest.date ? " " + esc(fmt(latest.date)) : ""}</a>`;
+        if (nm.length > 1) {
+          const rest = nm.slice(1).map(m =>
+            `<a class="notion-meeting-item" href="${esc(m.url)}" target="_blank" rel="noopener">📝 ${esc(fmt(m.date) || "議事録")}</a>`
+          ).join("");
+          notionLinksHtml = `<span class="notion-meetings">${latestLink}<details class="notion-meeting-more"><summary>他${nm.length - 1}件</summary><div class="notion-meeting-list">${rest}</div></details></span>`;
+        } else {
+          notionLinksHtml = `<span class="notion-meetings">${latestLink}</span>`;
+        }
+      }
       const updatedAt = companyUpdatedAt.get(company) ?? "";
       const updatedLabel = updatedAt
         ? `<span class="company-updated-at">GoCoo更新: ${updatedAt.slice(0, 10)}</span>` : "";
@@ -994,6 +1011,7 @@
           <span class="company-task-name">${esc(company)}</span>
           ${ownerChip}
           ${updatedLabel}
+          ${notionLinksHtml}
         </div>
         ${dealInfoBar}
         <div class="task-cards">${activeTasks.join("") || '<p class="task-empty" style="padding:8px 12px">アクティブなタスクなし</p>'}</div>
