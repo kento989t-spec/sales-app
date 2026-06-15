@@ -258,6 +258,8 @@ async function main() {
     total,
     deals,
     all_deals: allDeals,
+    // 正規化社名キー → Notion議事録リスト（全社・全案件から参照可能にするためトップレベルに保持）
+    notion_meetings_by_company: Object.fromEntries(meetingMap),
     tasks: {
       standing: standingTasks,
       next_action: naTasks,

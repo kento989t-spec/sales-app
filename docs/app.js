@@ -42,6 +42,39 @@
     return sessionStorage.getItem(SESSION_KEY) ?? "";
   }
 
+  // ===== Notion議事録 ルックアップ（notion-meetings.ts の normalizeCompany と同一ロジック）=====
+  function normalizeCompany(raw) {
+    if (!raw) return "";
+    let s = String(raw);
+    s = s.replace(/[Ａ-Ｚａ-ｚ０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xfee0));
+    s = s.replace(/\s+/g, "");
+    s = s.replace(/(株式会社|有限会社|合同会社|合名会社|合資会社|一般社団法人|一般財団法人|公益社団法人|公益財団法人|特定非営利活動法人|\(株\)|（株）|\(有\)|（有）)/g, "");
+    s = s.replace(/様$/g, "");
+    return s.toLowerCase();
+  }
+
+  // 企業名 → 議事録リスト（日付降順）
+  function meetingsFor(companyName) {
+    const map = DATA.notion_meetings_by_company;
+    if (!map || !companyName) return [];
+    return map[normalizeCompany(companyName)] ?? [];
+  }
+
+  // 日付を MM/DD に整形
+  function fmtMeetingDate(d) {
+    return (d || "").replace(/^(\d{4})-(\d{2})-(\d{2})$/, "$2/$3");
+  }
+
+  // テーブルセル用のコンパクトな議事録リンク（最新を開く・複数なら件数表示・hoverで全日付）
+  function meetingCellLink(companyName) {
+    const ms = meetingsFor(companyName);
+    if (ms.length === 0) return "";
+    const latest = ms[0];
+    const allDates = ms.map(m => fmtMeetingDate(m.date) || "議事録").join(" / ");
+    const countBadge = ms.length > 1 ? `<span class="notion-cell-count">${ms.length}</span>` : "";
+    return ` <a class="notion-cell-link" href="${esc(latest.url)}" target="_blank" rel="noopener" title="Notion議事録を開く（${esc(allDates)}）" onclick="event.stopPropagation()">📝${countBadge}</a>`;
+  }
+
   // ===== 楽観的更新 + ペンディング管理（localStorage）=====
   const PENDING_KEY = "sales_app_pending";
   const PENDING_TTL = 90 * 60 * 1000; // 90分: Actions完了 + hourly fetch を余裕で待てる
@@ -696,7 +729,7 @@
       : "";
     const amountRaw = d.amount ?? 0;
     return `<tr>
-      <td>${esc(d.company || d.name)}</td>
+      <td>${esc(d.company || d.name)}${meetingCellLink(d.company || d.name)}</td>
       <td>${catDropdown(d)}</td>
       <td>${yomiSelect(d)}</td>
       <td class="num"><input type="number" class="amount-input" value="${amountRaw}" data-deal-id="${d.id}" onchange="window._amountChange(this, ${d.id})"></td>
