@@ -794,7 +794,10 @@
     ).join("");
 
     const due = getTaskDue(id) || defaultDue;
-    const dueClass = due && due < new Date().toISOString().slice(0, 10) ? "due-overdue" : "";
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const dueClass = due
+      ? (due < todayStr ? "due-overdue" : (due === todayStr ? "due-today" : ""))
+      : "";
     const taskOwnerVal = getTaskOwner(id);
     const ownerOpts = `<option value="">担当: -</option>` +
       OWNER_OPTIONS.map(u => `<option value="${esc(u.name)}" ${taskOwnerVal === u.name ? "selected" : ""}>${esc(u.name)}</option>`).join("");
@@ -853,6 +856,7 @@
   let activeTaskYomi  = "";
   let activeTaskMonth = "";
   let activeTaskDue   = "";
+  let selectedTaskPhases = new Set();
 
   function initTaskFilters() {
     const yomiFil = document.getElementById("task-yomi-filter");
@@ -863,6 +867,20 @@
 
     const meetingFil = document.getElementById("task-has-meeting-filter");
     if (meetingFil) meetingFil.addEventListener("change", renderTasks);
+
+    document.querySelectorAll("#task-phase-filter-chips .phase-chip").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const phase = btn.dataset.taskPhase;
+        if (selectedTaskPhases.has(phase)) {
+          selectedTaskPhases.delete(phase);
+          btn.classList.remove("active");
+        } else {
+          selectedTaskPhases.add(phase);
+          btn.classList.add("active");
+        }
+        renderTasks();
+      });
+    });
   }
 
   function renderTasks() {
@@ -886,6 +904,20 @@
     const companies = new Map();
     const meetingsByCompany = new Map();
 
+    // 名寄せ: GoCoo案件名（deal_companies）を正準名とし、Slack議事録等の表記揺れ
+    // （例: GoCoo「株式会社Kanaglee」 vs Slack「Kanaglee」）を同一グループにまとめる。
+    // セクションのキー＝表示名（正準名）。タスクIDも表示名ベースのため既存ステータスを維持。
+    const canonicalByNorm = new Map();
+    for (const dc of dcs) {
+      const nk = normalizeCompany(dc.company ?? "");
+      if (nk && !canonicalByNorm.has(nk)) canonicalByNorm.set(nk, dc.company);
+    }
+    const resolveName = raw => {
+      const name = raw ?? "（会社不明）";
+      const nk = normalizeCompany(name);
+      return (nk && canonicalByNorm.get(nk)) || name;
+    };
+
     // 管理対象全会社を起点にセクションを生成（updated_atも保持）
     const companyUpdatedAt = new Map();
     for (const dc of dcs) {
@@ -894,20 +926,20 @@
       if (dc.updated_at) companyUpdatedAt.set(key, dc.updated_at);
     }
     for (const t of slack) {
-      const key = t.company ?? "（会社不明）";
+      const key = resolveName(t.company);
       if (!companies.has(key)) companies.set(key, { slack: [], na: [], custom: [], owner: t.owner });
       companies.get(key).slack.push(t);
       if (!meetingsByCompany.has(key)) meetingsByCompany.set(key, new Set());
       meetingsByCompany.get(key).add(t.source_ts);
     }
     for (const t of na) {
-      const key = t.company ?? "（会社不明）";
+      const key = resolveName(t.company);
       if (!companies.has(key)) companies.set(key, { slack: [], na: [], custom: [], owner: t.owner });
       companies.get(key).na.push(t);
     }
     // カスタムタスク（新規会社セクションも生成）
     for (const t of Object.values(loadCustomTasks())) {
-      const key = t.company ?? "（会社不明）";
+      const key = resolveName(t.company);
       if (!companies.has(key)) companies.set(key, { slack: [], na: [], custom: [], owner: null });
       companies.get(key).custom.push(t);
     }
@@ -922,13 +954,14 @@
     // 計上月・ヨミ・商談済みフィルタ: 会社に紐づく案件でマッチング
     const taskHasMeeting = document.getElementById("task-has-meeting-filter")?.checked ?? false;
     function companyMatchesFilter(company) {
-      const hasFilter = activeTaskYomi || selectedTaskMonths.size > 0 || taskHasMeeting;
+      const hasFilter = activeTaskYomi || selectedTaskMonths.size > 0 || taskHasMeeting || selectedTaskPhases.size > 0;
       if (!hasFilter) return true;
       const deal = allDeals.find(d => (d.company || d.name) === company);
       if (!deal) return false;
       if (activeTaskYomi && deal.yomi !== activeTaskYomi) return false;
       if (selectedTaskMonths.size > 0 && !selectedTaskMonths.has(deal.billing_month?.slice(0, 7) ?? "")) return false;
       if (taskHasMeeting && !deal.initial_meeting_done) return false;
+      if (selectedTaskPhases.size > 0 && !selectedTaskPhases.has(deriveStatus(deal.phase))) return false;
       return true;
     }
 
@@ -1142,11 +1175,12 @@
 
   window._setTaskDue = function(taskId, date) {
     setTaskDue(taskId, date);
-    // 期限切れクラスのみ即時更新（再描画なし）
+    // 期限切れ/当日クラスを即時更新（再描画なし）
     const input = document.querySelector(`.task-due-input[data-task-id="${taskId}"]`);
     if (input) {
       const today = new Date().toISOString().slice(0, 10);
       input.classList.toggle("due-overdue", !!date && date < today);
+      input.classList.toggle("due-today", date === today);
     }
   };
 

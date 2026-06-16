@@ -532,6 +532,7 @@ header {
 }
 .task-due-input:hover, .task-due-input:focus { border-color: var(--primary); outline: none; }
 .task-due-input.due-overdue { color: var(--danger); border-color: #fca5a5; background: #fff1f2; }
+.task-due-input.due-today { color: #b45309; border-color: #fcd34d; background: #fffbeb; font-weight: 600; }
 
 /* 追加ラベル */
 .custom-label { background: #ecfdf5; color: #065f46; }
