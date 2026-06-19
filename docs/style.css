@@ -938,9 +938,8 @@ th.sortable:hover { background: #f3f4f6; }
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  text-align: center;
+  text-align: left;
+  max-width: 230px;
 }
 .status-deal-select:disabled { opacity: .5; cursor: default; }
 .status-deal-IS   { background: #f3e8ff; color: #6b21a8; border-color: #d8b4fe; }

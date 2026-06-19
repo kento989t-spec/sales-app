@@ -107,6 +107,10 @@
     valid.forEach(p => { cleaned[`${p.dealId}:${p.field}`] = p; });
     localStorage.setItem(PENDING_KEY, JSON.stringify(cleaned));
 
+    // phase文字列→path_id 逆引きテーブル
+    const PHASE_TO_PATH_ID = Object.fromEntries(
+      Object.entries(PATH_PHASE_FROM_ID).map(([k, v]) => [v, Number(k)])
+    );
     for (const { dealId, field, value } of valid) {
       for (const arr of [DATA.deals, DATA.all_deals]) {
         const deal = (arr ?? []).find(d => d.id === dealId);
@@ -119,6 +123,8 @@
         }
         if (field === "phase") {
           deal.is_won = String(value).includes("CS-");
+          // path_id_raw もペンディング期間中ずれないよう同期
+          if (PHASE_TO_PATH_ID[value]) deal.path_id_raw = PHASE_TO_PATH_ID[value];
         }
       }
     }
@@ -349,15 +355,47 @@
   const F_PATH        = "path_id";
   const F_OWNER       = "field_8fbb7b46-95c0-4268-833a-f65e9a8d09da";
   const YOMI_OPTIONS  = { A: 120, B: 121, C: 122, D: 123 };
-  // GoCoo path step IDs (from /custom-objects/5/paths)
+  // GoCoo path step IDs (from /custom-objects/5/paths, 2026-06-20 リニューアル後)
   const PATH_ID = { IS: 3, FS: 5, 保留: 19, 失注: 20, CS: 12 };
   const PATH_PHASE_FROM_ID = {
+    1:  "【IS-01】アプローチ前",
+    2:  "【IS-02】アプローチ可能",
     3:  "【IS-03】アプローチ済",
+    4:  "【FS-01】初回商談日FIX",
     5:  "【FS-02】初回商談実施済",
+    32: "【FS-03】本提案FIX",
+    6:  "【FS-04】本提案実施済",
+    7:  "【FS-05】推進合意",
+    33: "【FS-06】取り組み要件の合意",
+    35: "【FS-07】決裁者への上申済み",
+    36: "【FS-08】他社比較検討開始",
+    9:  "【FS-09】導入決定(口頭受注)",
+    37: "【FS-10】社内稟議",
+    10: "【FS-11】申込書送付",
+    11: "【FS-12】申込書回収",
     12: "【CS-01】本番初期設定・キックオフ",
+    14: "【CS-02】代理店向け設定・キックオフ",
+    15: "【CS-03】正式運用",
+    16: "【CS-04】安定運用",
+    18: "【CS-05】継続受注",
     19: "ペンディング",
     20: "失注",
   };
+  // フェーズ→ヨミ自動付与 (FS-01〜FS-12 のみ。IS/CS/その他は対象外)
+  // 01-04→D, 05-06→C, 07-08→B, 09-12→A
+  const PHASE_TO_YOMI = {
+    4:  "D", 5:  "D", 32: "D", 6:  "D",
+    7:  "C", 33: "C",
+    35: "B", 36: "B",
+    9:  "A", 37: "A", 10: "A", 11: "A",
+  };
+  // ステータスセレクトの選択肢（表示順）
+  const PHASE_SELECT_GROUPS = [
+    { label: "IS",   ids: [1, 2, 3] },
+    { label: "FS",   ids: [4, 5, 32, 6, 7, 33, 35, 36, 9, 37, 10, 11] },
+    { label: "CS",   ids: [12, 14, 15, 16, 18] },
+    { label: "その他", ids: [19, 20] },
+  ];
   const CAT_OPTIONS   = [
     { id: 258, name: "CoPASS" },
     { id: 259, name: "CoPASS BPO" },
@@ -704,12 +742,26 @@
   }
 
   const STATUS_LABELS = { IS: "IS（アプローチ）", FS: "FS（商談中）", 保留: "保留", 失注: "失注", CS: "CS（受注）" };
+
+  // 現案件の path_id（楽観的更新後の整合用に DATA を参照）
+  function getDealPathId(dealId) {
+    const d = (DATA?.all_deals ?? DATA?.deals ?? []).find(x => x.id === dealId);
+    return d?.path_id_raw ?? null;
+  }
+
+  // 詳細フェーズセレクト（IS/FS/CS/その他で optgroup 分類）
   function statusSelect(d) {
-    const current = deriveStatus(d.phase);
-    const opts = Object.keys(PATH_ID).map(v =>
-      `<option value="${v}" ${current === v ? "selected" : ""}>${STATUS_LABELS[v] ?? v}</option>`
-    ).join("");
-    return `<select class="status-deal-select status-deal-${current}" data-deal-id="${d.id}" onchange="window._statusChange(this, ${d.id})">${opts}</select>`;
+    const current = d.path_id_raw ?? null;
+    const groupHtml = PHASE_SELECT_GROUPS.map(g => {
+      const opts = g.ids.map(pid => {
+        const label = PATH_PHASE_FROM_ID[pid] ?? `id=${pid}`;
+        return `<option value="${pid}" ${current === pid ? "selected" : ""}>${label}</option>`;
+      }).join("");
+      return `<optgroup label="${g.label}">${opts}</optgroup>`;
+    }).join("");
+    const placeholder = current === null ? `<option value="" selected>—</option>` : "";
+    const statusKey = deriveStatus(d.phase);
+    return `<select class="status-deal-select status-deal-${statusKey}" data-deal-id="${d.id}" onchange="window._statusChange(this, ${d.id})">${placeholder}${groupHtml}</select>`;
   }
 
   function ownerSelect(d) {
@@ -1266,24 +1318,55 @@
   }
 
   window._statusChange = async function(select, dealId) {
-    const newStatus = select.value;
-    const newPathId = PATH_ID[newStatus] ?? PATH_ID["FS"];
+    const newPathId = Number(select.value);
+    if (!newPathId) return;
     const newPhase  = PATH_PHASE_FROM_ID[newPathId] ?? "";
+    const newStatusKey = deriveStatus(newPhase);
 
     const deal = [...(DATA.all_deals ?? []), ...(DATA.deals ?? [])].find(d => d.id === dealId);
-    const origPhase = deal?.phase ?? "";
+    const origPhase  = deal?.phase ?? "";
+    const origPathId = deal?.path_id_raw ?? null;
+    const origYomi   = deal?.yomi ?? "";
 
     select.disabled = true;
     optimisticUpdate(dealId, "phase", newPhase);
-    select.className = `status-deal-select status-deal-${newStatus}`;
+    // path_id_raw も同期しておかないと次回描画時にselectが旧値に戻ってしまう
+    for (const arr of [DATA.deals, DATA.all_deals]) {
+      const d = (arr ?? []).find(x => x.id === dealId);
+      if (d) d.path_id_raw = newPathId;
+    }
+    select.className = `status-deal-select status-deal-${newStatusKey}`;
 
     const ok = await triggerUpdate(dealId, F_PATH, newPathId);
-    select.disabled = false;
     if (!ok) {
       revertUpdate(dealId, "phase", origPhase);
-      select.value = deriveStatus(origPhase);
+      for (const arr of [DATA.deals, DATA.all_deals]) {
+        const d = (arr ?? []).find(x => x.id === dealId);
+        if (d) d.path_id_raw = origPathId;
+      }
+      select.value = String(origPathId ?? "");
       select.className = `status-deal-select status-deal-${deriveStatus(origPhase)}`;
+      select.disabled = false;
+      return;
     }
+
+    // ===== フェーズ→ヨミ 自動付与（FS-01〜FS-12 のみ）=====
+    const targetYomi = PHASE_TO_YOMI[newPathId];
+    if (targetYomi && targetYomi !== origYomi) {
+      const choiceId = YOMI_OPTIONS[targetYomi];
+      optimisticUpdate(dealId, "yomi", targetYomi);
+      const yomiOk = await triggerUpdate(dealId, F_YOMI, choiceId);
+      if (yomiOk) {
+        // 案件行を即時再描画してヨミセレクトに反映
+        renderDealsList();
+        renderDashboardDeals();
+        toast(`ヨミを自動で ${origYomi || "—"} → ${targetYomi} に更新しました`, "success");
+      } else {
+        revertUpdate(dealId, "yomi", origYomi);
+        toast("ヨミの自動更新に失敗しました", "error");
+      }
+    }
+    select.disabled = false;
   };
 
   window._taskStatusChange = function(select) {
