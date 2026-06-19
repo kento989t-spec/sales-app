@@ -222,6 +222,38 @@ header {
 }
 .yomi-btn:hover:not(.active) { background: #f3f4f6; }
 
+/* ヨミ月行 */
+.yomi-month-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.filter-row-label {
+  font-size: 12px;
+  color: var(--text-sub);
+  white-space: nowrap;
+}
+.month-filter-pills.inline { padding: 0; }
+
+/* ===== Paid対応セレクト ===== */
+.paid-select {
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 12px;
+  cursor: pointer;
+  background: var(--surface);
+}
+.paid-select.paid-none { color: var(--text-sub); }
+.paid-select.paid-todo { background: #fef3c7; border-color: #fcd34d; color: #92400e; }
+.paid-select.paid-done { background: #d1fae5; border-color: #6ee7b7; color: #065f46; }
+.paid-select.paid-skip { background: #e5e7eb; border-color: #d1d5db; color: #4b5563; }
+
+/* Paidチップ（フィルタ） */
+.paid-chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
 /* ===== 案件テーブル ===== */
 .deals-table {
   width: 100%;

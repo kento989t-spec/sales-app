@@ -199,6 +199,7 @@
     comments: {},
     taskDates: {},
     taskOwners: {},
+    paidStatus: {}, // { [dealId]: "todo" | "done" | "skip" }
     pat: "",
   };
 
@@ -228,12 +229,13 @@
   async function loadSharedState() {
     await resolveSalesApi();
     try {
-      const [taskStatus, customTasks, comments, taskDates, taskOwners, config] = await Promise.all([
+      const [taskStatus, customTasks, comments, taskDates, taskOwners, paidStatus, config] = await Promise.all([
         apiFetchKey("task_status"),
         apiFetchKey("custom_tasks"),
         apiFetchKey("comments"),
         apiFetchKey("task_dates"),
         apiFetchKey("task_owners"),
+        apiFetchKey("paid_status"),
         SALES_API
           ? fetch(`${SALES_API}/api/sales/config`).then(r => r.ok ? r.json() : { pat: "" }).catch(() => ({ pat: "" }))
           : Promise.resolve({ pat: "" }),
@@ -243,6 +245,7 @@
       sharedState.comments    = comments    ?? {};
       sharedState.taskDates   = taskDates   ?? {};
       sharedState.taskOwners  = taskOwners  ?? {};
+      sharedState.paidStatus  = paidStatus  ?? {};
       // PAT: ローカルオーバーライドがあればそちら優先
       const override = localStorage.getItem("sales_app_pat_override");
       sharedState.pat = override || config.pat || "";
@@ -438,11 +441,14 @@
 
   // ===== メインデータ =====
   let DATA = null;
-  let activeYomi = "";
+  let selectedYomis = new Set();        // ダッシュボード ヨミ別内訳（複数選択。空=すべて）
+  let selectedYomiMonths = new Set();   // ダッシュボード ヨミ月（複数選択。空=すべて）
   let activeOwner = "";
   let OWNER_OPTIONS = []; // { id: number, name: string }[]
   let selectedBillingMonths = new Set();
   let selectedPhases = new Set();
+  let selectedListYomis = new Set();    // 案件一覧 ヨミフィルタ（複数選択。空=すべて）
+  let selectedPaidStatuses = new Set(); // 案件一覧 Paid対応フィルタ（複数選択。空=すべて）
   let selectedTaskMonths = new Set();
   let selectedTasks = new Set();
 
@@ -508,13 +514,25 @@
     });
   }
 
-  // ===== フィルタ適用（ダッシュボード用・今月分のみ）=====
+  // ===== フィルタ適用（ダッシュボード サマリー集計用・今月分のみ）=====
+  // サマリー/進捗バーは引き続き当月固定で集計する（経営指標の意味が変わるため）
   function filteredDeals(extraYomi = null) {
-    const yomi = extraYomi !== null ? extraYomi : activeYomi;
     const source = DATA.deals ?? [];
     return source.filter(d => {
       if (activeOwner && d.owner !== activeOwner) return false;
-      if (yomi && d.yomi !== yomi) return false;
+      if (extraYomi !== null && extraYomi !== "" && d.yomi !== extraYomi) return false;
+      return true;
+    });
+  }
+
+  // ヨミ別内訳テーブル用: 月セレクタ＋ヨミ複数選択を適用（all_deals起点）
+  // 初期表示は makeMonthPills が当月を pre-select する。「すべて」を押すと全月表示。
+  function filteredYomiSectionDeals() {
+    const source = DATA.all_deals ?? DATA.deals ?? [];
+    return source.filter(d => {
+      if (activeOwner && d.owner !== activeOwner) return false;
+      if (selectedYomis.size > 0 && !selectedYomis.has(d.yomi)) return false;
+      if (selectedYomiMonths.size > 0 && !selectedYomiMonths.has(d.billing_month?.slice(0, 7) ?? "")) return false;
       return true;
     });
   }
@@ -718,7 +736,22 @@
     </div>`;
   }
 
-  function dealRow(d, showBillingMonth = false) {
+  // ===== Paid対応ステータス =====
+  const PAID_LABELS = { todo: "未対応", done: "対応済み", skip: "不要" };
+  function getPaidStatus(dealId) {
+    return sharedState.paidStatus[dealId] ?? "";
+  }
+  function paidStatusSelect(d) {
+    const cur = getPaidStatus(d.id);
+    const cls = cur ? `paid-select paid-${cur}` : "paid-select paid-none";
+    const placeholder = cur ? "" : `<option value="" selected>—</option>`;
+    const opts = Object.entries(PAID_LABELS).map(([v, label]) =>
+      `<option value="${v}" ${cur === v ? "selected" : ""}>${label}</option>`
+    ).join("");
+    return `<select class="${cls}" data-deal-id="${d.id}" onchange="window._paidChange(this, ${d.id})">${placeholder}${opts}</select>`;
+  }
+
+  function dealRow(d, showBillingMonth = false, showPaid = false) {
     const wonBadge = d.is_won ? `<span class="badge badge-CS">CS（受注）</span> ` : "";
     const billingVal = d.billing_month ? d.billing_month.slice(0, 7) : "";
     const billingCell = showBillingMonth
@@ -727,6 +760,7 @@
     const updatedCell = showBillingMonth
       ? `<td class="updated-cell">${d.updated_at ? d.updated_at.slice(0, 10) : ""}</td>`
       : "";
+    const paidCell = showPaid ? `<td>${paidStatusSelect(d)}</td>` : "";
     const amountRaw = d.amount ?? 0;
     return `<tr>
       <td>${esc(d.company || d.name)}${meetingCellLink(d.company || d.name)}</td>
@@ -737,13 +771,14 @@
       <td>${wonBadge}${statusSelect(d)}</td>
       ${billingCell}
       <td>${ownerSelect(d)}</td>
+      ${paidCell}
       ${updatedCell}
     </tr>`;
   }
 
   // ===== ダッシュボード内案件リスト =====
   function renderDashboardDeals() {
-    const deals = filteredDeals(activeYomi);
+    const deals = filteredYomiSectionDeals();
     const tbody = document.getElementById("deals-body-dashboard");
     if (deals.length === 0) {
       tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--text-sub);padding:24px">該当案件なし</td></tr>`;
@@ -763,6 +798,8 @@
       if (activeOwner && d.owner !== activeOwner) return false;
       if (catFilter && !(d.categories || []).includes(catFilter)) return false;
       if (selectedPhases.size > 0 && !selectedPhases.has(deriveStatus(d.phase))) return false;
+      if (selectedListYomis.size > 0 && !selectedListYomis.has(d.yomi)) return false;
+      if (selectedPaidStatuses.size > 0 && !selectedPaidStatuses.has(getPaidStatus(d.id) || "todo")) return false;
       if (selectedBillingMonths.size > 0 && !selectedBillingMonths.has(d.billing_month?.slice(0, 7) ?? "")) return false;
       if (hasMeeting && !d.initial_meeting_done) return false;
       return true;
@@ -771,9 +808,9 @@
     const sorted = sortDeals(deals);
     const tbody = document.getElementById("deals-body-list");
     if (sorted.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--text-sub);padding:24px">該当案件なし</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;color:var(--text-sub);padding:24px">該当案件なし</td></tr>`;
     } else {
-      tbody.innerHTML = sorted.map(d => dealRow(d, true)).join("");
+      tbody.innerHTML = sorted.map(d => dealRow(d, true, true)).join("");
     }
   }
 
@@ -1328,6 +1365,29 @@
     }
   };
 
+  window._paidChange = async function(select, dealId) {
+    const newVal = select.value; // "" | "todo" | "done" | "skip"
+    const orig = getPaidStatus(dealId);
+    // クラス更新
+    select.className = newVal ? `paid-select paid-${newVal}` : "paid-select paid-none";
+    // メモリ反映
+    if (newVal) sharedState.paidStatus[dealId] = newVal;
+    else delete sharedState.paidStatus[dealId];
+    select.disabled = true;
+    try {
+      await apiSaveKey("paid_status", sharedState.paidStatus);
+    } catch (e) {
+      // ロールバック
+      if (orig) sharedState.paidStatus[dealId] = orig;
+      else delete sharedState.paidStatus[dealId];
+      select.value = orig || "";
+      select.className = orig ? `paid-select paid-${orig}` : "paid-select paid-none";
+      toast("Paid対応の更新に失敗しました", "error");
+    } finally {
+      select.disabled = false;
+    }
+  };
+
   window._billingChange = async function(input, dealId) {
     const newMonth = input.value; // "YYYY-MM"
     if (!newMonth) return;
@@ -1373,16 +1433,37 @@
     });
   }
 
-  // ===== ヨミフィルタ =====
+  // ===== ヨミフィルタ（ダッシュボード・複数選択） =====
   function initYomiFilter() {
-    document.querySelectorAll(".yomi-btn").forEach(btn => {
+    const buttons = document.querySelectorAll(".yomi-btn");
+    const allBtn = document.querySelector('.yomi-btn[data-yomi=""]');
+    buttons.forEach(btn => {
       btn.addEventListener("click", () => {
-        document.querySelectorAll(".yomi-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        activeYomi = btn.dataset.yomi;
+        const v = btn.dataset.yomi;
+        if (v === "") {
+          // 「すべて」: 個別選択を全クリア
+          selectedYomis.clear();
+          buttons.forEach(b => b.classList.remove("active"));
+          allBtn.classList.add("active");
+        } else {
+          allBtn.classList.remove("active");
+          if (selectedYomis.has(v)) {
+            selectedYomis.delete(v);
+            btn.classList.remove("active");
+            if (selectedYomis.size === 0) allBtn.classList.add("active");
+          } else {
+            selectedYomis.add(v);
+            btn.classList.add("active");
+          }
+        }
         renderDashboardDeals();
       });
     });
+  }
+
+  // ヨミ月セレクタ（ダッシュボード）
+  function initYomiMonthFilter() {
+    makeMonthPills("yomi-month-filter", selectedYomiMonths, renderDashboardDeals);
   }
 
   // ===== 案件一覧フィルタ =====
@@ -1397,6 +1478,32 @@
           btn.classList.remove("active");
         } else {
           selectedPhases.add(phase);
+          btn.classList.add("active");
+        }
+        renderDealsList();
+      });
+    });
+    document.querySelectorAll(".yomi-list-chip").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const y = btn.dataset.yomi;
+        if (selectedListYomis.has(y)) {
+          selectedListYomis.delete(y);
+          btn.classList.remove("active");
+        } else {
+          selectedListYomis.add(y);
+          btn.classList.add("active");
+        }
+        renderDealsList();
+      });
+    });
+    document.querySelectorAll(".paid-chip").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const p = btn.dataset.paid;
+        if (selectedPaidStatuses.has(p)) {
+          selectedPaidStatuses.delete(p);
+          btn.classList.remove("active");
+        } else {
+          selectedPaidStatuses.add(p);
           btn.classList.add("active");
         }
         renderDealsList();
@@ -1526,6 +1633,7 @@
     renderHeader();
     initTabs();
     initYomiFilter();
+    initYomiMonthFilter();
     initDealsFilter();
     initBillingMonthFilter();
     initSortHeaders();

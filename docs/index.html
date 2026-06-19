@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>deex 営業ダッシュボード</title>
-  <link rel="stylesheet" href="style.css?v=27">
+  <link rel="stylesheet" href="style.css?v=28">
 </head>
 <body>
 
@@ -61,7 +61,12 @@
 
     <section class="yomi-section">
       <h2>ヨミ別内訳</h2>
+      <div class="yomi-month-row">
+        <span class="filter-row-label">ヨミ月:</span>
+        <div id="yomi-month-filter" class="month-filter-pills inline"></div>
+      </div>
       <div class="yomi-filter">
+        <span class="filter-row-label">ヨミ確度:</span>
         <button class="yomi-btn active" data-yomi="">すべて</button>
         <button class="yomi-btn" data-yomi="A">A（80%↑）</button>
         <button class="yomi-btn" data-yomi="B">B（60〜80%）</button>
@@ -105,6 +110,19 @@
             <button class="month-btn phase-chip" data-phase="保留">保留</button>
             <button class="month-btn phase-chip" data-phase="失注">失注</button>
           </div>
+          <div id="list-yomi-filter-chips" class="phase-chip-bar">
+            <span class="phase-chip-label">ヨミ:</span>
+            <button class="month-btn yomi-list-chip" data-yomi="A">A</button>
+            <button class="month-btn yomi-list-chip" data-yomi="B">B</button>
+            <button class="month-btn yomi-list-chip" data-yomi="C">C</button>
+            <button class="month-btn yomi-list-chip" data-yomi="D">D</button>
+          </div>
+          <div id="paid-filter-chips" class="phase-chip-bar">
+            <span class="phase-chip-label">Paid:</span>
+            <button class="month-btn paid-chip" data-paid="todo">未対応</button>
+            <button class="month-btn paid-chip" data-paid="done">対応済み</button>
+            <button class="month-btn paid-chip" data-paid="skip">不要</button>
+          </div>
           <label class="meeting-toggle">
             <input type="checkbox" id="has-meeting-filter"> 商談済みのみ
           </label>
@@ -130,6 +148,7 @@
             <th>フェーズ</th>
             <th class="sortable" data-sort="billing_month">計上月 <span class="sort-icon"></span></th>
             <th>担当</th>
+            <th>Paid対応</th>
             <th class="sortable" data-sort="updated_at">最終更新 <span class="sort-icon"></span></th>
           </tr>
         </thead>
@@ -176,6 +195,6 @@
   </div>
 </div>
 
-<script src="app.js?v=29"></script>
+<script src="app.js?v=30"></script>
 </body>
 </html>
