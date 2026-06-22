@@ -246,10 +246,15 @@ header {
   cursor: pointer;
   background: var(--surface);
 }
-.paid-select.paid-none { color: var(--text-sub); }
-.paid-select.paid-todo { background: #fef3c7; border-color: #fcd34d; color: #92400e; }
-.paid-select.paid-done { background: #d1fae5; border-color: #6ee7b7; color: #065f46; }
-.paid-select.paid-skip { background: #e5e7eb; border-color: #d1d5db; color: #4b5563; }
+.paid-select.paid-none          { color: var(--text-sub); }
+.paid-select.paid-todo          { background: #fef3c7; border-color: #fcd34d; color: #92400e; }
+.paid-select.paid-pre_review    { background: #ffedd5; border-color: #fdba74; color: #9a3412; }
+.paid-select.paid-pre_approved  { background: #dbeafe; border-color: #93c5fd; color: #1e40af; }
+.paid-select.paid-main_review   { background: #ede9fe; border-color: #c4b5fd; color: #5b21b6; }
+.paid-select.paid-main_approved { background: #d1fae5; border-color: #6ee7b7; color: #065f46; }
+.paid-select.paid-skip          { background: #e5e7eb; border-color: #d1d5db; color: #4b5563; }
+/* 旧"done"の互換表示（DBに残った場合のみ。マイグレ後は不要） */
+.paid-select.paid-done          { background: #d1fae5; border-color: #6ee7b7; color: #065f46; }
 
 /* Paidチップ（フィルタ） */
 .paid-chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }

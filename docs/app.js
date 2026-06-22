@@ -789,7 +789,16 @@
   }
 
   // ===== Paid対応ステータス =====
-  const PAID_LABELS = { todo: "未対応", done: "対応済み", skip: "不要" };
+  // 2026-06-22 拡張: 「対応済み」を削除し、事前審査/本審査の各段階を追加
+  // 旧値 "done" は読込時に "approved"（本審査承認済み）として表示する後方互換のみ。
+  const PAID_LABELS = {
+    todo:           "未対応",
+    pre_review:     "事前審査中",
+    pre_approved:   "事前審査承認済み",
+    main_review:    "本審査中",
+    main_approved:  "本審査承認済み",
+    skip:           "不要",
+  };
   function getPaidStatus(dealId) {
     return sharedState.paidStatus[dealId] ?? "";
   }

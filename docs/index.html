@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>deex 営業ダッシュボード</title>
-  <link rel="stylesheet" href="style.css?v=29">
+  <link rel="stylesheet" href="style.css?v=30">
 </head>
 <body>
 
@@ -120,7 +120,10 @@
           <div id="paid-filter-chips" class="phase-chip-bar">
             <span class="phase-chip-label">Paid:</span>
             <button class="month-btn paid-chip" data-paid="todo">未対応</button>
-            <button class="month-btn paid-chip" data-paid="done">対応済み</button>
+            <button class="month-btn paid-chip" data-paid="pre_review">事前審査中</button>
+            <button class="month-btn paid-chip" data-paid="pre_approved">事前審査承認済み</button>
+            <button class="month-btn paid-chip" data-paid="main_review">本審査中</button>
+            <button class="month-btn paid-chip" data-paid="main_approved">本審査承認済み</button>
             <button class="month-btn paid-chip" data-paid="skip">不要</button>
           </div>
           <label class="meeting-toggle">
@@ -195,6 +198,6 @@
   </div>
 </div>
 
-<script src="app.js?v=31"></script>
+<script src="app.js?v=32"></script>
 </body>
 </html>
