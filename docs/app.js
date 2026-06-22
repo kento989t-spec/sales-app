@@ -835,17 +835,13 @@
     if (!isLossLike) return `${wonBadge}${statusSelect(d)}`;
 
     const detailVal = esc(d.loss_detail || "");
-    const showReasonSelect = d.phase === "失注"; // ペンディングは選択肢を出さず詳細(自由記述)のみ
-    let reasonSelectHtml = "";
-    if (showReasonSelect) {
-      const cur = d.loss_reason || "";
-      const opts = LOSS_REASON_OPTIONS.map(o =>
-        `<option value="${o.id}" ${cur === o.name ? "selected" : ""}>${esc(o.name)}</option>`
-      ).join("");
-      const placeholder = cur ? "" : `<option value="" selected>—</option>`;
-      reasonSelectHtml = `<select class="loss-reason-select" data-deal-id="${d.id}" onchange="window._lossReasonChange(this, ${d.id})">${placeholder}${opts}</select>`;
-    }
-    const placeholder = d.phase === "失注" ? "失注理由 詳細" : "保留理由";
+    const cur = d.loss_reason || "";
+    const opts = LOSS_REASON_OPTIONS.map(o =>
+      `<option value="${o.id}" ${cur === o.name ? "selected" : ""}>${esc(o.name)}</option>`
+    ).join("");
+    const placeholderOpt = cur ? "" : `<option value="" selected>—</option>`;
+    const reasonSelectHtml = `<select class="loss-reason-select" data-deal-id="${d.id}" onchange="window._lossReasonChange(this, ${d.id})">${placeholderOpt}${opts}</select>`;
+    const placeholder = d.phase === "失注" ? "失注理由 詳細" : "保留理由 詳細";
     return `${wonBadge}${statusSelect(d)}
       <div class="reason-block">
         ${reasonSelectHtml}
@@ -905,10 +901,10 @@
       if (selectedBillingMonths.size > 0 && !selectedBillingMonths.has(d.billing_month?.slice(0, 7) ?? "")) return false;
       if (hasMeeting && !d.initial_meeting_done) return false;
       if (reasonMissing) {
-        // 失注/ペンディング案件で、選択肢(失注のみ)も詳細もない場合のみ表示
+        // 失注/ペンディング案件で、選択肢も詳細もない場合のみ表示
         if (d.phase !== "失注" && d.phase !== "ペンディング") return false;
         const hasDetail = !!(d.loss_detail && d.loss_detail.trim() && d.loss_detail.trim() !== "-");
-        const hasReason = d.phase === "失注" ? !!d.loss_reason : true; // ペンディングは選択肢チェック対象外
+        const hasReason = !!d.loss_reason;
         if (hasDetail && hasReason) return false;
       }
       return true;
