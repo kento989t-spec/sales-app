@@ -404,6 +404,22 @@
     { id: 333, name: "BPO(開拓以外）" },
   ];
 
+  // ===== 失注/保留 理由フィールド（牛丸さん依頼 2026-06-22）=====
+  const F_LOSS_REASON = "field_22619744-b92c-4ebc-9dd0-735c353f446a"; // 失注理由（choices, 失注・ペンディング共用）
+  const F_LOSS_DETAIL = "field_a0b85965-ffa8-4b86-9353-22aa43cb91dd"; // 失注理由詳細（text）
+  const LOSS_REASON_OPTIONS = [
+    { id: 128, name: "予算NG" },
+    { id: 129, name: "サービス内容とニーズが異なる" },
+    { id: 130, name: "検討時期が明確でない" },
+    { id: 131, name: "コンペ負け" },
+    { id: 132, name: "金額に対しての価値を伝えきれなかった" },
+    { id: 133, name: "営業のアプローチが遅かった" },
+    { id: 134, name: "音信不通" },
+    { id: 135, name: "相見積もり(当て馬)" },
+    { id: 136, name: "機能不足" },
+  ];
+  const LOSS_NAME_TO_ID = Object.fromEntries(LOSS_REASON_OPTIONS.map(o => [o.name, o.id]));
+
   // ===== GitHub PAT =====
   // PAT は sharedState.pat（サーバー共有）を使用。
   // ユーザーが独自 PAT を使いたい場合は localStorage の sales_app_pat_override に保存し優先される。
@@ -812,8 +828,32 @@
     return `<select class="${cls}" data-deal-id="${d.id}" onchange="window._paidChange(this, ${d.id})">${placeholder}${opts}</select>`;
   }
 
-  function dealRow(d, showBillingMonth = false, showPaid = false) {
+  // ステータスセル: 失注・ペンディング時のみ理由UIを縦に追加
+  function statusCellHtml(d) {
     const wonBadge = d.is_won ? `<span class="badge badge-CS">CS（受注）</span> ` : "";
+    const isLossLike = d.phase === "失注" || d.phase === "ペンディング";
+    if (!isLossLike) return `${wonBadge}${statusSelect(d)}`;
+
+    const detailVal = esc(d.loss_detail || "");
+    const showReasonSelect = d.phase === "失注"; // ペンディングは選択肢を出さず詳細(自由記述)のみ
+    let reasonSelectHtml = "";
+    if (showReasonSelect) {
+      const cur = d.loss_reason || "";
+      const opts = LOSS_REASON_OPTIONS.map(o =>
+        `<option value="${o.id}" ${cur === o.name ? "selected" : ""}>${esc(o.name)}</option>`
+      ).join("");
+      const placeholder = cur ? "" : `<option value="" selected>—</option>`;
+      reasonSelectHtml = `<select class="loss-reason-select" data-deal-id="${d.id}" onchange="window._lossReasonChange(this, ${d.id})">${placeholder}${opts}</select>`;
+    }
+    const placeholder = d.phase === "失注" ? "失注理由 詳細" : "保留理由";
+    return `${wonBadge}${statusSelect(d)}
+      <div class="reason-block">
+        ${reasonSelectHtml}
+        <input type="text" class="loss-detail-input" placeholder="${placeholder}" value="${detailVal}" data-deal-id="${d.id}" onchange="window._lossDetailChange(this, ${d.id})">
+      </div>`;
+  }
+
+  function dealRow(d, showBillingMonth = false, showPaid = false) {
     const billingVal = d.billing_month ? d.billing_month.slice(0, 7) : "";
     const billingCell = showBillingMonth
       ? `<td><input type="month" class="billing-input" value="${billingVal}" data-deal-id="${d.id}" onchange="window._billingChange(this, ${d.id})"></td>`
@@ -829,7 +869,7 @@
       <td>${yomiSelect(d)}</td>
       <td class="num"><input type="number" class="amount-input" value="${amountRaw}" data-deal-id="${d.id}" onchange="window._amountChange(this, ${d.id})"></td>
       <td class="num">${yen(d.weighted_amount)}</td>
-      <td>${wonBadge}${statusSelect(d)}</td>
+      <td class="status-cell">${statusCellHtml(d)}</td>
       ${billingCell}
       <td>${ownerSelect(d)}</td>
       ${paidCell}
@@ -852,6 +892,7 @@
   function renderDealsList() {
     const catFilter  = document.getElementById("cat-filter").value;
     const hasMeeting = document.getElementById("has-meeting-filter")?.checked ?? false;
+    const reasonMissing = document.getElementById("reason-missing-filter")?.checked ?? false;
 
     const source = DATA.all_deals ?? DATA.deals ?? [];
 
@@ -863,6 +904,13 @@
       if (selectedPaidStatuses.size > 0 && !selectedPaidStatuses.has(getPaidStatus(d.id) || "todo")) return false;
       if (selectedBillingMonths.size > 0 && !selectedBillingMonths.has(d.billing_month?.slice(0, 7) ?? "")) return false;
       if (hasMeeting && !d.initial_meeting_done) return false;
+      if (reasonMissing) {
+        // 失注/ペンディング案件で、選択肢(失注のみ)も詳細もない場合のみ表示
+        if (d.phase !== "失注" && d.phase !== "ペンディング") return false;
+        const hasDetail = !!(d.loss_detail && d.loss_detail.trim() && d.loss_detail.trim() !== "-");
+        const hasReason = d.phase === "失注" ? !!d.loss_reason : true; // ペンディングは選択肢チェック対象外
+        if (hasDetail && hasReason) return false;
+      }
       return true;
     });
 
@@ -1480,6 +1528,48 @@
     }
   };
 
+  window._lossReasonChange = async function(select, dealId) {
+    const newId = select.value ? Number(select.value) : null;
+    const newLabel = LOSS_REASON_OPTIONS.find(o => o.id === newId)?.name ?? "";
+    const orig = (DATA.all_deals ?? DATA.deals ?? []).find(x => x.id === dealId)?.loss_reason ?? "";
+    select.disabled = true;
+    for (const arr of [DATA.deals, DATA.all_deals]) {
+      const d = (arr ?? []).find(x => x.id === dealId);
+      if (d) { d.loss_reason = newLabel; d.loss_reason_id = newId; }
+    }
+    const ok = await triggerUpdate(dealId, F_LOSS_REASON, newId);
+    select.disabled = false;
+    if (!ok) {
+      for (const arr of [DATA.deals, DATA.all_deals]) {
+        const d = (arr ?? []).find(x => x.id === dealId);
+        if (d) { d.loss_reason = orig; d.loss_reason_id = LOSS_NAME_TO_ID[orig] ?? null; }
+      }
+      select.value = String(LOSS_NAME_TO_ID[orig] ?? "");
+      toast("失注理由の更新に失敗しました", "error");
+    }
+  };
+
+  window._lossDetailChange = async function(input, dealId) {
+    const val = input.value;
+    const orig = (DATA.all_deals ?? DATA.deals ?? []).find(x => x.id === dealId)?.loss_detail ?? "";
+    if (val === orig) return;
+    input.disabled = true;
+    for (const arr of [DATA.deals, DATA.all_deals]) {
+      const d = (arr ?? []).find(x => x.id === dealId);
+      if (d) d.loss_detail = val;
+    }
+    const ok = await triggerUpdate(dealId, F_LOSS_DETAIL, val);
+    input.disabled = false;
+    if (!ok) {
+      for (const arr of [DATA.deals, DATA.all_deals]) {
+        const d = (arr ?? []).find(x => x.id === dealId);
+        if (d) d.loss_detail = orig;
+      }
+      input.value = orig;
+      toast("理由詳細の更新に失敗しました", "error");
+    }
+  };
+
   window._billingChange = async function(input, dealId) {
     const newMonth = input.value; // "YYYY-MM"
     if (!newMonth) return;
@@ -1562,6 +1652,7 @@
   function initDealsFilter() {
     document.getElementById("cat-filter").addEventListener("change", renderDealsList);
     document.getElementById("has-meeting-filter")?.addEventListener("change", renderDealsList);
+    document.getElementById("reason-missing-filter")?.addEventListener("change", renderDealsList);
     document.querySelectorAll(".phase-chip").forEach(btn => {
       btn.addEventListener("click", () => {
         const phase = btn.dataset.phase;

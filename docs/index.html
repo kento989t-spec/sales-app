@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>deex 営業ダッシュボード</title>
-  <link rel="stylesheet" href="style.css?v=30">
+  <link rel="stylesheet" href="style.css?v=31">
 </head>
 <body>
 
@@ -129,6 +129,9 @@
           <label class="meeting-toggle">
             <input type="checkbox" id="has-meeting-filter"> 商談済みのみ
           </label>
+          <label class="meeting-toggle">
+            <input type="checkbox" id="reason-missing-filter"> 失注/保留 理由未入力のみ
+          </label>
           <div class="export-wrap">
             <button id="export-btn" title="GoCooデータをCSV出力">⬇ CSV出力</button>
             <div id="export-menu" class="export-menu hidden">
@@ -198,6 +201,6 @@
   </div>
 </div>
 
-<script src="app.js?v=32"></script>
+<script src="app.js?v=33"></script>
 </body>
 </html>

@@ -259,6 +259,32 @@ header {
 /* Paidチップ（フィルタ） */
 .paid-chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
+/* ===== 失注/保留 理由入力（ステータスセル内）===== */
+.reason-block {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 4px;
+}
+.loss-reason-select {
+  font-size: 11px;
+  padding: 2px 4px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: #fff7ed;
+  color: #9a3412;
+  max-width: 220px;
+}
+.loss-detail-input {
+  font-size: 11px;
+  padding: 2px 6px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: #fafafa;
+  width: 220px;
+}
+.loss-detail-input::placeholder { color: #9ca3af; }
+
 /* ===== 案件テーブル ===== */
 .deals-table {
   width: 100%;

@@ -33,6 +33,8 @@ const F = {
   CONTRACT_END:     "field_a939a2bc-be58-4422-8540-4535eb593f7d", // 契約終了日
   INITIAL_MEETING:  "field_0977ff67-f40f-40bd-a8df-457d57f2fc32", // 初回商談日
   INITIAL_MEETING_DONE: "field_bdff4e65-2f04-4a56-aecd-e1532e337799", // 初回商談実施済
+  LOSS_REASON:      "field_22619744-b92c-4ebc-9dd0-735c353f446a", // 失注理由（choices）
+  LOSS_DETAIL:      "field_a0b85965-ffa8-4b86-9353-22aa43cb91dd", // 失注理由詳細（text・保留理由としても兼用）
 };
 
 interface FieldValue {
@@ -113,6 +115,9 @@ function mapDeal(d: RawDeal) {
     owner: ownerField?.formatted_value ?? "",
     owner_id: (ownerField?.value as number) ?? null,
     next_action: (getField(d, F.NEXT_ACTION)?.value as string) ?? "",
+    loss_reason:    getField(d, F.LOSS_REASON)?.formatted_value ?? "",
+    loss_reason_id: (getField(d, F.LOSS_REASON)?.value as number) ?? null,
+    loss_detail:    (getField(d, F.LOSS_DETAIL)?.value as string) ?? "",
     initial_meeting_date: (getField(d, F.INITIAL_MEETING)?.value as string) ?? "",
     initial_meeting_done: Boolean(getField(d, F.INITIAL_MEETING_DONE)?.value),
     updated_at: (d.updated_at as FieldValue)?.value as string ?? "",
