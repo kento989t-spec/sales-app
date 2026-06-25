@@ -209,24 +209,61 @@
     pat: "",
   };
 
+  // fetch成功時は {ok:true, value} を、失敗時は {ok:false} を返す。
+  // 「fetch失敗」と「サーバーが空マップを返した」を絶対に混同しない設計に修正。
   async function apiFetchKey(key) {
-    if (!SALES_API) return null;
+    if (!SALES_API) return { ok: false, reason: "no-api" };
     try {
       const res = await fetch(`${SALES_API}/api/sales/store?key=${encodeURIComponent(key)}`);
-      if (!res.ok) return null;
+      if (!res.ok) return { ok: false, reason: `http-${res.status}` };
       const json = await res.json();
-      return json.value ?? null;
-    } catch { return null; }
+      return { ok: true, value: json.value ?? null };
+    } catch (e) {
+      return { ok: false, reason: "network", error: String(e) };
+    }
+  }
+
+  // クライアント側書き込みロック。ロード失敗時のキーは書き込み禁止にする
+  const writeLock = new Set();
+
+  function showFatalBanner(msg) {
+    if (document.getElementById("__sales_app_fatal_banner")) {
+      document.getElementById("__sales_app_fatal_banner").textContent = msg;
+      return;
+    }
+    const div = document.createElement("div");
+    div.id = "__sales_app_fatal_banner";
+    div.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:9999;background:#c00;color:#fff;padding:10px 16px;font-weight:bold;text-align:center;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,0.3)";
+    div.textContent = msg;
+    document.body.appendChild(div);
+  }
+
+  function clearFatalBanner() {
+    const el = document.getElementById("__sales_app_fatal_banner");
+    if (el) el.remove();
   }
 
   async function apiSaveKey(key, value) {
     if (!SALES_API) return;
+    if (writeLock.has(key)) {
+      console.warn(`[apiSaveKey] BLOCKED: key='${key}' は読み込み失敗中のため書き込み禁止`);
+      showFatalBanner(`⚠ サーバーから ${key} の読み込みに失敗しています。ページを再読み込みしてから操作してください（誤書き込み防止のため保存をブロックしました）`);
+      return;
+    }
     try {
-      await fetch(`${SALES_API}/api/sales/store`, {
+      const res = await fetch(`${SALES_API}/api/sales/store`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key, value }),
       });
+      if (!res.ok) {
+        // サーバー側のshrink-blockを含むエラー
+        const body = await res.text().catch(() => "");
+        console.warn("apiSaveKey rejected:", key, res.status, body);
+        if (res.status === 409) {
+          showFatalBanner(`⚠ サーバーが ${key} の書き込みを安全防御で拒否しました。ページを再読み込みしてから操作してください（${body}）`);
+        }
+      }
     } catch (e) {
       console.warn("apiSaveKey failed:", key, e);
     }
@@ -234,30 +271,49 @@
 
   async function loadSharedState() {
     await resolveSalesApi();
-    try {
-      const [taskStatus, customTasks, comments, taskDates, taskOwners, paidStatus, config] = await Promise.all([
-        apiFetchKey("task_status"),
-        apiFetchKey("custom_tasks"),
-        apiFetchKey("comments"),
-        apiFetchKey("task_dates"),
-        apiFetchKey("task_owners"),
-        apiFetchKey("paid_status"),
-        SALES_API
-          ? fetch(`${SALES_API}/api/sales/config`).then(r => r.ok ? r.json() : { pat: "" }).catch(() => ({ pat: "" }))
-          : Promise.resolve({ pat: "" }),
-      ]);
-      sharedState.taskStatus  = taskStatus  ?? {};
-      sharedState.customTasks = customTasks ?? {};
-      sharedState.comments    = comments    ?? {};
-      sharedState.taskDates   = taskDates   ?? {};
-      sharedState.taskOwners  = taskOwners  ?? {};
-      sharedState.paidStatus  = paidStatus  ?? {};
-      // PAT: ローカルオーバーライドがあればそちら優先
-      const override = localStorage.getItem("sales_app_pat_override");
-      sharedState.pat = override || config.pat || "";
-    } catch (e) {
-      console.warn("loadSharedState failed, using empty state:", e);
+    const [taskStatus, customTasks, comments, taskDates, taskOwners, paidStatus, configRes] = await Promise.all([
+      apiFetchKey("task_status"),
+      apiFetchKey("custom_tasks"),
+      apiFetchKey("comments"),
+      apiFetchKey("task_dates"),
+      apiFetchKey("task_owners"),
+      apiFetchKey("paid_status"),
+      SALES_API
+        ? fetch(`${SALES_API}/api/sales/config`).then(r => r.ok ? r.json() : null).catch(() => null)
+        : Promise.resolve(null),
+    ]);
+
+    // キー単位でのロード成否判定: 失敗したキーは現状を維持し、書き込みロックを立てる
+    const pairs = [
+      ["task_status",  "taskStatus",  taskStatus],
+      ["custom_tasks", "customTasks", customTasks],
+      ["comments",     "comments",    comments],
+      ["task_dates",   "taskDates",   taskDates],
+      ["task_owners",  "taskOwners",  taskOwners],
+      ["paid_status",  "paidStatus",  paidStatus],
+    ];
+
+    const failedKeys = [];
+    for (const [apiKey, stateKey, result] of pairs) {
+      if (result.ok) {
+        sharedState[stateKey] = result.value ?? {};
+        writeLock.delete(apiKey);
+      } else {
+        writeLock.add(apiKey);
+        failedKeys.push(apiKey);
+        console.warn(`[loadSharedState] FETCH FAILED key=${apiKey} reason=${result.reason} → 書き込みロック`);
+      }
     }
+
+    if (failedKeys.length > 0) {
+      showFatalBanner(`⚠ 一部データの読み込みに失敗: [${failedKeys.join(", ")}]。再読み込みするまで該当データの編集は保存されません`);
+    } else {
+      clearFatalBanner();
+    }
+
+    // PAT: ローカルオーバーライドがあればそちら優先
+    const override = localStorage.getItem("sales_app_pat_override");
+    sharedState.pat = override || (configRes && configRes.pat) || "";
   }
 
   // ===== タスクステータス（sharedState）=====
